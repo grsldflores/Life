@@ -1,0 +1,821 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#9E7655" />
+<title>My Life Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+<style>
+:root{
+  --paper:#EDE6DA; --card:#FBF8F1; --ink:#4C3729; --inkSoft:#8A7561;
+  --lilac:#9E7655; --lilacSoft:#D8C3A3; --lilacWash:#E8DCC6;
+  --gold:#C7A37E; --goldSoft:#E3CBA6; --rose:#A85D3E; --sage:#7C6A4D; --line:#E0D5C4;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  font-family:'Nunito',system-ui,sans-serif; color:var(--ink);
+  background:radial-gradient(1200px 500px at 50% -200px,var(--lilacWash),transparent),var(--paper);
+}
+.lh-root{max-width:540px;margin:0 auto;padding-bottom:84px;position:relative;min-height:100vh;}
+h1,h2,h3{font-family:'Fraunces',Georgia,serif;font-weight:600;letter-spacing:-0.01em;margin:0;}
+.muted{color:var(--inkSoft);font-size:13px;}
+.empty{color:var(--inkSoft);font-size:13.5px;font-style:italic;padding:4px 2px;}
+
+/* header */
+.app-head{padding:22px 20px 8px;display:flex;align-items:center;justify-content:space-between;}
+.brand{display:flex;align-items:center;gap:12px;}
+.brand-mark{width:40px;height:40px;border-radius:14px;display:grid;place-items:center;color:#fff;
+  background:linear-gradient(140deg,var(--lilac),var(--gold));box-shadow:0 6px 16px -6px var(--lilac);}
+.brand h1{font-size:22px;line-height:1.1;}
+.sync{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:700;}
+.signout{background:none;border:1px solid var(--line);color:var(--inkSoft);font-family:inherit;
+  font-weight:700;font-size:12px;padding:7px 12px;border-radius:11px;cursor:pointer;}
+.signout:hover{background:var(--lilacWash);color:var(--ink);}
+
+.app-body{padding:6px 18px 24px;}
+.stack{display:flex;flex-direction:column;gap:16px;}
+
+.hello{display:flex;align-items:center;gap:12px;padding:6px 2px 2px;}
+.hello h2{font-size:21px;}
+
+.verse{position:relative;text-align:center;padding:24px 22px 18px;
+  background:linear-gradient(150deg,var(--card),var(--lilacWash));border:1px solid var(--line);
+  border-radius:22px;box-shadow:0 10px 30px -22px var(--lilac);}
+.verse .spark{color:var(--gold);margin-bottom:6px;display:inline-flex;}
+.verse-text{font-family:'Fraunces',serif;font-size:18px;line-height:1.45;margin:4px 0 8px;}
+.verse-ref{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);font-weight:800;}
+
+.block{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:16px 16px 18px;
+  box-shadow:0 8px 24px -20px rgba(58,46,69,.5);}
+.block-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.block-head h3{font-size:15.5px;}
+
+.banner{display:flex;align-items:center;gap:14px;padding:18px;border-radius:20px;color:#fff;}
+.banner h2{font-size:19px;}
+.banner .muted{color:rgba(255,255,255,.85);}
+.banner svg{flex:none;}
+.faith-banner{background:linear-gradient(135deg,var(--lilac),#644736);}
+.balance-banner{background:linear-gradient(135deg,#B59F8C,var(--lilac));}
+.money-banner{background:linear-gradient(135deg,var(--gold),var(--lilac));}
+
+.focus-list,.habit-today,.prayer-list,.dev-list,.cat-list,.row-list,.goal-list,.habit-week{
+  list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;}
+.focus-list li,.habit-today li{display:flex;align-items:center;gap:11px;font-size:15px;}
+.focus-list li.done span,.habit-today li .done{text-decoration:line-through;color:var(--inkSoft);}
+.prayer-list li.answered .plain-input{text-decoration:line-through;color:var(--inkSoft);}
+.focus-list li span{flex:1;}
+
+.check{width:24px;height:24px;border-radius:8px;border:1.8px solid var(--lilac);background:#fff;
+  display:grid;place-items:center;color:#fff;cursor:pointer;flex:none;transition:all .15s;}
+.ghost-x{background:none;border:none;color:var(--inkSoft);cursor:pointer;padding:4px;border-radius:8px;
+  display:grid;place-items:center;}
+.ghost-x:hover{background:var(--lilacWash);color:var(--ink);}
+.dot{width:9px;height:9px;border-radius:50%;flex:none;}
+
+.add-row{display:flex;gap:8px;margin-top:12px;}
+.add-row input,.habit-add input,.habit-add select{flex:1;padding:10px 12px;border:1px solid var(--line);
+  border-radius:12px;font-family:inherit;font-size:14px;background:#fff;color:var(--ink);}
+.pill{background:var(--lilac);color:#fff;border:none;width:42px;border-radius:12px;display:grid;
+  place-items:center;cursor:pointer;}
+.pill:hover{filter:brightness(1.05);}
+
+textarea,.plain-input,input,select{font-family:inherit;color:var(--ink);}
+.grateful{width:100%;border:1px solid var(--line);border-radius:14px;padding:12px;font-size:14px;
+  resize:vertical;background:#fff;}
+
+.reading{display:flex;flex-direction:column;gap:12px;}
+.plain-input{border:none;background:transparent;font-size:14.5px;width:100%;padding:4px 2px;
+  border-bottom:1px solid transparent;}
+.plain-input:focus{border-bottom-color:var(--lilac);outline:none;}
+.plain-input.bold{font-weight:800;}
+.reading-track{display:flex;flex-direction:column;gap:8px;}
+.progress{height:10px;background:var(--lilacWash);border-radius:99px;overflow:hidden;}
+.progress.thin{height:7px;}
+.progress>div{height:100%;border-radius:99px;transition:width .3s;}
+.reading-nums{display:flex;align-items:center;gap:8px;font-weight:800;font-size:15px;}
+.reading-nums .muted{font-weight:400;}
+.step{width:30px;height:30px;border-radius:9px;border:1px solid var(--line);background:#fff;font-size:18px;
+  line-height:1;cursor:pointer;color:var(--lilac);}
+.step:hover{background:var(--lilacWash);}
+
+.dev-form{display:flex;flex-direction:column;gap:10px;margin-bottom:14px;}
+.dev-form textarea{border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:14px;resize:vertical;}
+.primary{align-self:flex-start;background:var(--lilac);color:#fff;border:none;padding:9px 16px;border-radius:11px;
+  font-weight:800;font-size:13.5px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;}
+.primary:hover{filter:brightness(1.05);}
+.dev-list li{background:var(--lilacWash);border-radius:13px;padding:11px 13px;}
+.dev-meta{display:flex;align-items:center;gap:10px;}
+.dev-ref{font-weight:800;color:var(--lilac);font-size:13.5px;flex:1;}
+.dev-list p{margin:6px 0 0;font-size:14px;line-height:1.5;white-space:pre-wrap;}
+
+.add-mini{background:var(--lilacWash);color:var(--lilac);border:none;padding:6px 11px;border-radius:10px;
+  font-weight:800;font-size:12.5px;cursor:pointer;display:inline-flex;align-items:center;gap:5px;}
+.add-mini:hover{background:#e6d9f3;}
+.answered-tag{display:inline-flex;align-items:center;gap:6px;background:var(--lilacWash);color:#6A4F38;padding:6px 12px;
+  border-radius:99px;font-size:12.5px;font-weight:800;margin:0 0 10px;}
+.prayer-list li{display:flex;gap:11px;align-items:flex-start;background:var(--paper);border:1px solid var(--line);
+  border-radius:13px;padding:11px;}
+.prayer-body{flex:1;display:flex;flex-direction:column;gap:2px;}
+
+.radar-wrap{margin:-2px 0 4px;display:grid;place-items:center;}
+.raters{display:flex;flex-direction:column;gap:11px;margin:6px 0 14px;}
+.rater{display:flex;align-items:center;justify-content:space-between;}
+.rater-name{display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px;}
+.dots{display:flex;gap:7px;}
+.rate-dot{width:22px;height:22px;border-radius:50%;border:1.6px solid var(--line);background:#fff;cursor:pointer;
+  transition:all .12s;}
+.rate-dot.filled{border-color:transparent;}
+.rate-dot:hover{transform:scale(1.1);}
+
+.habit-week li{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:12px;}
+.habit-week-head{display:flex;align-items:center;gap:9px;margin-bottom:10px;}
+.habit-name{font-weight:700;font-size:14.5px;flex:1;}
+.streak{display:inline-flex;align-items:center;gap:3px;color:var(--gold);font-weight:800;font-size:12.5px;}
+.week-dots{display:flex;gap:6px;}
+.wk{flex:1;height:34px;border-radius:10px;border:1.4px solid var(--line);background:#fff;color:var(--inkSoft);
+  font-size:11px;font-weight:800;cursor:pointer;text-transform:uppercase;transition:all .12s;}
+.wk.on{color:#fff;}
+.wk.today{box-shadow:0 0 0 2px var(--goldSoft);}
+.habit-add{display:flex;gap:8px;margin-top:12px;}
+
+.money-summary{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:16px;
+  box-shadow:0 8px 24px -20px rgba(58,46,69,.5);}
+.sum-card{display:flex;align-items:center;justify-content:space-between;padding-bottom:12px;
+  border-bottom:1px solid var(--line);margin-bottom:12px;}
+.sum-card .numfield input{font-size:22px;font-weight:800;width:120px;text-align:right;font-family:'Fraunces',serif;}
+.sum-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;text-align:center;}
+.sum-grid>div{display:flex;flex-direction:column;gap:3px;}
+.sum-grid strong{font-family:'Fraunces',serif;font-size:18px;}
+.sum-grid .pos strong{color:#7A6147;}
+.sum-grid .neg strong{color:var(--rose);}
+
+.numfield{display:inline-flex;align-items:center;gap:2px;background:#fff;border:1px solid var(--line);
+  border-radius:10px;padding:2px 8px;}
+.numfield .prefix{color:var(--inkSoft);font-weight:700;}
+.numfield input{border:none;background:transparent;width:62px;text-align:right;font-size:14px;font-weight:700;padding:5px 0;}
+.numfield input:focus{outline:none;}
+
+.pie-wrap{display:flex;align-items:center;gap:16px;flex-wrap:wrap;justify-content:center;}
+.legend{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;flex:1;min-width:150px;}
+.legend li{display:flex;align-items:center;gap:8px;font-size:13.5px;}
+.legend .muted{margin-left:auto;font-weight:800;}
+
+.cat-list li,.goal-list li{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:12px;
+  display:flex;flex-direction:column;gap:9px;}
+.cat-top,.goal-top{display:flex;align-items:center;gap:8px;}
+.cat-nums{display:flex;gap:10px;}
+.cat-nums label{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--inkSoft);font-weight:800;flex:1;}
+.cat-nums .numfield{flex:1;}
+.row-list li{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:12px;
+  display:grid;grid-template-columns:1fr auto;gap:8px 10px;align-items:center;}
+.row-list li .plain-input.bold{grid-column:1;}
+.row-list li .ghost-x{grid-row:1;grid-column:2;}
+.row-list label{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--inkSoft);font-weight:800;}
+
+.tabbar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:540px;
+  background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border-top:1px solid var(--line);
+  display:flex;padding:8px 8px calc(8px + env(safe-area-inset-bottom));}
+.tab{flex:1;background:none;border:none;display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px;
+  color:var(--inkSoft);cursor:pointer;font-family:inherit;font-size:11px;font-weight:800;border-radius:12px;transition:all .15s;}
+.tab.active{color:var(--lilac);background:var(--lilacWash);}
+
+/* auth */
+.auth-wrap{max-width:400px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;justify-content:center;
+  gap:18px;padding:24px;}
+.auth-card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:26px 22px;
+  box-shadow:0 18px 50px -30px var(--lilac);display:flex;flex-direction:column;gap:14px;}
+.auth-card h2{font-size:22px;}
+.auth-card input{padding:12px 14px;border:1px solid var(--line);border-radius:12px;font-size:15px;font-family:inherit;background:#fff;}
+.auth-card .primary{align-self:stretch;justify-content:center;padding:13px;font-size:15px;}
+.auth-toggle{background:none;border:none;color:var(--lilac);font-weight:800;font-size:13px;cursor:pointer;font-family:inherit;}
+.auth-err{color:#A85D3E;font-size:13px;font-weight:700;}
+.auth-note{font-size:12.5px;color:var(--inkSoft);text-align:center;line-height:1.5;}
+.intro-mark{width:54px;height:54px;border-radius:18px;display:grid;place-items:center;color:#fff;margin:0 auto;
+  background:linear-gradient(140deg,var(--lilac),var(--gold));box-shadow:0 10px 24px -10px var(--lilac);}
+
+.loading-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;min-height:70vh;}
+.spinner{width:34px;height:34px;border-radius:50%;border:3px solid var(--lilacWash);border-top-color:var(--lilac);
+  animation:spin 1s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid var(--lilac);outline-offset:2px;}
+.config-warn{max-width:480px;margin:60px auto;padding:24px;background:#fff;border:1px solid var(--line);
+  border-radius:18px;line-height:1.6;font-size:14px;}
+.config-warn code{background:var(--lilacWash);padding:2px 6px;border-radius:6px;font-size:13px;}
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<!-- Libraries (loaded in the browser, no build step needed) -->
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<script type="text/babel" data-presets="react">
+const { useState, useEffect, useRef, useCallback } = React;
+
+/* =====================================================================
+   1) PASTE YOUR SUPABASE KEYS HERE
+   Supabase dashboard → Project Settings → Data API / API keys
+   ===================================================================== */
+const SUPABASE_URL = "PASTE_YOUR_PROJECT_URL_HERE";       // e.g. https://abcd1234.supabase.co
+const SUPABASE_ANON_KEY = "PASTE_YOUR_ANON_PUBLIC_KEY_HERE";
+/* ===================================================================== */
+
+const COLORS = {
+  paper:"#EDE6DA", ink:"#4C3729", inkSoft:"#8A7561", lilac:"#9E7655", lilacSoft:"#D8C3A3",
+  lilacWash:"#E8DCC6", gold:"#C7A37E", goldSoft:"#E3CBA6", rose:"#A85D3E", sage:"#7C6A4D", line:"#E0D5C4",
+};
+const AREA_COLORS = { Faith:"#9E7655", Family:"#B59F8C", Health:"#C7A37E", Work:"#644736", Rest:"#C9B79E", Friends:"#8A6A4E" };
+
+const VERSES = [
+  ["The LORD is my shepherd; I shall not want.","Psalm 23:1"],
+  ["Be still, and know that I am God.","Psalm 46:10"],
+  ["I can do all things through Christ which strengtheneth me.","Philippians 4:13"],
+  ["This is the day which the LORD hath made; we will rejoice and be glad in it.","Psalm 118:24"],
+  ["Cast thy burden upon the LORD, and he shall sustain thee.","Psalm 55:22"],
+  ["Trust in the LORD with all thine heart.","Proverbs 3:5"],
+  ["The joy of the LORD is your strength.","Nehemiah 8:10"],
+  ["Strength and honour are her clothing; and she shall rejoice in time to come.","Proverbs 31:25"],
+  ["Commit thy works unto the LORD, and thy thoughts shall be established.","Proverbs 16:3"],
+  ["Weeping may endure for a night, but joy cometh in the morning.","Psalm 30:5"],
+  ["The LORD will bless his people with peace.","Psalm 29:11"],
+  ["My grace is sufficient for thee.","2 Corinthians 12:9"],
+];
+
+/* ---------- icons (inline SVG) ---------- */
+function Icon({ name, size = 18 }) {
+  const s = { width: size, height: size, viewBox: "0 0 24 24", fill: "none",
+    stroke: "currentColor", strokeWidth: 2, strokeLinecap: "round", strokeLinejoin: "round" };
+  const F = { ...s, fill: "currentColor", stroke: "none" };
+  switch (name) {
+    case "spark": return <svg {...F}><path d="M12 2l1.7 5.3L19 9l-5.3 1.7L12 16l-1.7-5.3L5 9l5.3-1.7z"/></svg>;
+    case "star": return <svg {...F}><path d="M12 3l2.6 5.3 5.9.8-4.3 4.1 1 5.8L12 16.9 6.8 19l1-5.8L3.5 9.1l5.9-.8z"/></svg>;
+    case "heart": return <svg {...F}><path d="M12 20.5S4 15.6 4 9.9C4 7.2 6 5.5 8.3 5.5c1.6 0 2.9 1 3.7 2.2.8-1.2 2.1-2.2 3.7-2.2C18 5.5 20 7.2 20 9.9c0 5.7-8 10.6-8 10.6z"/></svg>;
+    case "flame": return <svg {...F}><path d="M12 2c1.8 3 4.5 4.7 4.5 8.5a4.5 4.5 0 1 1-9 0c0-1.4.6-2.3 1.3-3 .2 1 .9 1.7 1.7 1.7C12 9.2 10.5 6 12 2z"/></svg>;
+    case "sunrise": return <svg {...s}><path d="M12 3v3M5.6 9.6 7 11M3 16h18M18.4 9.6 17 11M21 16a9 9 0 0 0-18 0"/><path d="M8 16a4 4 0 0 1 8 0"/></svg>;
+    case "sun": return <svg {...s}><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5l1.4 1.4M17.6 17.6 19 19M19 5l-1.4 1.4M6.4 17.6 5 19"/></svg>;
+    case "moon": return <svg {...s}><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></svg>;
+    case "compass": return <svg {...s}><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg>;
+    case "wallet": return <svg {...s}><path d="M3 7a2 2 0 0 1 2-2h12v3"/><path d="M3 7v10a2 2 0 0 0 2 2h14a1 1 0 0 0 1-1v-9a1 1 0 0 0-1-1H5"/><circle cx="16.5" cy="12.5" r="1.2" fill="currentColor" stroke="none"/></svg>;
+    case "book": return <svg {...s}><path d="M12 6c-1.5-1-4-1.6-6-1.6S2.5 5 2 5.5v13c.5-.5 2-1 4-1s4.5.6 6 1.6"/><path d="M12 6c1.5-1 4-1.6 6-1.6S21.5 5 22 5.5v13c-.5-.5-2-1-4-1s-4.5.6-6 1.6V6z"/></svg>;
+    case "hands": return <svg {...F}><path d="M12 20.5S4 15.6 4 9.9C4 7.2 6 5.5 8.3 5.5c1.6 0 2.9 1 3.7 2.2.8-1.2 2.1-2.2 3.7-2.2C18 5.5 20 7.2 20 9.9c0 5.7-8 10.6-8 10.6z"/></svg>;
+    case "plus": return <svg {...s}><path d="M12 5v14M5 12h14"/></svg>;
+    case "check": return <svg {...s}><path d="M20 6 9 17l-5-5"/></svg>;
+    case "trash": return <svg {...s}><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg>;
+    case "x": return <svg {...s}><path d="M18 6 6 18M6 6l12 12"/></svg>;
+    case "cloud": return <svg {...s}><path d="M6 18a4 4 0 0 1 0-8 5 5 0 0 1 9.6-1.3A3.5 3.5 0 0 1 18 18z"/></svg>;
+    default: return null;
+  }
+}
+
+/* ---------- helpers ---------- */
+const uid = () => Math.random().toString(36).slice(2, 9);
+const todayKey = () => new Date().toLocaleDateString("en-CA");
+const money = (n) => new Intl.NumberFormat("en-US",{style:"currency",currency:"USD",maximumFractionDigits:0}).format(Number(n)||0);
+function last7Keys(){const o=[];for(let i=6;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);o.push(d.toLocaleDateString("en-CA"));}return o;}
+function streakOf(h){let s=0;const d=new Date();if(!h[d.toLocaleDateString("en-CA")])d.setDate(d.getDate()-1);for(;;){const k=d.toLocaleDateString("en-CA");if(h[k]){s++;d.setDate(d.getDate()-1);}else break;}return s;}
+
+function seed(){
+  return {
+    profile:{name:"Gris"}, days:{},
+    habits:[
+      {id:uid(),name:"Morning prayer",area:"Faith",history:{}},
+      {id:uid(),name:"Read scripture",area:"Faith",history:{}},
+      {id:uid(),name:"Move my body",area:"Health",history:{}},
+      {id:uid(),name:"Time with my little one",area:"Family",history:{}},
+      {id:uid(),name:"Tidy 10 minutes",area:"Rest",history:{}},
+    ],
+    areas:[
+      {id:uid(),name:"Faith",rating:3},{id:uid(),name:"Family",rating:3},{id:uid(),name:"Health",rating:3},
+      {id:uid(),name:"Work",rating:3},{id:uid(),name:"Rest",rating:3},{id:uid(),name:"Friends",rating:3},
+    ],
+    balanceNote:"",
+    faith:{
+      devotionals:[],
+      prayers:[{id:uid(),name:"",request:"",answered:false,date:todayKey()}],
+      reading:{name:"Reading plan",total:0,completed:0},
+    },
+    money:{
+      income:0,
+      categories:[
+        {id:uid(),name:"Tithe & offering",budget:0,spent:0},
+        {id:uid(),name:"Housing",budget:0,spent:0},
+        {id:uid(),name:"Groceries",budget:0,spent:0},
+        {id:uid(),name:"Utilities",budget:0,spent:0},
+        {id:uid(),name:"Car",budget:0,spent:0},
+        {id:uid(),name:"Childcare",budget:0,spent:0},
+        {id:uid(),name:"Savings",budget:0,spent:0},
+        {id:uid(),name:"Fun",budget:0,spent:0},
+      ],
+      debts:[
+        {id:uid(),name:"Mortgage",balance:0,payment:0},
+        {id:uid(),name:"Car payment",balance:0,payment:0},
+        {id:uid(),name:"Solar loan",balance:0,payment:0},
+      ],
+      goals:[
+        {id:uid(),name:"Christmas fund",target:0,saved:0},
+        {id:uid(),name:"Emergency fund",target:0,saved:0},
+      ],
+    },
+  };
+}
+// merge loaded data over seed so new fields never crash an old saved blob
+function hydrate(loaded){
+  const base = seed();
+  if(!loaded || typeof loaded!=="object") return base;
+  return {
+    ...base, ...loaded,
+    profile:{...base.profile, ...(loaded.profile||{})},
+    days: loaded.days||{},
+    habits: loaded.habits||base.habits,
+    areas: loaded.areas||base.areas,
+    faith:{...base.faith, ...(loaded.faith||{}), reading:{...base.faith.reading, ...((loaded.faith||{}).reading||{})}},
+    money:{...base.money, ...(loaded.money||{})},
+  };
+}
+
+/* ---------- supabase client ---------- */
+const sb = (SUPABASE_URL.startsWith("http"))
+  ? supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+  : null;
+
+/* ---------- small UI pieces ---------- */
+function SyncBadge({ status }){
+  const map={loading:["Loading…",COLORS.inkSoft],saving:["Saving…",COLORS.gold],synced:["Saved to cloud",COLORS.sage],offline:["Not saved",COLORS.rose]};
+  const [label,color]=map[status]||map.synced;
+  return <span className="sync" style={{color}}><Icon name="cloud" size={13}/> {label}</span>;
+}
+function Section({ title, action, children }){
+  return <section className="block"><div className="block-head"><h3>{title}</h3>{action}</div>{children}</section>;
+}
+function NumberField({ value, onChange, prefix }){
+  return <span className="numfield">{prefix&&<span className="prefix">{prefix}</span>}
+    <input type="number" inputMode="decimal" value={value===0?"":value} placeholder="0"
+      onChange={(e)=>onChange(e.target.value===""?0:Number(e.target.value))}/></span>;
+}
+
+/* ---------- hand-drawn charts ---------- */
+function RadarSVG({ areas }){
+  const n=areas.length, R=72, cx=110, cy=100;
+  const pt=(i,r)=>{const a=(-90+i*360/n)*Math.PI/180;return [cx+r*Math.cos(a),cy+r*Math.sin(a)];};
+  const poly=(scale)=>areas.map((a,i)=>pt(i,R*scale(a,i)).join(",")).join(" ");
+  const grid=[0.25,0.5,0.75,1];
+  return (
+    <svg viewBox="0 0 220 200" width="100%" style={{maxWidth:300}}>
+      {grid.map((g,k)=><polygon key={k} points={poly(()=>g)} fill="none" stroke={COLORS.line} strokeWidth="1"/>)}
+      {areas.map((_,i)=>{const[x,y]=pt(i,R);return <line key={i} x1={cx} y1={cy} x2={x} y2={y} stroke={COLORS.line}/>;})}
+      <polygon points={poly((a)=>Math.max(0.001,a.rating/5))} fill={COLORS.lilac} fillOpacity="0.32" stroke={COLORS.lilac} strokeWidth="2"/>
+      {areas.map((a,i)=>{const[x,y]=pt(i,R+15);
+        const anchor=Math.abs(x-cx)<8?"middle":(x>cx?"start":"end");
+        return <text key={i} x={x} y={y} fontSize="11" fontWeight="700" fill={COLORS.inkSoft} textAnchor={anchor} dominantBaseline="middle">{a.name}</text>;})}
+    </svg>
+  );
+}
+function DonutSVG({ data, colors }){
+  const total=data.reduce((a,d)=>a+d.value,0)||1;
+  let acc=0;
+  return (
+    <svg viewBox="0 0 100 100" width="150" height="150">
+      <g transform="rotate(-90 50 50)">
+        {data.map((d,i)=>{const frac=d.value/total*100;
+          const c=<circle key={i} cx="50" cy="50" r="38" fill="none" stroke={colors[i%colors.length]}
+            strokeWidth="15" pathLength="100" strokeDasharray={`${frac} ${100-frac}`} strokeDashoffset={-acc}/>;
+          acc+=frac; return c;})}
+      </g>
+    </svg>
+  );
+}
+
+/* ============================== TODAY ============================== */
+function Today({ state, update }){
+  const dk=todayKey();
+  const day=state.days[dk]||{focus:[],gratitude:""};
+  const verse=VERSES[new Date().getDate()%VERSES.length];
+  const hour=new Date().getHours();
+  const greet=hour<12?"Good morning":hour<18?"Good afternoon":"Good evening";
+  const greetIcon=hour<12?"sunrise":hour<18?"sun":"moon";
+  const setDay=(patch)=>update((s)=>({...s,days:{...s.days,[dk]:{...day,...patch}}}));
+  const [focusText,setFocusText]=useState("");
+  const addFocus=()=>{if(!focusText.trim())return;setDay({focus:[...day.focus,{id:uid(),text:focusText.trim(),done:false}]});setFocusText("");};
+  const toggleFocus=(id)=>setDay({focus:day.focus.map((f)=>f.id===id?{...f,done:!f.done}:f)});
+  const removeFocus=(id)=>setDay({focus:day.focus.filter((f)=>f.id!==id)});
+  const dateStr=new Date().toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric"});
+  const toggleHabit=(id)=>update((s)=>({...s,habits:s.habits.map((h)=>h.id===id?{...h,history:{...h.history,[dk]:!h.history[dk]}}:h)}));
+  return (
+    <div className="stack">
+      <div className="hello">
+        <span style={{color:COLORS.gold}}><Icon name={greetIcon} size={22}/></span>
+        <div><h2>{greet}, {state.profile.name}.</h2><p className="muted">{dateStr}</p></div>
+      </div>
+      <div className="verse">
+        <span className="spark"><Icon name="spark" size={16}/></span>
+        <p className="verse-text">"{verse[0]}"</p>
+        <p className="verse-ref">{verse[1]}</p>
+      </div>
+      <Section title="Today's focus">
+        {day.focus.length===0&&<p className="empty">What are the few things that matter most today? Add up to three.</p>}
+        <ul className="focus-list">
+          {day.focus.map((f)=>(
+            <li key={f.id} className={f.done?"done":""}>
+              <button className="check" onClick={()=>toggleFocus(f.id)} style={f.done?{background:COLORS.lilac,borderColor:"transparent"}:{}}>{f.done&&<Icon name="check" size={14}/>}</button>
+              <span>{f.text}</span>
+              <button className="ghost-x" onClick={()=>removeFocus(f.id)}><Icon name="x" size={14}/></button>
+            </li>
+          ))}
+        </ul>
+        {day.focus.length<3&&(
+          <div className="add-row">
+            <input value={focusText} placeholder="Add a focus…" onChange={(e)=>setFocusText(e.target.value)} onKeyDown={(e)=>e.key==="Enter"&&addFocus()}/>
+            <button className="pill" onClick={addFocus}><Icon name="plus" size={15}/></button>
+          </div>
+        )}
+      </Section>
+      <Section title="Daily habits">
+        <ul className="habit-today">
+          {state.habits.map((h)=>(
+            <li key={h.id}>
+              <button className="check" onClick={()=>toggleHabit(h.id)} style={h.history[dk]?{background:AREA_COLORS[h.area]||COLORS.lilac,borderColor:"transparent"}:{}}>{h.history[dk]&&<Icon name="check" size={14}/>}</button>
+              <span className={h.history[dk]?"done":""} style={{flex:1}}>{h.name}</span>
+              <span className="dot" style={{background:AREA_COLORS[h.area]||COLORS.lilac}}/>
+            </li>
+          ))}
+        </ul>
+      </Section>
+      <Section title="Gratitude">
+        <textarea className="grateful" rows={2} placeholder="One thing I'm thankful for today…" value={day.gratitude} onChange={(e)=>setDay({gratitude:e.target.value})}/>
+      </Section>
+    </div>
+  );
+}
+
+/* ============================== FAITH ============================== */
+function Faith({ state, update }){
+  const f=state.faith;
+  const setFaith=(patch)=>update((s)=>({...s,faith:{...s.faith,...patch}}));
+  const [dev,setDev]=useState({reference:"",reflection:""});
+  const addDev=()=>{if(!dev.reference.trim()&&!dev.reflection.trim())return;setFaith({devotionals:[{id:uid(),date:todayKey(),...dev},...f.devotionals]});setDev({reference:"",reflection:""});};
+  const delDev=(id)=>setFaith({devotionals:f.devotionals.filter((d)=>d.id!==id)});
+  const addPrayer=()=>setFaith({prayers:[...f.prayers,{id:uid(),name:"",request:"",answered:false,date:todayKey()}]});
+  const setPrayer=(id,patch)=>setFaith({prayers:f.prayers.map((p)=>p.id===id?{...p,...patch}:p)});
+  const delPrayer=(id)=>setFaith({prayers:f.prayers.filter((p)=>p.id!==id)});
+  const answered=f.prayers.filter((p)=>p.answered).length;
+  const pct=f.reading.total>0?Math.min(100,Math.round((f.reading.completed/f.reading.total)*100)):0;
+  return (
+    <div className="stack">
+      <div className="banner faith-banner"><Icon name="book" size={18}/><div><h2>Walk with God</h2><p className="muted">Your quiet place to read, reflect, and pray.</p></div></div>
+      <Section title="Reading plan">
+        <div className="reading">
+          <input className="plain-input" value={f.reading.name} onChange={(e)=>setFaith({reading:{...f.reading,name:e.target.value}})} placeholder="Plan name (e.g. Psalms in 30 days)"/>
+          <div className="reading-track">
+            <div className="progress"><div style={{width:pct+"%",background:COLORS.lilac}}/></div>
+            <div className="reading-nums">
+              <button className="step" onClick={()=>setFaith({reading:{...f.reading,completed:Math.max(0,f.reading.completed-1)}})}>–</button>
+              <span>{f.reading.completed}</span><span className="muted">of</span>
+              <NumberField value={f.reading.total} onChange={(v)=>setFaith({reading:{...f.reading,total:v}})}/>
+              <button className="step" onClick={()=>setFaith({reading:{...f.reading,completed:f.reading.completed+1}})}>+</button>
+            </div>
+          </div>
+        </div>
+      </Section>
+      <Section title="Devotional journal">
+        <div className="dev-form">
+          <input className="plain-input" placeholder="Scripture (e.g. John 15:1–8)" value={dev.reference} onChange={(e)=>setDev({...dev,reference:e.target.value})}/>
+          <textarea rows={3} placeholder="What is God showing me today?" value={dev.reflection} onChange={(e)=>setDev({...dev,reflection:e.target.value})}/>
+          <button className="primary" onClick={addDev}><Icon name="plus" size={15}/> Save entry</button>
+        </div>
+        <ul className="dev-list">
+          {f.devotionals.map((d)=>(
+            <li key={d.id}>
+              <div className="dev-meta">
+                <span className="dev-ref">{d.reference||"Reflection"}</span>
+                <span className="muted">{new Date(d.date).toLocaleDateString("en-US",{month:"short",day:"numeric"})}</span>
+                <button className="ghost-x" onClick={()=>delDev(d.id)}><Icon name="trash" size={13}/></button>
+              </div>
+              {d.reflection&&<p>{d.reflection}</p>}
+            </li>
+          ))}
+          {f.devotionals.length===0&&<p className="empty">Your saved reflections will gather here.</p>}
+        </ul>
+      </Section>
+      <Section title="Prayer list" action={<button className="add-mini" onClick={addPrayer}><Icon name="plus" size={14}/> Add</button>}>
+        {answered>0&&<p className="answered-tag"><Icon name="hands" size={14}/> {answered} answered — give thanks</p>}
+        <ul className="prayer-list">
+          {f.prayers.map((p)=>(
+            <li key={p.id} className={p.answered?"answered":""}>
+              <button className="check" onClick={()=>setPrayer(p.id,{answered:!p.answered})} style={p.answered?{background:COLORS.sage,borderColor:"transparent"}:{}}>{p.answered&&<Icon name="check" size={14}/>}</button>
+              <div className="prayer-body">
+                <input className="plain-input bold" placeholder="Who / what" value={p.name} onChange={(e)=>setPrayer(p.id,{name:e.target.value})}/>
+                <input className="plain-input" placeholder="Prayer request…" value={p.request} onChange={(e)=>setPrayer(p.id,{request:e.target.value})}/>
+              </div>
+              <button className="ghost-x" onClick={()=>delPrayer(p.id)}><Icon name="trash" size={13}/></button>
+            </li>
+          ))}
+        </ul>
+      </Section>
+    </div>
+  );
+}
+
+/* ============================== BALANCE ============================== */
+function Balance({ state, update }){
+  const setArea=(id,rating)=>update((s)=>({...s,areas:s.areas.map((a)=>a.id===id?{...a,rating}:a)}));
+  const [habitName,setHabitName]=useState("");
+  const [habitArea,setHabitArea]=useState("Faith");
+  const addHabit=()=>{if(!habitName.trim())return;update((s)=>({...s,habits:[...s.habits,{id:uid(),name:habitName.trim(),area:habitArea,history:{}}]}));setHabitName("");};
+  const delHabit=(id)=>update((s)=>({...s,habits:s.habits.filter((h)=>h.id!==id)}));
+  const toggleDay=(hid,dk)=>update((s)=>({...s,habits:s.habits.map((h)=>h.id===hid?{...h,history:{...h.history,[dk]:!h.history[dk]}}:h)}));
+  const week=last7Keys();
+  return (
+    <div className="stack">
+      <div className="banner balance-banner"><Icon name="compass" size={18}/><div><h2>Life balance</h2><p className="muted">A weekly check-in across the areas that matter.</p></div></div>
+      <Section title="How is each area feeling this week?">
+        <div className="radar-wrap"><RadarSVG areas={state.areas}/></div>
+        <div className="raters">
+          {state.areas.map((a)=>(
+            <div className="rater" key={a.id}>
+              <span className="rater-name"><span className="dot" style={{background:AREA_COLORS[a.name]||COLORS.lilac}}/>{a.name}</span>
+              <div className="dots">
+                {[1,2,3,4,5].map((n)=>(
+                  <button key={n} className={"rate-dot"+(n<=a.rating?" filled":"")} style={n<=a.rating?{background:AREA_COLORS[a.name]||COLORS.lilac}:{}} onClick={()=>setArea(a.id,n)}/>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+        <textarea className="grateful" rows={2} placeholder="A note to myself about this week's balance…" value={state.balanceNote} onChange={(e)=>update((s)=>({...s,balanceNote:e.target.value}))}/>
+      </Section>
+      <Section title="Habits & rhythms">
+        <ul className="habit-week">
+          {state.habits.map((h)=>(
+            <li key={h.id}>
+              <div className="habit-week-head">
+                <span className="dot" style={{background:AREA_COLORS[h.area]||COLORS.lilac}}/>
+                <span className="habit-name">{h.name}</span>
+                {streakOf(h.history)>0&&<span className="streak"><Icon name="flame" size={12}/> {streakOf(h.history)}</span>}
+                <button className="ghost-x" onClick={()=>delHabit(h.id)}><Icon name="trash" size={13}/></button>
+              </div>
+              <div className="week-dots">
+                {week.map((dk)=>{const isToday=dk===todayKey();const on=!!h.history[dk];
+                  return <button key={dk} className={"wk"+(on?" on":"")+(isToday?" today":"")} style={on?{background:AREA_COLORS[h.area]||COLORS.lilac,borderColor:"transparent"}:{}} onClick={()=>toggleDay(h.id,dk)} title={dk}>{new Date(dk).toLocaleDateString("en-US",{weekday:"narrow"})}</button>;})}
+              </div>
+            </li>
+          ))}
+        </ul>
+        <div className="habit-add">
+          <input value={habitName} placeholder="New habit…" onChange={(e)=>setHabitName(e.target.value)} onKeyDown={(e)=>e.key==="Enter"&&addHabit()}/>
+          <select value={habitArea} onChange={(e)=>setHabitArea(e.target.value)}>
+            {Object.keys(AREA_COLORS).map((a)=><option key={a} value={a}>{a}</option>)}
+          </select>
+          <button className="pill" onClick={addHabit}><Icon name="plus" size={15}/></button>
+        </div>
+      </Section>
+    </div>
+  );
+}
+
+/* ============================== MONEY ============================== */
+function Money({ state, update }){
+  const m=state.money;
+  const setMoney=(patch)=>update((s)=>({...s,money:{...s.money,...patch}}));
+  const totalBudget=m.categories.reduce((a,c)=>a+(Number(c.budget)||0),0);
+  const totalSpent=m.categories.reduce((a,c)=>a+(Number(c.spent)||0),0);
+  const left=(Number(m.income)||0)-totalSpent;
+  const totalDebt=m.debts.reduce((a,d)=>a+(Number(d.balance)||0),0);
+  const pieData=m.categories.filter((c)=>Number(c.spent)>0).map((c)=>({name:c.name,value:Number(c.spent)}));
+  const pieColors=["#9E7655","#C7A37E","#B59F8C","#644736","#C9B79E","#8A6A4E","#D8C3A3","#7C6A4D"];
+  const setCat=(id,patch)=>setMoney({categories:m.categories.map((c)=>c.id===id?{...c,...patch}:c)});
+  const addCat=()=>setMoney({categories:[...m.categories,{id:uid(),name:"New category",budget:0,spent:0}]});
+  const delCat=(id)=>setMoney({categories:m.categories.filter((c)=>c.id!==id)});
+  const setDebt=(id,patch)=>setMoney({debts:m.debts.map((d)=>d.id===id?{...d,...patch}:d)});
+  const addDebt=()=>setMoney({debts:[...m.debts,{id:uid(),name:"New debt",balance:0,payment:0}]});
+  const delDebt=(id)=>setMoney({debts:m.debts.filter((d)=>d.id!==id)});
+  const setGoal=(id,patch)=>setMoney({goals:m.goals.map((g)=>g.id===id?{...g,...patch}:g)});
+  const addGoal=()=>setMoney({goals:[...m.goals,{id:uid(),name:"New goal",target:0,saved:0}]});
+  const delGoal=(id)=>setMoney({goals:m.goals.filter((g)=>g.id!==id)});
+  return (
+    <div className="stack">
+      <div className="banner money-banner"><Icon name="wallet" size={18}/><div><h2>Budget &amp; finances</h2><p className="muted">A clear picture, updated whenever you like.</p></div></div>
+      <div className="money-summary">
+        <div className="sum-card"><span className="muted">Monthly income</span><NumberField prefix="$" value={m.income} onChange={(v)=>setMoney({income:v})}/></div>
+        <div className="sum-grid">
+          <div><span className="muted">Spent</span><strong>{money(totalSpent)}</strong></div>
+          <div><span className="muted">Budgeted</span><strong>{money(totalBudget)}</strong></div>
+          <div className={left<0?"neg":"pos"}><span className="muted">Left this month</span><strong>{money(left)}</strong></div>
+        </div>
+      </div>
+      {pieData.length>0&&(
+        <Section title="Where it's going">
+          <div className="pie-wrap">
+            <DonutSVG data={pieData} colors={pieColors}/>
+            <ul className="legend">
+              {pieData.map((d,i)=>(
+                <li key={d.name}><span className="dot" style={{background:pieColors[i%pieColors.length]}}/>{d.name} <span className="muted">{money(d.value)}</span></li>
+              ))}
+            </ul>
+          </div>
+        </Section>
+      )}
+      <Section title="Budget" action={<button className="add-mini" onClick={addCat}><Icon name="plus" size={14}/> Category</button>}>
+        <ul className="cat-list">
+          {m.categories.map((c)=>{
+            const pct=Number(c.budget)>0?Math.min(100,(Number(c.spent)/Number(c.budget))*100):0;
+            const over=Number(c.spent)>Number(c.budget)&&Number(c.budget)>0;
+            return (
+              <li key={c.id}>
+                <div className="cat-top"><input className="plain-input bold" value={c.name} onChange={(e)=>setCat(c.id,{name:e.target.value})}/><button className="ghost-x" onClick={()=>delCat(c.id)}><Icon name="trash" size={13}/></button></div>
+                <div className="progress thin"><div style={{width:pct+"%",background:over?COLORS.rose:COLORS.lilac}}/></div>
+                <div className="cat-nums">
+                  <label>Spent <NumberField prefix="$" value={c.spent} onChange={(v)=>setCat(c.id,{spent:v})}/></label>
+                  <label>Budget <NumberField prefix="$" value={c.budget} onChange={(v)=>setCat(c.id,{budget:v})}/></label>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+      </Section>
+      <Section title={`Debts${totalDebt?" · "+money(totalDebt):""}`} action={<button className="add-mini" onClick={addDebt}><Icon name="plus" size={14}/> Debt</button>}>
+        <ul className="row-list">
+          {m.debts.map((d)=>(
+            <li key={d.id}>
+              <input className="plain-input bold" value={d.name} onChange={(e)=>setDebt(d.id,{name:e.target.value})}/>
+              <label>Balance <NumberField prefix="$" value={d.balance} onChange={(v)=>setDebt(d.id,{balance:v})}/></label>
+              <label>Payment <NumberField prefix="$" value={d.payment} onChange={(v)=>setDebt(d.id,{payment:v})}/></label>
+              <button className="ghost-x" onClick={()=>delDebt(d.id)}><Icon name="trash" size={13}/></button>
+            </li>
+          ))}
+        </ul>
+      </Section>
+      <Section title="Savings goals" action={<button className="add-mini" onClick={addGoal}><Icon name="plus" size={14}/> Goal</button>}>
+        <ul className="goal-list">
+          {m.goals.map((g)=>{
+            const pct=Number(g.target)>0?Math.min(100,(Number(g.saved)/Number(g.target))*100):0;
+            return (
+              <li key={g.id}>
+                <div className="goal-top"><input className="plain-input bold" value={g.name} onChange={(e)=>setGoal(g.id,{name:e.target.value})}/><span className="muted">{Math.round(pct)}%</span><button className="ghost-x" onClick={()=>delGoal(g.id)}><Icon name="trash" size={13}/></button></div>
+                <div className="progress thin"><div style={{width:pct+"%",background:COLORS.gold}}/></div>
+                <div className="cat-nums">
+                  <label>Saved <NumberField prefix="$" value={g.saved} onChange={(v)=>setGoal(g.id,{saved:v})}/></label>
+                  <label>Target <NumberField prefix="$" value={g.target} onChange={(v)=>setGoal(g.id,{target:v})}/></label>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+      </Section>
+    </div>
+  );
+}
+
+/* ============================== AUTH ============================== */
+function Auth(){
+  const [mode,setMode]=useState("in"); // in | up
+  const [email,setEmail]=useState("");
+  const [pw,setPw]=useState("");
+  const [err,setErr]=useState("");
+  const [msg,setMsg]=useState("");
+  const [busy,setBusy]=useState(false);
+  const submit=async()=>{
+    setErr("");setMsg("");setBusy(true);
+    try{
+      if(mode==="up"){
+        const {data,error}=await sb.auth.signUp({email,password:pw});
+        if(error)throw error;
+        if(!data.session) setMsg("Account created. Check your email to confirm, then sign in.");
+      } else {
+        const {error}=await sb.auth.signInWithPassword({email,password:pw});
+        if(error)throw error;
+      }
+    }catch(e){ setErr(e.message||"Something went wrong."); }
+    setBusy(false);
+  };
+  return (
+    <div className="auth-wrap">
+      <div className="intro-mark"><Icon name="spark" size={22}/></div>
+      <div style={{textAlign:"center"}}>
+        <h1 style={{fontSize:26}}>My Life Hub</h1>
+        <p className="muted" style={{marginTop:6}}>Faith, balance, and finances — in one quiet place.</p>
+      </div>
+      <div className="auth-card">
+        <h2>{mode==="in"?"Welcome back":"Create your account"}</h2>
+        <input type="email" placeholder="Email" value={email} onChange={(e)=>setEmail(e.target.value)} autoComplete="email"/>
+        <input type="password" placeholder="Password" value={pw} onChange={(e)=>setPw(e.target.value)}
+          onKeyDown={(e)=>e.key==="Enter"&&submit()} autoComplete={mode==="in"?"current-password":"new-password"}/>
+        {err&&<p className="auth-err">{err}</p>}
+        {msg&&<p className="auth-note" style={{color:COLORS.sage,fontWeight:700}}>{msg}</p>}
+        <button className="primary" onClick={submit} disabled={busy}>{busy?"…":(mode==="in"?"Sign in":"Create account")}</button>
+        <button className="auth-toggle" onClick={()=>{setMode(mode==="in"?"up":"in");setErr("");setMsg("");}}>
+          {mode==="in"?"New here? Create an account":"Already have an account? Sign in"}
+        </button>
+      </div>
+      <p className="auth-note">Your data is private to your account and synced across every device you sign in on.</p>
+    </div>
+  );
+}
+
+/* ============================== APP ============================== */
+const TABS=[
+  {id:"today",label:"Today",icon:"star"},
+  {id:"faith",label:"Faith",icon:"heart"},
+  {id:"balance",label:"Balance",icon:"compass"},
+  {id:"money",label:"Money",icon:"wallet"},
+];
+
+function Dashboard({ session }){
+  const [state,setState]=useState(null);
+  const [status,setStatus]=useState("loading");
+  const [tab,setTab]=useState("today");
+  const saveTimer=useRef(null);
+  const userId=session.user.id;
+
+  useEffect(()=>{
+    let alive=true;
+    (async()=>{
+      try{
+        const {data,error}=await sb.from("life_hub").select("data").eq("user_id",userId).maybeSingle();
+        if(error)throw error;
+        if(alive){ setState(hydrate(data?data.data:null)); setStatus("synced"); }
+      }catch(e){ if(alive){ setState(seed()); setStatus("offline"); } }
+    })();
+    return ()=>{alive=false;};
+  },[userId]);
+
+  const update=useCallback((updater)=>{
+    setState((prev)=>{
+      const next=typeof updater==="function"?updater(prev):updater;
+      setStatus("saving");
+      clearTimeout(saveTimer.current);
+      saveTimer.current=setTimeout(async()=>{
+        try{
+          const {error}=await sb.from("life_hub").upsert({user_id:userId,data:next,updated_at:new Date().toISOString()});
+          setStatus(error?"offline":"synced");
+        }catch{ setStatus("offline"); }
+      },600);
+      return next;
+    });
+  },[userId]);
+
+  if(!state){
+    return <div className="lh-root loading-screen"><div className="spinner"/><p className="muted">Opening your space…</p></div>;
+  }
+  return (
+    <div className="lh-root">
+      <header className="app-head">
+        <div className="brand">
+          <span className="brand-mark"><Icon name="spark" size={16}/></span>
+          <div><h1>My Life Hub</h1><SyncBadge status={status}/></div>
+        </div>
+        <button className="signout" onClick={()=>sb.auth.signOut()}>Sign out</button>
+      </header>
+      <main className="app-body">
+        {tab==="today"&&<Today state={state} update={update}/>}
+        {tab==="faith"&&<Faith state={state} update={update}/>}
+        {tab==="balance"&&<Balance state={state} update={update}/>}
+        {tab==="money"&&<Money state={state} update={update}/>}
+      </main>
+      <nav className="tabbar">
+        {TABS.map((t)=>(
+          <button key={t.id} className={"tab"+(tab===t.id?" active":"")} onClick={()=>setTab(t.id)}>
+            <Icon name={t.icon} size={20}/><span>{t.label}</span>
+          </button>
+        ))}
+      </nav>
+    </div>
+  );
+}
+
+function Root(){
+  const [session,setSession]=useState(undefined); // undefined = checking
+  useEffect(()=>{
+    if(!sb) return;
+    sb.auth.getSession().then(({data})=>setSession(data.session));
+    const {data:sub}=sb.auth.onAuthStateChange((_e,s)=>setSession(s));
+    return ()=>sub.subscription.unsubscribe();
+  },[]);
+
+  if(!sb){
+    return (
+      <div className="config-warn">
+        <h2 style={{marginBottom:10}}>Almost there 🌿</h2>
+        Add your Supabase project URL and anon key near the top of this file (look for
+        <code>SUPABASE_URL</code> and <code>SUPABASE_ANON_KEY</code>), then reload. The setup steps are in the notes I sent with this file.
+      </div>
+    );
+  }
+  if(session===undefined){
+    return <div className="lh-root loading-screen"><div className="spinner"/><p className="muted">Loading…</p></div>;
+  }
+  return session ? <Dashboard session={session}/> : <Auth/>;
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<Root/>);
+</script>
+</body>
+</html>
