@@ -177,6 +177,27 @@ textarea,.plain-input,input,select{font-family:inherit;color:var(--ink);}
 .row-list li .ghost-x{grid-row:1;grid-column:2;}
 .row-list label{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--inkSoft);font-weight:800;}
 
+/* devotional journey */
+.year-toggle{display:flex;align-items:center;gap:10px;font-weight:800;font-size:14px;color:var(--ink);}
+.year-toggle button{width:26px;height:26px;border-radius:8px;border:1px solid var(--line);background:#fff;cursor:pointer;color:var(--lilac);font-size:16px;line-height:1;}
+.year-toggle button:disabled{opacity:.35;cursor:default;}
+.journey-today{margin-bottom:14px;}
+.journey-btn{display:flex;align-items:center;gap:9px;background:var(--lilacWash);border:1px solid var(--line);color:var(--ink);font-family:inherit;font-weight:700;font-size:14px;padding:11px 14px;border-radius:13px;cursor:pointer;width:100%;text-align:left;}
+.journey-btn.on{background:var(--lilac);color:#fff;border-color:transparent;}
+.journey-btn .check.small{width:20px;height:20px;border-radius:6px;border:1.6px solid var(--lilac);background:#fff;display:grid;place-items:center;color:#fff;flex:none;}
+.journey-btn.on .check.small{background:#fff;border-color:#fff;color:var(--lilac);}
+.journey-done{display:flex;align-items:center;gap:9px;background:#efe6d6;color:#6a4f38;font-weight:800;font-size:14px;padding:11px 14px;border-radius:13px;width:100%;}
+.streak-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;}
+.stat{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:12px 6px;text-align:center;display:flex;flex-direction:column;gap:3px;}
+.stat-num{font-family:'Fraunces',serif;font-size:23px;font-weight:600;color:var(--lilac);display:inline-flex;align-items:center;justify-content:center;gap:3px;}
+.stat-lbl{font-size:11px;color:var(--inkSoft);font-weight:700;}
+.heatmap-scroll{overflow-x:auto;padding-bottom:4px;}
+.heat-legend{display:flex;align-items:center;justify-content:flex-end;gap:5px;font-size:11px;color:var(--inkSoft);margin-top:4px;font-weight:700;}
+.heat-legend i{width:11px;height:11px;border-radius:3px;display:inline-block;}
+.compare-head{margin:18px 0 6px;font-weight:800;font-size:13px;color:var(--ink);}
+.compare-legend{display:flex;gap:18px;justify-content:center;font-size:12px;color:var(--inkSoft);font-weight:700;margin-top:2px;}
+.compare-legend i{width:11px;height:11px;border-radius:3px;display:inline-block;margin-right:6px;vertical-align:-1px;}
+
 .tabbar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:540px;
   background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border-top:1px solid var(--line);
   display:flex;padding:8px 8px calc(8px + env(safe-area-inset-bottom));}
@@ -457,6 +478,7 @@ function seed() {
     balanceNote: "",
     faith: {
       devotionals: [],
+      devoDays: {},
       prayers: [{
         id: uid(),
         name: "",
@@ -562,7 +584,8 @@ function hydrate(loaded) {
       reading: {
         ...base.faith.reading,
         ...((loaded.faith || {}).reading || {})
-      }
+      },
+      devoDays: (loaded.faith || {}).devoDays || {}
     },
     money: {
       ...base.money,
@@ -864,6 +887,259 @@ function Today({
     })
   })));
 }
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const MONTH_LETTERS = ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"];
+const HEAT = ["#E8DCC6", "#D8C3A3", "#C7A37E", "#9E7655"];
+function dayInfo(faith) {
+  const entries = {};
+  (faith.devotionals || []).forEach(d => {
+    if (d.date) entries[d.date] = (entries[d.date] || 0) + 1;
+  });
+  const checked = faith.devoDays || {};
+  const keys = new Set([...Object.keys(entries), ...Object.keys(checked).filter(k => checked[k])]);
+  const level = k => {
+    const e = entries[k] || 0;
+    if (e >= 2) return 3;
+    if (e === 1) return 2;
+    if (checked[k]) return 1;
+    return 0;
+  };
+  return {
+    entries,
+    checked,
+    keys,
+    level
+  };
+}
+function computeStreaks(keysSet) {
+  const sorted = [...keysSet].sort();
+  let longest = 0,
+    run = 0,
+    prev = null;
+  for (const k of sorted) {
+    if (prev && Math.round((new Date(k) - new Date(prev)) / 86400000) === 1) run++;else run = 1;
+    if (run > longest) longest = run;
+    prev = k;
+  }
+  let current = 0;
+  const d = new Date();
+  if (!keysSet.has(d.toLocaleDateString("en-CA"))) d.setDate(d.getDate() - 1);
+  while (keysSet.has(d.toLocaleDateString("en-CA"))) {
+    current++;
+    d.setDate(d.getDate() - 1);
+  }
+  return {
+    current,
+    longest
+  };
+}
+function YearHeatmap({
+  year,
+  level
+}) {
+  const cell = 11,
+    gap = 3,
+    step = cell + gap,
+    leftPad = 20,
+    topPad = 16;
+  const start = new Date(year, 0, 1);
+  start.setDate(1 - new Date(year, 0, 1).getDay());
+  const end = new Date(year, 11, 31);
+  const totalDays = Math.round((end - start) / 86400000) + 1;
+  const rects = [],
+    labels = [];
+  for (let i = 0; i < totalDays; i++) {
+    const d = new Date(start);
+    d.setDate(start.getDate() + i);
+    const col = Math.floor(i / 7),
+      row = i % 7;
+    const inYear = d.getFullYear() === year;
+    const key = d.toLocaleDateString("en-CA");
+    const x = leftPad + col * step,
+      y = topPad + row * step;
+    rects.push(React.createElement("rect", {
+      key: i,
+      x: x,
+      y: y,
+      width: cell,
+      height: cell,
+      rx: "2.5",
+      fill: inYear ? HEAT[level(key)] : "transparent"
+    }));
+    if (inYear && d.getDate() === 1) labels.push(React.createElement("text", {
+      key: "m" + i,
+      x: x,
+      y: topPad - 5,
+      fontSize: "9",
+      fontWeight: "700",
+      fill: COLORS.inkSoft
+    }, MONTHS[d.getMonth()]));
+  }
+  const cols = Math.ceil(totalDays / 7);
+  const width = leftPad + cols * step,
+    height = topPad + 7 * step;
+  const dayLabels = ["", "M", "", "W", "", "F", ""];
+  return React.createElement("svg", {
+    width: width,
+    height: height,
+    style: {
+      minWidth: width
+    }
+  }, dayLabels.map((l, r) => l ? React.createElement("text", {
+    key: r,
+    x: "0",
+    y: topPad + r * step + cell - 1,
+    fontSize: "8",
+    fontWeight: "700",
+    fill: COLORS.inkSoft
+  }, l) : null), labels, rects);
+}
+function MonthlyCompare({
+  year,
+  keysSet
+}) {
+  const cy = new Array(12).fill(0),
+    py = new Array(12).fill(0);
+  keysSet.forEach(k => {
+    const y = +k.slice(0, 4),
+      mo = +k.slice(5, 7) - 1;
+    if (y === year) cy[mo]++;else if (y === year - 1) py[mo]++;
+  });
+  const max = Math.max(1, ...cy, ...py);
+  const W = 340,
+    H = 132,
+    top = 8,
+    bottom = 20,
+    left = 6;
+  const plotH = H - top - bottom,
+    groupW = (W - left) / 12,
+    barW = Math.min(9, (groupW - 5) / 2);
+  const bar = (v, x, fill) => {
+    const h = v / max * plotH;
+    return React.createElement("rect", {
+      x: x,
+      y: top + plotH - h,
+      width: barW,
+      height: h,
+      rx: "2",
+      fill: fill
+    });
+  };
+  return React.createElement("svg", {
+    viewBox: `0 0 ${W} ${H}`,
+    width: "100%",
+    style: {
+      maxWidth: "100%"
+    }
+  }, [...Array(12)].map((_, m) => {
+    const cx = left + m * groupW + groupW / 2;
+    return React.createElement("g", {
+      key: m
+    }, bar(py[m], cx - barW - 1, "#D8C3A3"), bar(cy[m], cx + 1, "#9E7655"), React.createElement("text", {
+      x: cx,
+      y: H - 6,
+      fontSize: "9",
+      fontWeight: "700",
+      fill: COLORS.inkSoft,
+      textAnchor: "middle"
+    }, MONTH_LETTERS[m]));
+  }));
+}
+function DevotionalJourney({
+  faith,
+  toggleToday
+}) {
+  const thisYear = new Date().getFullYear();
+  const [year, setYear] = useState(thisYear);
+  const info = dayInfo(faith);
+  const {
+    current,
+    longest
+  } = computeStreaks(info.keys);
+  const yearCount = [...info.keys].filter(k => +k.slice(0, 4) === year).length;
+  const tk = todayKey();
+  const journaledToday = (info.entries[tk] || 0) > 0;
+  const checkedToday = !!(faith.devoDays && faith.devoDays[tk]);
+  return React.createElement("section", {
+    className: "block"
+  }, React.createElement("div", {
+    className: "block-head"
+  }, React.createElement("h3", null, "Devotional journey"), React.createElement("div", {
+    className: "year-toggle"
+  }, React.createElement("button", {
+    onClick: () => setYear(year - 1),
+    "aria-label": "previous year"
+  }, "‹"), React.createElement("span", null, year), React.createElement("button", {
+    onClick: () => setYear(year + 1),
+    disabled: year >= thisYear,
+    "aria-label": "next year"
+  }, "›"))), React.createElement("div", {
+    className: "journey-today"
+  }, journaledToday ? React.createElement("span", {
+    className: "journey-done"
+  }, React.createElement(Icon, {
+    name: "check",
+    size: 15
+  }), " You spent time in the Word today") : React.createElement("button", {
+    className: "journey-btn" + (checkedToday ? " on" : ""),
+    onClick: toggleToday
+  }, React.createElement("span", {
+    className: "check small"
+  }, checkedToday && React.createElement(Icon, {
+    name: "check",
+    size: 13
+  })), checkedToday ? "Marked for today" : "I spent time with God today")), React.createElement("div", {
+    className: "streak-stats"
+  }, React.createElement("div", {
+    className: "stat"
+  }, React.createElement("span", {
+    className: "stat-num"
+  }, React.createElement(Icon, {
+    name: "flame",
+    size: 16
+  }), current), React.createElement("span", {
+    className: "stat-lbl"
+  }, "current streak")), React.createElement("div", {
+    className: "stat"
+  }, React.createElement("span", {
+    className: "stat-num"
+  }, longest), React.createElement("span", {
+    className: "stat-lbl"
+  }, "longest streak")), React.createElement("div", {
+    className: "stat"
+  }, React.createElement("span", {
+    className: "stat-num"
+  }, yearCount), React.createElement("span", {
+    className: "stat-lbl"
+  }, "days in ", year))), React.createElement("div", {
+    className: "heatmap-scroll"
+  }, React.createElement(YearHeatmap, {
+    year: year,
+    level: info.level
+  })), React.createElement("div", {
+    className: "heat-legend"
+  }, "Less", HEAT.map((c, i) => React.createElement("i", {
+    key: i,
+    style: {
+      background: c
+    }
+  })), "More"), React.createElement("div", {
+    className: "compare-head"
+  }, "Each month — ", year, " vs ", year - 1), React.createElement(MonthlyCompare, {
+    year: year,
+    keysSet: info.keys
+  }), React.createElement("div", {
+    className: "compare-legend"
+  }, React.createElement("span", null, React.createElement("i", {
+    style: {
+      background: "#9E7655"
+    }
+  }), year), React.createElement("span", null, React.createElement("i", {
+    style: {
+      background: "#D8C3A3"
+    }
+  }), year - 1)));
+}
 function Faith({
   state,
   update
@@ -915,6 +1191,16 @@ function Faith({
   const delPrayer = id => setFaith({
     prayers: f.prayers.filter(p => p.id !== id)
   });
+  const toggleToday = () => {
+    const k = todayKey();
+    const dd = {
+      ...(f.devoDays || {})
+    };
+    if (dd[k]) delete dd[k];else dd[k] = true;
+    setFaith({
+      devoDays: dd
+    });
+  };
   const answered = f.prayers.filter(p => p.answered).length;
   const pct = f.reading.total > 0 ? Math.min(100, Math.round(f.reading.completed / f.reading.total * 100)) : 0;
   return React.createElement("div", {
@@ -926,7 +1212,10 @@ function Faith({
     size: 18
   }), React.createElement("div", null, React.createElement("h2", null, "Walk with God"), React.createElement("p", {
     className: "muted"
-  }, "Your quiet place to read, reflect, and pray."))), React.createElement(Section, {
+  }, "Your quiet place to read, reflect, and pray."))), React.createElement(DevotionalJourney, {
+    faith: f,
+    toggleToday: toggleToday
+  }), React.createElement(Section, {
     title: "Reading plan"
   }, React.createElement("div", {
     className: "reading"
