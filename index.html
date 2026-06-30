@@ -198,6 +198,40 @@ textarea,.plain-input,input,select{font-family:inherit;color:var(--ink);}
 .compare-legend{display:flex;gap:18px;justify-content:center;font-size:12px;color:var(--inkSoft);font-weight:700;margin-top:2px;}
 .compare-legend i{width:11px;height:11px;border-radius:3px;display:inline-block;margin-right:6px;vertical-align:-1px;}
 
+/* gratitude record */
+.grat-list{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-direction:column;gap:8px;}
+.grat-list li{display:flex;align-items:center;gap:9px;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:9px 11px;}
+.grat-mark{color:var(--rose);display:inline-flex;flex:none;}
+.grat-text{flex:1;font-size:14px;}
+.grat-date{font-size:11px;color:var(--inkSoft);font-weight:700;flex:none;}
+
+/* bible in a year */
+.bible-prog{display:flex;flex-direction:column;gap:7px;margin-bottom:14px;}
+.bible-meta{font-size:14px;font-weight:800;color:var(--lilac);}
+.bible-meta .muted{font-weight:600;}
+.bible-current{background:var(--lilacWash);border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:8px;}
+.bible-day{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);}
+.bible-passage{font-family:'Fraunces',serif;font-size:18px;color:var(--ink);line-height:1.3;}
+.bible-current .primary{align-self:flex-start;margin-top:2px;}
+.bible-finished{display:inline-flex;align-items:center;gap:8px;background:#efe6d6;color:#6a4f38;font-weight:800;font-size:14px;padding:12px 14px;border-radius:13px;}
+.bible-all{margin-top:12px;}
+.bible-all summary{cursor:pointer;font-weight:800;font-size:13px;color:var(--lilac);padding:6px 0;list-style-position:inside;}
+.bible-list{list-style:none;margin:8px 0 0;padding:0;max-height:300px;overflow-y:auto;display:flex;flex-direction:column;gap:6px;}
+.bible-list li{display:flex;align-items:center;gap:9px;font-size:13px;padding:5px 2px;}
+.bible-list li.read .bp{color:var(--inkSoft);text-decoration:line-through;}
+.bible-list .bd{font-weight:800;color:var(--inkSoft);font-size:11px;width:46px;flex:none;}
+.bible-list .bp{flex:1;}
+.check.small{width:20px;height:20px;border-radius:6px;border:1.6px solid var(--lilac);background:#fff;display:grid;place-items:center;color:#fff;flex:none;cursor:pointer;}
+
+/* money over time */
+.hist-list{list-style:none;margin:14px 0 0;padding:0;display:flex;flex-direction:column;gap:8px;}
+.hist-list li{display:flex;align-items:center;gap:10px;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:10px 12px;flex-wrap:wrap;}
+.hist-ym{font-weight:800;font-size:13px;flex:none;min-width:78px;}
+.hist-cell{font-size:13px;font-weight:700;display:flex;flex-direction:column;}
+.hist-cell i{font-style:normal;font-size:10px;font-weight:700;}
+.hist-cell .pos{color:#5f8a55;}
+.hist-cell .neg{color:var(--rose);}
+
 .tabbar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:540px;
   background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border-top:1px solid var(--line);
   display:flex;padding:8px 8px calc(8px + env(safe-area-inset-bottom));}
@@ -424,6 +458,7 @@ function seed() {
       name: "Gris"
     },
     days: {},
+    gratitudes: [],
     habits: [{
       id: uid(),
       name: "Morning prayer",
@@ -479,6 +514,9 @@ function seed() {
     faith: {
       devotionals: [],
       devoDays: {},
+      bible: {
+        completed: {}
+      },
       prayers: [{
         id: uid(),
         name: "",
@@ -494,6 +532,7 @@ function seed() {
     },
     money: {
       income: 0,
+      history: [],
       categories: [{
         id: uid(),
         name: "Tithe & offering",
@@ -568,6 +607,22 @@ function seed() {
 function hydrate(loaded) {
   const base = seed();
   if (!loaded || typeof loaded !== "object") return base;
+  const lf = loaded.faith || {},
+    lm = loaded.money || {};
+  let gratitudes = loaded.gratitudes;
+  if (!Array.isArray(gratitudes)) {
+    gratitudes = [];
+    const days = loaded.days || {};
+    Object.keys(days).forEach(dk => {
+      const t = days[dk] && days[dk].gratitude;
+      if (t && typeof t === "string" && t.trim()) gratitudes.push({
+        id: uid(),
+        date: dk,
+        text: t.trim()
+      });
+    });
+    gratitudes.sort((a, b) => a.date < b.date ? 1 : -1);
+  }
   return {
     ...base,
     ...loaded,
@@ -576,20 +631,25 @@ function hydrate(loaded) {
       ...(loaded.profile || {})
     },
     days: loaded.days || {},
+    gratitudes,
     habits: loaded.habits || base.habits,
     areas: loaded.areas || base.areas,
     faith: {
       ...base.faith,
-      ...(loaded.faith || {}),
+      ...lf,
       reading: {
         ...base.faith.reading,
-        ...((loaded.faith || {}).reading || {})
+        ...(lf.reading || {})
       },
-      devoDays: (loaded.faith || {}).devoDays || {}
+      devoDays: lf.devoDays || {},
+      bible: {
+        completed: lf.bible && lf.bible.completed || {}
+      }
     },
     money: {
       ...base.money,
-      ...(loaded.money || {})
+      ...lm,
+      history: Array.isArray(lm.history) ? lm.history : []
     }
   };
 }
@@ -772,6 +832,24 @@ function Today({
   const removeFocus = id => setDay({
     focus: day.focus.filter(f => f.id !== id)
   });
+  const [gratText, setGratText] = useState("");
+  const grats = state.gratitudes || [];
+  const addGrat = () => {
+    if (!gratText.trim()) return;
+    update(s => ({
+      ...s,
+      gratitudes: [{
+        id: uid(),
+        date: dk,
+        text: gratText.trim()
+      }, ...(s.gratitudes || [])]
+    }));
+    setGratText("");
+  };
+  const delGrat = id => update(s => ({
+    ...s,
+    gratitudes: (s.gratitudes || []).filter(g => g.id !== id)
+  }));
   const dateStr = new Date().toLocaleDateString("en-US", {
     weekday: "long",
     month: "long",
@@ -877,15 +955,50 @@ function Today({
     }
   }))))), React.createElement(Section, {
     title: "Gratitude"
-  }, React.createElement("textarea", {
-    className: "grateful",
-    rows: 2,
-    placeholder: "One thing I'm thankful for today…",
-    value: day.gratitude,
-    onChange: e => setDay({
-      gratitude: e.target.value
-    })
-  })));
+  }, React.createElement("div", {
+    className: "add-row"
+  }, React.createElement("input", {
+    value: gratText,
+    placeholder: "One thing I'm thankful for…",
+    onChange: e => setGratText(e.target.value),
+    onKeyDown: e => e.key === "Enter" && addGrat()
+  }), React.createElement("button", {
+    className: "pill",
+    onClick: addGrat
+  }, React.createElement(Icon, {
+    name: "plus",
+    size: 15
+  }))), grats.length === 0 && React.createElement("p", {
+    className: "empty"
+  }, "A little record of thanks — it grows each day."), React.createElement("ul", {
+    className: "grat-list"
+  }, grats.slice(0, 30).map(g => React.createElement("li", {
+    key: g.id
+  }, React.createElement("span", {
+    className: "grat-mark"
+  }, React.createElement(Icon, {
+    name: "heart",
+    size: 12
+  })), React.createElement("span", {
+    className: "grat-text"
+  }, g.text), React.createElement("span", {
+    className: "grat-date"
+  }, new Date(g.date).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric"
+  })), React.createElement("button", {
+    className: "ghost-x",
+    onClick: () => delGrat(g.id)
+  }, React.createElement(Icon, {
+    name: "x",
+    size: 13
+  }))))), grats.length > 30 && React.createElement("p", {
+    className: "muted",
+    style: {
+      textAlign: "center",
+      marginTop: 8
+    }
+  }, "Showing your 30 most recent · ", grats.length, " total")));
 }
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const MONTH_LETTERS = ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"];
@@ -1140,6 +1253,112 @@ function DevotionalJourney({
     }
   }), year - 1)));
 }
+const BIBLE_BOOKS = [["Genesis", 50], ["Exodus", 40], ["Leviticus", 27], ["Numbers", 36], ["Deuteronomy", 34], ["Joshua", 24], ["Judges", 21], ["Ruth", 4], ["1 Samuel", 31], ["2 Samuel", 24], ["1 Kings", 22], ["2 Kings", 25], ["1 Chronicles", 29], ["2 Chronicles", 36], ["Ezra", 10], ["Nehemiah", 13], ["Esther", 10], ["Job", 42], ["Psalms", 150], ["Proverbs", 31], ["Ecclesiastes", 12], ["Song of Solomon", 8], ["Isaiah", 66], ["Jeremiah", 52], ["Lamentations", 5], ["Ezekiel", 48], ["Daniel", 12], ["Hosea", 14], ["Joel", 3], ["Amos", 9], ["Obadiah", 1], ["Jonah", 4], ["Micah", 7], ["Nahum", 3], ["Habakkuk", 3], ["Zephaniah", 3], ["Haggai", 2], ["Zechariah", 14], ["Malachi", 4], ["Matthew", 28], ["Mark", 16], ["Luke", 24], ["John", 21], ["Acts", 28], ["Romans", 16], ["1 Corinthians", 16], ["2 Corinthians", 13], ["Galatians", 6], ["Ephesians", 6], ["Philippians", 4], ["Colossians", 4], ["1 Thessalonians", 5], ["2 Thessalonians", 3], ["1 Timothy", 6], ["2 Timothy", 4], ["Titus", 3], ["Philemon", 1], ["Hebrews", 13], ["James", 5], ["1 Peter", 5], ["2 Peter", 3], ["1 John", 5], ["2 John", 1], ["3 John", 1], ["Jude", 1], ["Revelation", 22]];
+function buildBiblePlan() {
+  const flat = [];
+  BIBLE_BOOKS.forEach(([name, ch]) => {
+    for (let c = 1; c <= ch; c++) flat.push([name, c]);
+  });
+  const total = flat.length,
+    days = 365,
+    plan = [];
+  for (let d = 1; d <= days; d++) {
+    const startIdx = Math.round((d - 1) * total / days);
+    const endIdx = Math.round(d * total / days) - 1;
+    const slice = flat.slice(startIdx, endIdx + 1);
+    const parts = [];
+    let i = 0;
+    while (i < slice.length) {
+      const book = slice[i][0];
+      let j = i;
+      while (j + 1 < slice.length && slice[j + 1][0] === book && slice[j + 1][1] === slice[j][1] + 1) j++;
+      const a = slice[i][1],
+        b = slice[j][1];
+      parts.push(book + " " + (a === b ? a : a + "–" + b));
+      i = j + 1;
+    }
+    plan.push({
+      day: d,
+      label: parts.join("; ")
+    });
+  }
+  return plan;
+}
+const BIBLE_PLAN = buildBiblePlan();
+function BiblePlan({
+  bible,
+  setBible
+}) {
+  const completed = bible.completed || {};
+  const doneCount = Object.keys(completed).filter(k => completed[k]).length;
+  const pct = Math.round(doneCount / 365 * 100);
+  let nextDay = 1;
+  while (nextDay <= 365 && completed[nextDay]) nextDay++;
+  const current = BIBLE_PLAN[Math.min(nextDay, 365) - 1];
+  const toggle = d => {
+    const c = {
+      ...completed
+    };
+    if (c[d]) delete c[d];else c[d] = true;
+    setBible({
+      completed: c
+    });
+  };
+  return React.createElement(Section, {
+    title: "Bible in a year"
+  }, React.createElement("div", {
+    className: "bible-prog"
+  }, React.createElement("div", {
+    className: "progress"
+  }, React.createElement("div", {
+    style: {
+      width: pct + "%",
+      background: COLORS.lilac
+    }
+  })), React.createElement("div", {
+    className: "bible-meta"
+  }, React.createElement("strong", null, doneCount), " ", React.createElement("span", {
+    className: "muted"
+  }, "of 365 days · ", pct, "%"))), doneCount < 365 ? React.createElement("div", {
+    className: "bible-current"
+  }, React.createElement("div", {
+    className: "bible-day"
+  }, "Day ", current.day), React.createElement("div", {
+    className: "bible-passage"
+  }, current.label), React.createElement("button", {
+    className: "primary",
+    onClick: () => toggle(current.day)
+  }, React.createElement(Icon, {
+    name: "check",
+    size: 15
+  }), " Mark as read")) : React.createElement("p", {
+    className: "bible-finished"
+  }, React.createElement(Icon, {
+    name: "spark",
+    size: 15
+  }), " You read through the whole Bible. Glory to God."), React.createElement("details", {
+    className: "bible-all"
+  }, React.createElement("summary", null, "Browse all 365 days"), React.createElement("ul", {
+    className: "bible-list"
+  }, BIBLE_PLAN.map(p => React.createElement("li", {
+    key: p.day,
+    className: completed[p.day] ? "read" : ""
+  }, React.createElement("button", {
+    className: "check small" + (completed[p.day] ? " on" : ""),
+    style: completed[p.day] ? {
+      background: COLORS.lilac,
+      borderColor: "transparent"
+    } : {},
+    onClick: () => toggle(p.day)
+  }, completed[p.day] && React.createElement(Icon, {
+    name: "check",
+    size: 12
+  })), React.createElement("span", {
+    className: "bd"
+  }, "Day ", p.day), React.createElement("span", {
+    className: "bp"
+  }, p.label))))));
+}
 function Faith({
   state,
   update
@@ -1215,58 +1434,12 @@ function Faith({
   }, "Your quiet place to read, reflect, and pray."))), React.createElement(DevotionalJourney, {
     faith: f,
     toggleToday: toggleToday
+  }), React.createElement(BiblePlan, {
+    bible: f.bible,
+    setBible: b => setFaith({
+      bible: b
+    })
   }), React.createElement(Section, {
-    title: "Reading plan"
-  }, React.createElement("div", {
-    className: "reading"
-  }, React.createElement("input", {
-    className: "plain-input",
-    value: f.reading.name,
-    onChange: e => setFaith({
-      reading: {
-        ...f.reading,
-        name: e.target.value
-      }
-    }),
-    placeholder: "Plan name (e.g. Psalms in 30 days)"
-  }), React.createElement("div", {
-    className: "reading-track"
-  }, React.createElement("div", {
-    className: "progress"
-  }, React.createElement("div", {
-    style: {
-      width: pct + "%",
-      background: COLORS.lilac
-    }
-  })), React.createElement("div", {
-    className: "reading-nums"
-  }, React.createElement("button", {
-    className: "step",
-    onClick: () => setFaith({
-      reading: {
-        ...f.reading,
-        completed: Math.max(0, f.reading.completed - 1)
-      }
-    })
-  }, "–"), React.createElement("span", null, f.reading.completed), React.createElement("span", {
-    className: "muted"
-  }, "of"), React.createElement(NumberField, {
-    value: f.reading.total,
-    onChange: v => setFaith({
-      reading: {
-        ...f.reading,
-        total: v
-      }
-    })
-  }), React.createElement("button", {
-    className: "step",
-    onClick: () => setFaith({
-      reading: {
-        ...f.reading,
-        completed: f.reading.completed + 1
-      }
-    })
-  }, "+"))))), React.createElement(Section, {
     title: "Devotional journal"
   }, React.createElement("div", {
     className: "dev-form"
@@ -1590,6 +1763,28 @@ function Money({
   const delGoal = id => setMoney({
     goals: m.goals.filter(g => g.id !== id)
   });
+  const savedTotal = m.goals.reduce((a, g) => a + (Number(g.saved) || 0), 0);
+  const history = m.history || [];
+  const ym = todayKey().slice(0, 7);
+  const monthName = new Date().toLocaleDateString("en-US", {
+    month: "long"
+  });
+  const saveSnapshot = () => {
+    const snap = {
+      ym,
+      income: Number(m.income) || 0,
+      spent: totalSpent,
+      budget: totalBudget,
+      debt: totalDebt,
+      saved: savedTotal,
+      left
+    };
+    const hist = history.filter(h => h.ym !== ym).concat(snap).sort((a, b) => a.ym < b.ym ? -1 : 1);
+    setMoney({
+      history: hist
+    });
+  };
+  const alreadySaved = history.some(h => h.ym === ym);
   return React.createElement("div", {
     className: "stack"
   }, React.createElement("div", {
@@ -1781,7 +1976,92 @@ function Money({
         target: v
       })
     }))));
-  }))));
+  }))), React.createElement(Section, {
+    title: "Money over time",
+    action: React.createElement("button", {
+      className: "add-mini",
+      onClick: saveSnapshot
+    }, React.createElement(Icon, {
+      name: "check",
+      size: 14
+    }), " ", alreadySaved ? `Update ${monthName}` : `Save ${monthName}`)
+  }, history.length === 0 ? React.createElement("p", {
+    className: "empty"
+  }, "Tap “Save ", monthName, "” to record this month's numbers. Each month you save builds a history you can look back on.") : React.createElement("div", null, React.createElement(MoneyHistoryChart, {
+    history: history
+  }), React.createElement("ul", {
+    className: "hist-list"
+  }, history.slice().reverse().map(h => React.createElement("li", {
+    key: h.ym
+  }, React.createElement("span", {
+    className: "hist-ym"
+  }, new Date(h.ym + "-01").toLocaleDateString("en-US", {
+    month: "short",
+    year: "numeric"
+  })), React.createElement("span", {
+    className: "hist-cell"
+  }, React.createElement("i", {
+    className: "muted"
+  }, "spent"), " ", money(h.spent)), React.createElement("span", {
+    className: "hist-cell"
+  }, React.createElement("i", {
+    className: "muted"
+  }, "left"), " ", React.createElement("b", {
+    className: h.left < 0 ? "neg" : "pos"
+  }, money(h.left))), React.createElement("span", {
+    className: "hist-cell"
+  }, React.createElement("i", {
+    className: "muted"
+  }, "debt"), " ", money(h.debt))))))));
+}
+function MoneyHistoryChart({
+  history
+}) {
+  const data = history.slice(-12);
+  const max = Math.max(1, ...data.map(h => Math.max(h.spent, h.income)));
+  const W = 340,
+    H = 140,
+    top = 8,
+    bottom = 22,
+    left = 6;
+  const plotH = H - top - bottom,
+    slot = (W - left) / Math.max(1, data.length),
+    barW = Math.min(14, slot * 0.5);
+  return React.createElement("div", null, React.createElement("svg", {
+    viewBox: `0 0 ${W} ${H}`,
+    width: "100%",
+    style: {
+      maxWidth: "100%"
+    }
+  }, data.map((h, i) => {
+    const cx = left + i * slot + slot / 2;
+    const hgt = h.spent / max * plotH;
+    return React.createElement("g", {
+      key: h.ym
+    }, React.createElement("rect", {
+      x: cx - barW / 2,
+      y: top + plotH - hgt,
+      width: barW,
+      height: hgt,
+      rx: "3",
+      fill: COLORS.lilac
+    }), React.createElement("text", {
+      x: cx,
+      y: H - 7,
+      fontSize: "9",
+      fontWeight: "700",
+      fill: COLORS.inkSoft,
+      textAnchor: "middle"
+    }, new Date(h.ym + "-01").toLocaleDateString("en-US", {
+      month: "narrow"
+    })));
+  })), React.createElement("div", {
+    className: "compare-legend"
+  }, React.createElement("span", null, React.createElement("i", {
+    style: {
+      background: "#9E7655"
+    }
+  }), "Spent each month")));
 }
 function Auth() {
   const [mode, setMode] = useState("in");
