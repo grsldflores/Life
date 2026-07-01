@@ -265,6 +265,41 @@ textarea,.plain-input,input,select{font-family:inherit;color:var(--ink);}
 .giv-amt{flex:1;font-weight:700;}
 .giv-date{flex:none;font-size:12px;}
 
+/* money: paychecks + tithe */
+.sum-hero{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;padding-bottom:12px;border-bottom:1px solid var(--line);margin-bottom:12px;flex-wrap:wrap;}
+.hero-num{font-family:'Fraunces',serif;font-size:30px;font-weight:600;color:var(--ink);display:block;line-height:1.1;margin-top:2px;}
+.hero-split{font-size:12px;color:var(--inkSoft);font-weight:800;}
+.who-toggle{display:flex;gap:8px;margin-bottom:10px;}
+.who-toggle button{flex:1;padding:9px;border:1px solid var(--line);background:#fff;border-radius:11px;font-family:inherit;font-weight:800;font-size:13.5px;color:var(--inkSoft);cursor:pointer;}
+.who-toggle button.on{background:var(--lilac);color:#fff;border-color:transparent;}
+.pay-add{display:flex;gap:8px;align-items:center;}
+.pay-add .numfield{flex:1;}
+.date-input{padding:8px 10px;border:1px solid var(--line);border-radius:11px;font-family:inherit;font-size:13px;background:#fff;color:var(--ink);max-width:150px;}
+.pay-hint{font-size:11.5px;color:var(--inkSoft);margin:8px 2px 12px;line-height:1.5;}
+.tithe-card{background:var(--lilacWash);border-radius:14px;padding:13px 14px;margin-bottom:12px;}
+.tithe-row{display:flex;align-items:center;justify-content:space-between;font-size:14px;font-weight:800;color:var(--ink);}
+.tithe-row strong{font-family:'Fraunces',serif;font-size:19px;color:var(--lilac);}
+.tithe-row.sub{font-size:12.5px;font-weight:700;color:var(--inkSoft);margin-top:5px;}
+.tithe-btn{margin-top:11px;width:100%;justify-content:center;}
+.pay-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:7px;}
+.pay-list li{display:flex;align-items:center;gap:9px;background:var(--paper);border:1px solid var(--line);border-radius:11px;padding:9px 11px;}
+.pay-who{font-weight:800;font-size:13px;width:62px;flex:none;}
+.pay-amt{font-weight:800;font-size:14px;}
+.pay-tithe{flex:1;font-size:11.5px;color:var(--gold);font-weight:800;}
+.pay-date{flex:none;font-size:12px;}
+
+/* balance: moments with hubby */
+.moment-list{list-style:none;margin:12px 0 0;padding:0;display:flex;flex-direction:column;gap:8px;}
+.moment-list li{display:flex;align-items:center;gap:9px;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:9px 11px;font-size:14px;}
+.moment-heart{color:var(--rose);display:inline-flex;flex:none;}
+.moment-note{flex:1;}
+.moment-date{font-size:11px;color:var(--inkSoft);font-weight:800;flex:none;}
+
+/* editable greeting name */
+.name-btn{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:inherit;color:var(--ink);background:none;border:none;padding:0;cursor:pointer;border-bottom:1.5px dashed var(--lilacSoft);line-height:1;}
+.name-btn:hover{color:var(--lilac);}
+.name-input{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:inherit;color:var(--ink);background:var(--card);border:none;border-bottom:2px solid var(--lilac);padding:0 2px;width:8ch;max-width:60vw;outline:none;}
+
 .tabbar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:540px;
   background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border-top:1px solid var(--line);
   display:flex;padding:8px 8px calc(8px + env(safe-area-inset-bottom));}
@@ -342,11 +377,26 @@ const COLORS = {
 const AREA_COLORS = {
   Faith: "#9E7655",
   Family: "#B59F8C",
+  Marriage: "#A9694A",
   Health: "#C7A37E",
   Work: "#644736",
   Rest: "#C9B79E",
   Friends: "#8A6A4E"
 };
+function fmtShort(dstr) {
+  if (!dstr) return "";
+  const p = String(dstr).split("-");
+  const dt = p.length === 3 ? new Date(+p[0], +p[1] - 1, +p[2]) : new Date(dstr);
+  return dt.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric"
+  });
+}
+function deriveName(email) {
+  if (!email || typeof email !== "string") return "friend";
+  let n = email.split("@")[0].replace(/[._\-0-9]+/g, " ").trim().split(" ")[0] || "friend";
+  return n.charAt(0).toUpperCase() + n.slice(1);
+}
 const VERSES = [["The LORD is my shepherd; I shall not want.", "Psalm 23:1"], ["Be still, and know that I am God.", "Psalm 46:10"], ["I can do all things through Christ which strengtheneth me.", "Philippians 4:13"], ["This is the day which the LORD hath made; we will rejoice and be glad in it.", "Psalm 118:24"], ["Cast thy burden upon the LORD, and he shall sustain thee.", "Psalm 55:22"], ["Trust in the LORD with all thine heart.", "Proverbs 3:5"], ["The joy of the LORD is your strength.", "Nehemiah 8:10"], ["Strength and honour are her clothing; and she shall rejoice in time to come.", "Proverbs 31:25"], ["Commit thy works unto the LORD, and thy thoughts shall be established.", "Proverbs 16:3"], ["Weeping may endure for a night, but joy cometh in the morning.", "Psalm 30:5"], ["The LORD will bless his people with peace.", "Psalm 29:11"], ["My grace is sufficient for thee.", "2 Corinthians 12:9"]];
 function Icon({
   name,
@@ -488,7 +538,7 @@ function streakOf(h) {
 function seed() {
   return {
     profile: {
-      name: "Gris"
+      name: ""
     },
     days: {},
     gratitudes: [],
@@ -528,6 +578,10 @@ function seed() {
       rating: 3
     }, {
       id: uid(),
+      name: "Marriage",
+      rating: 3
+    }, {
+      id: uid(),
       name: "Health",
       rating: 3
     }, {
@@ -544,6 +598,7 @@ function seed() {
       rating: 3
     }],
     balanceNote: "",
+    moments: [],
     study: {
       memoryVerses: [],
       sermons: []
@@ -571,6 +626,7 @@ function seed() {
       income: 0,
       history: [],
       giving: [],
+      paychecks: [],
       categories: [{
         id: uid(),
         name: "Tithe & offering",
@@ -670,12 +726,20 @@ function hydrate(loaded) {
     },
     days: loaded.days || {},
     gratitudes,
+    moments: Array.isArray(loaded.moments) ? loaded.moments : [],
     study: {
       memoryVerses: (loaded.study || {}).memoryVerses || [],
       sermons: (loaded.study || {}).sermons || []
     },
     habits: loaded.habits || base.habits,
-    areas: loaded.areas || base.areas,
+    areas: (() => {
+      const a = loaded.areas || base.areas;
+      return a.some(x => x.name === "Marriage") ? a : [...a, {
+        id: uid(),
+        name: "Marriage",
+        rating: 3
+      }];
+    })(),
     faith: {
       ...base.faith,
       ...lf,
@@ -692,7 +756,8 @@ function hydrate(loaded) {
       ...base.money,
       ...lm,
       history: Array.isArray(lm.history) ? lm.history : [],
-      giving: Array.isArray(lm.giving) ? lm.giving : []
+      giving: Array.isArray(lm.giving) ? lm.giving : [],
+      paychecks: Array.isArray(lm.paychecks) ? lm.paychecks : []
     }
   };
 }
@@ -833,7 +898,8 @@ function DonutSVG({
 }
 function Today({
   state,
-  update
+  update,
+  email
 }) {
   const dk = todayKey();
   const day = state.days[dk] || {
@@ -908,6 +974,23 @@ function Today({
       }
     } : h)
   }));
+  const displayName = (state.profile.name || "").trim() || deriveName(email);
+  const [editName, setEditName] = useState(false);
+  const [nameInput, setNameInput] = useState("");
+  const startEdit = () => {
+    setNameInput((state.profile.name || "").trim());
+    setEditName(true);
+  };
+  const saveName = () => {
+    update(s => ({
+      ...s,
+      profile: {
+        ...s.profile,
+        name: nameInput.trim()
+      }
+    }));
+    setEditName(false);
+  };
   return React.createElement("div", {
     className: "stack"
   }, React.createElement("div", {
@@ -919,7 +1002,22 @@ function Today({
   }, React.createElement(Icon, {
     name: greetIcon,
     size: 22
-  })), React.createElement("div", null, React.createElement("h2", null, greet, ", ", state.profile.name, "."), React.createElement("p", {
+  })), React.createElement("div", null, React.createElement("h2", null, greet, ", ", editName ? React.createElement("input", {
+    className: "name-input",
+    autoFocus: true,
+    value: nameInput,
+    placeholder: "your name",
+    onChange: e => setNameInput(e.target.value),
+    onKeyDown: e => {
+      if (e.key === "Enter") saveName();
+      if (e.key === "Escape") setEditName(false);
+    },
+    onBlur: saveName
+  }) : React.createElement("button", {
+    className: "name-btn",
+    onClick: startEdit,
+    title: "Tap to change your name"
+  }, displayName), "."), React.createElement("p", {
     className: "muted"
   }, dateStr))), React.createElement("div", {
     className: "verse"
@@ -1026,10 +1124,7 @@ function Today({
     className: "grat-text"
   }, g.text), React.createElement("span", {
     className: "grat-date"
-  }, new Date(g.date).toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric"
-  })), React.createElement("button", {
+  }, fmtShort(g.date)), React.createElement("button", {
     className: "ghost-x",
     onClick: () => delGrat(g.id)
   }, React.createElement(Icon, {
@@ -1920,10 +2015,7 @@ function GivingLog({
     className: "giv-amt"
   }, money(g.amount)), React.createElement("span", {
     className: "muted giv-date"
-  }, new Date(g.date).toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric"
-  })), React.createElement("button", {
+  }, fmtShort(g.date)), React.createElement("button", {
     className: "ghost-x",
     onClick: () => del(g.id)
   }, React.createElement(Icon, {
@@ -1972,6 +2064,27 @@ function Balance({
     } : h)
   }));
   const week = last7Keys();
+  const [moment, setMoment] = useState("");
+  const [momentDate, setMomentDate] = useState(todayKey());
+  const moments = state.moments || [];
+  const monthKey = todayKey().slice(0, 7);
+  const monthMoments = moments.filter(mm => (mm.date || "").slice(0, 7) === monthKey).length;
+  const addMoment = () => {
+    if (!moment.trim()) return;
+    update(s => ({
+      ...s,
+      moments: [{
+        id: uid(),
+        date: momentDate,
+        note: moment.trim()
+      }, ...(s.moments || [])]
+    }));
+    setMoment("");
+  };
+  const delMoment = id => update(s => ({
+    ...s,
+    moments: (s.moments || []).filter(mm => mm.id !== id)
+  }));
   return React.createElement("div", {
     className: "stack"
   }, React.createElement("div", {
@@ -2018,6 +2131,50 @@ function Balance({
       balanceNote: e.target.value
     }))
   })), React.createElement(Section, {
+    title: "Intentional moments with hubby",
+    action: moments.length > 0 && React.createElement("span", {
+      className: "muted"
+    }, monthMoments, " this month")
+  }, React.createElement("div", {
+    className: "add-row"
+  }, React.createElement("input", {
+    value: moment,
+    placeholder: "Date night, a walk, prayer together…",
+    onChange: e => setMoment(e.target.value),
+    onKeyDown: e => e.key === "Enter" && addMoment()
+  }), React.createElement("input", {
+    type: "date",
+    className: "date-input",
+    value: momentDate,
+    onChange: e => setMomentDate(e.target.value)
+  }), React.createElement("button", {
+    className: "pill",
+    onClick: addMoment
+  }, React.createElement(Icon, {
+    name: "plus",
+    size: 15
+  }))), moments.length === 0 && React.createElement("p", {
+    className: "empty"
+  }, "Jot the little intentional moments with your husband here and watch them add up."), React.createElement("ul", {
+    className: "moment-list"
+  }, moments.slice(0, 30).map(mm => React.createElement("li", {
+    key: mm.id
+  }, React.createElement("span", {
+    className: "moment-heart"
+  }, React.createElement(Icon, {
+    name: "heart",
+    size: 12
+  })), React.createElement("span", {
+    className: "moment-note"
+  }, mm.note), React.createElement("span", {
+    className: "moment-date"
+  }, fmtShort(mm.date)), React.createElement("button", {
+    className: "ghost-x",
+    onClick: () => delMoment(mm.id)
+  }, React.createElement(Icon, {
+    name: "x",
+    size: 12
+  })))))), React.createElement(Section, {
     title: "Habits & rhythms"
   }, React.createElement("ul", {
     className: "habit-week"
@@ -2093,15 +2250,56 @@ function Money({
       ...patch
     }
   }));
+  const ym = todayKey().slice(0, 7);
+  const monthName = new Date().toLocaleDateString("en-US", {
+    month: "long"
+  });
+  const paychecks = m.paychecks || [];
+  const monthPay = paychecks.filter(p => (p.date || "").slice(0, 7) === ym);
+  const yourIncome = monthPay.filter(p => p.who !== "spouse").reduce((a, p) => a + (Number(p.amount) || 0), 0);
+  const spouseIncome = monthPay.filter(p => p.who === "spouse").reduce((a, p) => a + (Number(p.amount) || 0), 0);
+  const income = yourIncome + spouseIncome;
   const totalBudget = m.categories.reduce((a, c) => a + (Number(c.budget) || 0), 0);
   const totalSpent = m.categories.reduce((a, c) => a + (Number(c.spent) || 0), 0);
-  const left = (Number(m.income) || 0) - totalSpent;
+  const left = income - totalSpent;
   const totalDebt = m.debts.reduce((a, d) => a + (Number(d.balance) || 0), 0);
   const pieData = m.categories.filter(c => Number(c.spent) > 0).map(c => ({
     name: c.name,
     value: Number(c.spent)
   }));
   const pieColors = ["#9E7655", "#C7A37E", "#B59F8C", "#644736", "#C9B79E", "#8A6A4E", "#D8C3A3", "#7C6A4D"];
+  const [payWho, setPayWho] = useState("me");
+  const [payAmt, setPayAmt] = useState(0);
+  const [payDate, setPayDate] = useState(todayKey());
+  const addPay = () => {
+    if (!payAmt) return;
+    setMoney({
+      paychecks: [{
+        id: uid(),
+        who: payWho,
+        amount: Number(payAmt) || 0,
+        date: payDate
+      }, ...paychecks]
+    });
+    setPayAmt(0);
+  };
+  const delPay = id => setMoney({
+    paychecks: paychecks.filter(p => p.id !== id)
+  });
+  const titheTarget = Math.round(income * 0.1);
+  const titheGiven = (m.giving || []).filter(g => g.type === "Tithe" && (g.date || "").slice(0, 7) === ym).reduce((a, g) => a + (Number(g.amount) || 0), 0);
+  const titheLeft = Math.max(0, titheTarget - titheGiven);
+  const recordTithe = () => {
+    if (titheLeft <= 0) return;
+    setMoney({
+      giving: [{
+        id: uid(),
+        date: todayKey(),
+        amount: titheLeft,
+        type: "Tithe"
+      }, ...(m.giving || [])]
+    });
+  };
   const setCat = (id, patch) => setMoney({
     categories: m.categories.map(c => c.id === id ? {
       ...c,
@@ -2155,14 +2353,10 @@ function Money({
   });
   const savedTotal = m.goals.reduce((a, g) => a + (Number(g.saved) || 0), 0);
   const history = m.history || [];
-  const ym = todayKey().slice(0, 7);
-  const monthName = new Date().toLocaleDateString("en-US", {
-    month: "long"
-  });
   const saveSnapshot = () => {
     const snap = {
       ym,
-      income: Number(m.income) || 0,
+      income,
       spent: totalSpent,
       budget: totalBudget,
       debt: totalDebt,
@@ -2187,26 +2381,87 @@ function Money({
   }, "A clear picture, updated whenever you like."))), React.createElement("div", {
     className: "money-summary"
   }, React.createElement("div", {
-    className: "sum-card"
-  }, React.createElement("span", {
+    className: "sum-hero"
+  }, React.createElement("div", null, React.createElement("span", {
     className: "muted"
-  }, "Monthly income"), React.createElement(NumberField, {
-    prefix: "$",
-    value: m.income,
-    onChange: v => setMoney({
-      income: v
-    })
-  })), React.createElement("div", {
+  }, "Income · ", monthName), React.createElement("strong", {
+    className: "hero-num"
+  }, money(income))), (yourIncome > 0 || spouseIncome > 0) && React.createElement("span", {
+    className: "hero-split"
+  }, "You ", money(yourIncome), " · Hubby ", money(spouseIncome))), React.createElement("div", {
     className: "sum-grid"
   }, React.createElement("div", null, React.createElement("span", {
     className: "muted"
-  }, "Spent"), React.createElement("strong", null, money(totalSpent))), React.createElement("div", null, React.createElement("span", {
-    className: "muted"
-  }, "Budgeted"), React.createElement("strong", null, money(totalBudget))), React.createElement("div", {
+  }, "Spent"), React.createElement("strong", null, money(totalSpent))), React.createElement("div", {
     className: left < 0 ? "neg" : "pos"
   }, React.createElement("span", {
     className: "muted"
-  }, "Left this month"), React.createElement("strong", null, money(left))))), pieData.length > 0 && React.createElement(Section, {
+  }, "Left"), React.createElement("strong", null, money(left))), React.createElement("div", null, React.createElement("span", {
+    className: "muted"
+  }, "Tithe 10%"), React.createElement("strong", null, money(titheTarget))))), React.createElement(Section, {
+    title: "Paychecks"
+  }, React.createElement("div", {
+    className: "who-toggle"
+  }, React.createElement("button", {
+    className: payWho === "me" ? "on" : "",
+    onClick: () => setPayWho("me")
+  }, "You"), React.createElement("button", {
+    className: payWho === "spouse" ? "on" : "",
+    onClick: () => setPayWho("spouse")
+  }, "Husband")), React.createElement("div", {
+    className: "pay-add"
+  }, React.createElement(NumberField, {
+    prefix: "$",
+    value: payAmt,
+    onChange: setPayAmt
+  }), React.createElement("input", {
+    type: "date",
+    className: "date-input",
+    value: payDate,
+    onChange: e => setPayDate(e.target.value)
+  }), React.createElement("button", {
+    className: "pill",
+    onClick: addPay
+  }, React.createElement(Icon, {
+    name: "plus",
+    size: 15
+  }))), React.createElement("p", {
+    className: "pay-hint"
+  }, "You're paid the 1st & 15th · your husband every 2 weeks. Add each check as it comes in, and your 10% tithe is figured for you."), React.createElement("div", {
+    className: "tithe-card"
+  }, React.createElement("div", {
+    className: "tithe-row"
+  }, React.createElement("span", null, "Tithe due · ", monthName), React.createElement("strong", null, money(titheTarget))), React.createElement("div", {
+    className: "tithe-row sub"
+  }, React.createElement("span", null, "Given so far"), React.createElement("span", null, money(titheGiven))), React.createElement("div", {
+    className: "tithe-row sub"
+  }, React.createElement("span", null, "Remaining"), React.createElement("span", null, money(titheLeft))), titheLeft > 0 && React.createElement("button", {
+    className: "primary tithe-btn",
+    onClick: recordTithe
+  }, React.createElement(Icon, {
+    name: "check",
+    size: 14
+  }), " Record ", money(titheLeft), " tithe")), monthPay.length === 0 ? React.createElement("p", {
+    className: "empty"
+  }, "No paychecks logged for ", monthName, " yet.") : React.createElement("ul", {
+    className: "pay-list"
+  }, monthPay.map(p => React.createElement("li", {
+    key: p.id
+  }, React.createElement("span", {
+    className: "pay-who"
+  }, p.who === "spouse" ? "Husband" : "You"), React.createElement("span", {
+    className: "pay-amt"
+  }, money(p.amount)), React.createElement("span", {
+    className: "pay-tithe"
+  }, "tithe ", money(Math.round((Number(p.amount) || 0) * 0.1))), React.createElement("span", {
+    className: "muted pay-date"
+  }, fmtShort(p.date)), React.createElement("button", {
+    className: "ghost-x",
+    onClick: () => delPay(p.id)
+  }, React.createElement(Icon, {
+    name: "trash",
+    size: 13
+  })))))), pieData.length > 0 && React.createElement(Section, {
     title: "Where it's going"
   }, React.createElement("div", {
     className: "pie-wrap"
@@ -2385,7 +2640,7 @@ function Money({
     key: h.ym
   }, React.createElement("span", {
     className: "hist-ym"
-  }, new Date(h.ym + "-01").toLocaleDateString("en-US", {
+  }, new Date(+h.ym.slice(0, 4), +h.ym.slice(5, 7) - 1, 1).toLocaleDateString("en-US", {
     month: "short",
     year: "numeric"
   })), React.createElement("span", {
@@ -2445,7 +2700,7 @@ function MoneyHistoryChart({
       fontWeight: "700",
       fill: COLORS.inkSoft,
       textAnchor: "middle"
-    }, new Date(h.ym + "-01").toLocaleDateString("en-US", {
+    }, new Date(+h.ym.slice(0, 4), +h.ym.slice(5, 7) - 1, 1).toLocaleDateString("en-US", {
       month: "narrow"
     })));
   })), React.createElement("div", {
@@ -2654,7 +2909,8 @@ function Dashboard({
     className: "app-body"
   }, tab === "today" && React.createElement(Today, {
     state: state,
-    update: update
+    update: update,
+    email: session.user.email
   }), tab === "faith" && React.createElement(Faith, {
     state: state,
     update: update
