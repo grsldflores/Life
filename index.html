@@ -300,6 +300,46 @@ textarea,.plain-input,input,select{font-family:inherit;color:var(--ink);}
 .name-btn:hover{color:var(--lilac);}
 .name-input{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:inherit;color:var(--ink);background:var(--card);border:none;border-bottom:2px solid var(--lilac);padding:0 2px;width:8ch;max-width:60vw;outline:none;}
 
+/* prayer & encouragement */
+.pray-intro{font-size:13px;color:var(--inkSoft);line-height:1.55;margin:0 0 12px;}
+.pray-chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px;}
+.pray-chip{background:var(--lilacWash);border:none;color:#6a4f38;font-family:inherit;font-weight:800;font-size:12.5px;padding:7px 13px;border-radius:99px;cursor:pointer;}
+.pray-chip:hover{background:#e6d9c2;}
+.pray-result{margin-top:16px;background:linear-gradient(150deg,var(--card),var(--lilacWash));border:1px solid var(--line);border-radius:16px;padding:16px;}
+.pray-echo{font-size:13px;color:var(--inkSoft);margin:0 0 10px;}
+.pray-echo em{color:var(--ink);font-style:italic;}
+.pray-h{font-family:'Fraunces',serif;font-size:17px;font-weight:600;margin:0 0 8px;color:var(--ink);}
+.pray-text{font-size:15px;line-height:1.6;margin:0 0 14px;color:var(--ink);}
+.pray-verses{display:flex;flex-direction:column;gap:11px;}
+.pray-verse{border-left:3px solid var(--gold);padding-left:12px;}
+.pray-verse p{font-family:'Fraunces',serif;font-style:italic;font-size:14.5px;line-height:1.5;margin:0 0 3px;color:var(--ink);}
+.pray-verse span{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);font-weight:800;}
+.pray-actions{display:flex;gap:10px;align-items:center;margin-top:16px;flex-wrap:wrap;}
+
+/* prayer timer */
+.timer-wrap{display:flex;flex-direction:column;align-items:center;gap:14px;padding:6px 0 2px;}
+.timer-face{text-align:center;}
+.timer-clock{font-family:'Fraunces',serif;font-size:46px;font-weight:600;color:var(--inkSoft);line-height:1;letter-spacing:.01em;font-variant-numeric:tabular-nums;}
+.timer-clock.live{color:var(--lilac);}
+.timer-sub{font-size:12px;color:var(--inkSoft);font-weight:800;margin-top:7px;letter-spacing:.02em;}
+.timer-btn{background:var(--lilac);color:#fff;border:none;font-family:inherit;font-weight:800;font-size:15px;padding:13px 30px;border-radius:14px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;box-shadow:0 8px 20px -10px var(--lilac);}
+.timer-btn.stop{background:#9c5f43;box-shadow:none;}
+.timer-btn span{display:inline-flex;align-items:center;gap:7px;}
+.timer-manual{margin-top:16px;padding-top:14px;border-top:1px solid var(--line);}
+.timer-manual>.muted{font-size:12.5px;font-weight:800;}
+.tm-row{display:flex;align-items:center;gap:9px;margin-top:9px;}
+.tm-row .numfield{width:96px;}
+.timer-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px;text-align:center;}
+.timer-stats>div{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:12px 6px;display:flex;flex-direction:column;gap:3px;}
+.timer-stats strong{font-family:'Fraunces',serif;font-size:20px;color:var(--lilac);}
+.timer-stats span{font-size:11px;color:var(--inkSoft);font-weight:800;}
+.pmin-week{display:flex;gap:8px;margin-top:16px;align-items:flex-end;}
+.pmin-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;}
+.pmin-track{width:100%;height:56px;display:flex;align-items:flex-end;background:var(--lilacWash);border-radius:8px;overflow:hidden;}
+.pmin-bar{width:100%;background:var(--lilac);border-radius:8px 8px 0 0;min-height:2px;transition:height .3s;}
+.pmin-col>span{font-size:10px;font-weight:800;color:var(--inkSoft);text-transform:uppercase;}
+.pmin-today{color:var(--gold)!important;}
+
 .tabbar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:540px;
   background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border-top:1px solid var(--line);
   display:flex;padding:8px 8px calc(8px + env(safe-area-inset-bottom));}
@@ -396,6 +436,24 @@ function deriveName(email) {
   if (!email || typeof email !== "string") return "friend";
   let n = email.split("@")[0].replace(/[._\-0-9]+/g, " ").trim().split(" ")[0] || "friend";
   return n.charAt(0).toUpperCase() + n.slice(1);
+}
+function fmtDur(s) {
+  s = Math.round(s || 0);
+  if (s < 60) return s + "s";
+  const m = Math.floor(s / 60);
+  if (m < 60) return m + "m";
+  const h = Math.floor(m / 60);
+  return h + "h " + m % 60 + "m";
+}
+function mmss(s) {
+  s = Math.max(0, Math.floor(s || 0));
+  const m = Math.floor(s / 60),
+    sec = s % 60;
+  if (m >= 60) {
+    const h = Math.floor(m / 60);
+    return h + ":" + String(m % 60).padStart(2, "0") + ":" + String(sec).padStart(2, "0");
+  }
+  return String(m).padStart(2, "0") + ":" + String(sec).padStart(2, "0");
 }
 const VERSES = [["The LORD is my shepherd; I shall not want.", "Psalm 23:1"], ["Be still, and know that I am God.", "Psalm 46:10"], ["I can do all things through Christ which strengtheneth me.", "Philippians 4:13"], ["This is the day which the LORD hath made; we will rejoice and be glad in it.", "Psalm 118:24"], ["Cast thy burden upon the LORD, and he shall sustain thee.", "Psalm 55:22"], ["Trust in the LORD with all thine heart.", "Proverbs 3:5"], ["The joy of the LORD is your strength.", "Nehemiah 8:10"], ["Strength and honour are her clothing; and she shall rejoice in time to come.", "Proverbs 31:25"], ["Commit thy works unto the LORD, and thy thoughts shall be established.", "Proverbs 16:3"], ["Weeping may endure for a night, but joy cometh in the morning.", "Psalm 30:5"], ["The LORD will bless his people with peace.", "Psalm 29:11"], ["My grace is sufficient for thee.", "2 Corinthians 12:9"]];
 function Icon({
@@ -606,6 +664,7 @@ function seed() {
     faith: {
       devotionals: [],
       devoDays: {},
+      prayerLog: [],
       bible: {
         completed: {}
       },
@@ -748,6 +807,7 @@ function hydrate(loaded) {
         ...(lf.reading || {})
       },
       devoDays: lf.devoDays || {},
+      prayerLog: Array.isArray(lf.prayerLog) ? lf.prayerLog : [],
       bible: {
         completed: lf.bible && lf.bible.completed || {}
       }
@@ -1497,6 +1557,304 @@ function BiblePlan({
     className: "bp"
   }, p.label))))));
 }
+const PRAYER_THEMES = [{
+  id: "peace",
+  label: "Peace",
+  keywords: ["peace", "calm", "rest", "restless", "still", "overwhelm", "tension", "turmoil"],
+  prayer: "Lord, quiet my heart. In the middle of everything pressing on me, I choose to be still and remember that You are God. Wrap me in the peace that passes understanding, and let my mind rest in Your care. Thank You that You are my refuge and my calm. In Jesus' name, amen.",
+  verses: [["Peace I leave with you, my peace I give unto you: let not your heart be troubled, neither let it be afraid.", "John 14:27"], ["Thou wilt keep him in perfect peace, whose mind is stayed on thee.", "Isaiah 26:3"], ["Be still, and know that I am God.", "Psalm 46:10"]]
+}, {
+  id: "worry",
+  label: "Worry",
+  keywords: ["worry", "worri", "anxious", "anxiety", "stress", "fret", "nervous", "cares", "care about", "overthink"],
+  prayer: "Father, I bring You the worries I keep trying to carry alone. You know every detail that weighs on me, and You have never once lost control. I cast this care on You now, and I trust You to sustain me. Trade my anxiety for Your peace, and help me rest in Your faithfulness. In Jesus' name, amen.",
+  verses: [["Casting all your care upon him; for he careth for you.", "1 Peter 5:7"], ["Be careful for nothing; but in every thing by prayer and supplication with thanksgiving let your requests be made known unto God.", "Philippians 4:6"], ["Take therefore no thought for the morrow: for the morrow shall take thought for the things of itself.", "Matthew 6:34"]]
+}, {
+  id: "fear",
+  label: "Fear",
+  keywords: ["fear", "afraid", "scared", "terrified", "dread", "panic", "frightened"],
+  prayer: "Lord, when fear rises up, remind me that You are with me. You have not given me a spirit of fear, but of power, love, and a sound mind. Steady my heart, and let Your perfect love drive out every anxious thought. I will trust You and not be afraid. In Jesus' name, amen.",
+  verses: [["Fear thou not; for I am with thee: be not dismayed; for I am thy God.", "Isaiah 41:10"], ["For God hath not given us the spirit of fear; but of power, and of love, and of a sound mind.", "2 Timothy 1:7"], ["What time I am afraid, I will trust in thee.", "Psalm 56:3"]]
+}, {
+  id: "joy",
+  label: "Joy",
+  keywords: ["joy", "joyful", "happy", "happiness", "rejoice", "glad", "celebrate", "delight"],
+  prayer: "Father, thank You for the gift of joy that doesn't depend on my circumstances. Fill me fresh today with the joy of Your presence, and let it be my strength. Help me to rejoice in You always and to carry Your light to everyone around me. In Jesus' name, amen.",
+  verses: [["The joy of the LORD is your strength.", "Nehemiah 8:10"], ["In thy presence is fulness of joy.", "Psalm 16:11"], ["Rejoice in the Lord alway: and again I say, Rejoice.", "Philippians 4:4"]]
+}, {
+  id: "grief",
+  label: "Grief",
+  keywords: ["grief", "grieving", "loss", "mourn", "sad", "sadness", "broken", "heartbroken", "death", "died", "depress", "tears", "weeping"],
+  prayer: "Lord, You are close to the brokenhearted, and I need Your nearness now. You see my tears and You hold each one. Comfort me in this sorrow, and remind me that weeping may last for a night, but joy comes in the morning. Carry what I cannot, and be my hope. In Jesus' name, amen.",
+  verses: [["The LORD is nigh unto them that are of a broken heart; and saveth such as be of a contrite spirit.", "Psalm 34:18"], ["Blessed are they that mourn: for they shall be comforted.", "Matthew 5:4"], ["Weeping may endure for a night, but joy cometh in the morning.", "Psalm 30:5"]]
+}, {
+  id: "strength",
+  label: "Strength",
+  keywords: ["strength", "weak", "weary", "tired", "exhausted", "burnout", "drained", "worn out", "no energy"],
+  prayer: "Father, I am tired, and I need Your strength. Thank You that when I have no more to give, You renew me. Let me wait on You and rise up as on wings like eagles. Carry me through today by Your grace, for Your strength is made perfect in my weakness. In Jesus' name, amen.",
+  verses: [["They that wait upon the LORD shall renew their strength; they shall mount up with wings as eagles.", "Isaiah 40:31"], ["Come unto me, all ye that labour and are heavy laden, and I will give you rest.", "Matthew 11:28"], ["My strength is made perfect in weakness.", "2 Corinthians 12:9"]]
+}, {
+  id: "guidance",
+  label: "Guidance",
+  keywords: ["guidance", "guide", "direction", "decision", "decide", "wisdom", "confused", "which way", "choice", "future", "unsure", "don't know"],
+  prayer: "Lord, I need Your direction. I don't want to lean on my own understanding — I want to trust You with all my heart. Make my path clear, and give me wisdom for the steps in front of me. Order my way, and I will follow. In Jesus' name, amen.",
+  verses: [["Trust in the LORD with all thine heart; and lean not unto thine own understanding.", "Proverbs 3:5"], ["Thy word is a lamp unto my feet, and a light unto my path.", "Psalm 119:105"], ["If any of you lack wisdom, let him ask of God, that giveth to all men liberally.", "James 1:5"]]
+}, {
+  id: "hope",
+  label: "Hope",
+  keywords: ["hope", "hopeless", "discouraged", "discourage", "defeated", "give up", "despair", "down", "cast down"],
+  prayer: "Father, when I feel discouraged, lift my eyes back to You. You are the God of hope, and You are working even in what I cannot see. Fill me with hope and remind me that Your plans for me are good. I will hope in You again. In Jesus' name, amen.",
+  verses: [["For I know the thoughts that I think toward you, saith the LORD, thoughts of peace, and not of evil, to give you an expected end.", "Jeremiah 29:11"], ["Why art thou cast down, O my soul? hope thou in God: for I shall yet praise him.", "Psalm 42:11"], ["The LORD is good unto them that wait for him.", "Lamentations 3:25"]]
+}, {
+  id: "loneliness",
+  label: "Loneliness",
+  keywords: ["lonely", "loneliness", "alone", "isolated", "abandoned", "forgotten", "no one", "by myself"],
+  prayer: "Lord, I feel alone, but I know You have promised never to leave me. Thank You that You are near, closer than I realize. Fill this lonely place with Your presence, and remind me that I am Yours. Be my companion and my comfort today. In Jesus' name, amen.",
+  verses: [["I will never leave thee, nor forsake thee.", "Hebrews 13:5"], ["Lo, I am with you alway, even unto the end of the world.", "Matthew 28:20"], ["When my father and my mother forsake me, then the LORD will take me up.", "Psalm 27:10"]]
+}, {
+  id: "healing",
+  label: "Healing",
+  keywords: ["heal", "healing", "sick", "sickness", "illness", "pain", "hurt", "disease", "health", "recovery", "surgery", "diagnosis", "doctor"],
+  prayer: "Father, You are the God who heals. I bring this need for healing to You and ask for Your touch on body, mind, and spirit. Strengthen what is weak and restore what is broken. Whatever comes, hold me in Your hands and let Your peace guard my heart. In Jesus' name, amen.",
+  verses: [["I am the LORD that healeth thee.", "Exodus 15:26"], ["He healeth the broken in heart, and bindeth up their wounds.", "Psalm 147:3"], ["Beloved, I wish above all things that thou mayest prosper and be in health.", "3 John 1:2"]]
+}, {
+  id: "provision",
+  label: "Provision",
+  keywords: ["money", "finances", "financ", "bills", "debt", "rent", "provide", "provision", "paycheck", "broke", "afford", "income", "job loss", "unemployed"],
+  prayer: "Lord, You are my provider. I bring my needs and my worries about provision to You, trusting that You know exactly what I need before I ask. Thank You that You supply all my needs according to Your riches. Help me to be faithful and generous, and to rest in Your care. In Jesus' name, amen.",
+  verses: [["But my God shall supply all your need according to his riches in glory by Christ Jesus.", "Philippians 4:19"], ["Seek ye first the kingdom of God, and his righteousness; and all these things shall be added unto you.", "Matthew 6:33"], ["The LORD is my shepherd; I shall not want.", "Psalm 23:1"]]
+}, {
+  id: "family",
+  label: "Family",
+  keywords: ["family", "children", "child", "kids", "son", "daughter", "mother", "father", "parent", "home", "household"],
+  prayer: "Father, I lift my family to You. Watch over each one, and cover my children with Your protection and grace. Fill our home with Your peace and Your love, and help me to lead them gently toward You. Thank You that they are a gift from Your hand. In Jesus' name, amen.",
+  verses: [["As for me and my house, we will serve the LORD.", "Joshua 24:15"], ["Train up a child in the way he should go: and when he is old, he will not depart from it.", "Proverbs 22:6"], ["Lo, children are an heritage of the LORD.", "Psalm 127:3"]]
+}, {
+  id: "marriage",
+  label: "Marriage",
+  keywords: ["marriage", "husband", "wife", "spouse", "married"],
+  prayer: "Lord, thank You for my marriage. Knit our hearts together and help us love each other the way You love us — patient, kind, and faithful. Where we are weary or distant, draw us close again. Let our home honor You. In Jesus' name, amen.",
+  verses: [["Charity suffereth long, and is kind; charity envieth not; beareth all things, endureth all things.", "1 Corinthians 13:4,7"], ["Two are better than one; a threefold cord is not quickly broken.", "Ecclesiastes 4:9,12"], ["What therefore God hath joined together, let not man put asunder.", "Matthew 19:6"]]
+}, {
+  id: "patience",
+  label: "Patience",
+  keywords: ["patience", "patient", "wait", "waiting", "delay", "slow", "timing", "how long"],
+  prayer: "Father, waiting is hard, and I need Your patience. Help me to trust Your timing even when I don't understand it. Teach me to wait on You with a quiet, hopeful heart, knowing You are never late. Strengthen me while I wait. In Jesus' name, amen.",
+  verses: [["Wait on the LORD: be of good courage, and he shall strengthen thine heart.", "Psalm 27:14"], ["But let patience have her perfect work, that ye may be perfect and entire, wanting nothing.", "James 1:4"], ["To every thing there is a season, and a time to every purpose under the heaven.", "Ecclesiastes 3:1"]]
+}, {
+  id: "gratitude",
+  label: "Gratitude",
+  keywords: ["gratitude", "grateful", "thankful", "thanks", "thanksgiving", "blessed", "blessing"],
+  prayer: "Lord, thank You. Thank You for Your goodness, Your mercy, and every gift I so easily overlook. Give me a grateful heart that sees Your hand in the small things and praises You in all things. I bless Your holy name today. In Jesus' name, amen.",
+  verses: [["O give thanks unto the LORD; for he is good: for his mercy endureth for ever.", "Psalm 107:1"], ["In every thing give thanks: for this is the will of God in Christ Jesus concerning you.", "1 Thessalonians 5:18"], ["Bless the LORD, O my soul, and forget not all his benefits.", "Psalm 103:2"]]
+}, {
+  id: "faith",
+  label: "Faith",
+  keywords: ["faith", "doubt", "doubting", "unbelief", "hard to believe", "far from god", "backslid", "distant from god"],
+  prayer: "Father, strengthen my faith. When doubt whispers, help me to fix my eyes on You and remember all You have done. I believe; help my unbelief. Increase my trust in Your faithfulness and Your Word. In Jesus' name, amen.",
+  verses: [["Lord, I believe; help thou mine unbelief.", "Mark 9:24"], ["Now faith is the substance of things hoped for, the evidence of things not seen.", "Hebrews 11:1"], ["Being confident of this very thing, that he which hath begun a good work in you will perform it.", "Philippians 1:6"]]
+}, {
+  id: "general",
+  label: "This moment",
+  prayer: "Father, You know exactly what I am carrying, even when I can't find the words. I bring my whole heart to You now and ask for Your presence, Your peace, and Your help. Meet me right where I am, and remind me that I am held by You. In Jesus' name, amen.",
+  verses: [["Cast thy burden upon the LORD, and he shall sustain thee.", "Psalm 55:22"], ["Come unto me, all ye that labour and are heavy laden, and I will give you rest.", "Matthew 11:28"], ["The LORD is my shepherd; I shall not want.", "Psalm 23:1"]]
+}];
+function matchTheme(text) {
+  const t = (text || "").toLowerCase();
+  let best = null,
+    bestScore = 0;
+  for (const th of PRAYER_THEMES) {
+    if (!th.keywords) continue;
+    let sc = 0;
+    for (const k of th.keywords) {
+      if (t.includes(k)) sc++;
+    }
+    if (sc > bestScore) {
+      bestScore = sc;
+      best = th;
+    }
+  }
+  return best || PRAYER_THEMES.find(x => x.id === "general");
+}
+function PrayerHelp({
+  onSave
+}) {
+  const [need, setNeed] = useState("");
+  const [result, setResult] = useState(null);
+  const [saved, setSaved] = useState(false);
+  const show = (theme, needText) => {
+    setResult({
+      theme,
+      need: needText || ""
+    });
+    setSaved(false);
+  };
+  const submit = () => {
+    if (!need.trim()) return;
+    show(matchTheme(need), need.trim());
+  };
+  const chips = [["Peace", "peace"], ["Joy", "joy"], ["Worry", "worry"], ["Fear", "fear"], ["Strength", "strength"], ["Guidance", "guidance"], ["Grief", "grief"], ["Gratitude", "gratitude"]];
+  const pickChip = (label, id) => {
+    setNeed(label);
+    show(PRAYER_THEMES.find(x => x.id === id), label);
+  };
+  const doSave = () => {
+    if (!result) return;
+    onSave(result.theme, result.need);
+    setSaved(true);
+  };
+  return React.createElement(Section, {
+    title: "Need prayer today?"
+  }, React.createElement("p", {
+    className: "pray-intro"
+  }, "Tell me what's on your heart — worry, joy, peace, a decision you're facing — and I'll bring you a prayer and scriptures of encouragement."), React.createElement("div", {
+    className: "add-row"
+  }, React.createElement("input", {
+    value: need,
+    placeholder: "What do you need prayer for?",
+    onChange: e => setNeed(e.target.value),
+    onKeyDown: e => e.key === "Enter" && submit()
+  }), React.createElement("button", {
+    className: "pill",
+    onClick: submit,
+    title: "Pray with me"
+  }, React.createElement(Icon, {
+    name: "hands",
+    size: 16
+  }))), React.createElement("div", {
+    className: "pray-chips"
+  }, chips.map(([label, id]) => React.createElement("button", {
+    key: id,
+    className: "pray-chip",
+    onClick: () => pickChip(label, id)
+  }, label))), result && React.createElement("div", {
+    className: "pray-result"
+  }, result.need && React.createElement("p", {
+    className: "pray-echo"
+  }, "For what you shared: ", React.createElement("em", null, "\"", result.need, "\"")), React.createElement("h4", {
+    className: "pray-h"
+  }, "A prayer for ", result.theme.label.toLowerCase()), React.createElement("p", {
+    className: "pray-text"
+  }, result.theme.prayer), React.createElement("div", {
+    className: "pray-verses"
+  }, result.theme.verses.map((v, i) => React.createElement("div", {
+    key: i,
+    className: "pray-verse"
+  }, React.createElement("p", null, "\"", v[0], "\""), React.createElement("span", null, v[1])))), React.createElement("div", {
+    className: "pray-actions"
+  }, React.createElement("button", {
+    className: "primary",
+    onClick: doSave,
+    disabled: saved
+  }, saved ? React.createElement("span", null, React.createElement(Icon, {
+    name: "check",
+    size: 14
+  }), " Saved to journal") : "Save to journal"), React.createElement("button", {
+    className: "add-mini",
+    onClick: () => {
+      setResult(null);
+      setNeed("");
+      setSaved(false);
+    }
+  }, "New request"))));
+}
+function PrayerTimer({
+  log,
+  onLog
+}) {
+  const [running, setRunning] = useState(false);
+  const [elapsed, setElapsed] = useState(0);
+  const [manual, setManual] = useState(0);
+  const startRef = useRef(0);
+  useEffect(() => {
+    if (!running) return;
+    const id = setInterval(() => setElapsed(Math.floor((Date.now() - startRef.current) / 1000)), 1000);
+    return () => clearInterval(id);
+  }, [running]);
+  const toggle = () => {
+    if (running) {
+      const secs = Math.floor((Date.now() - startRef.current) / 1000);
+      if (secs > 0) onLog(secs);
+      setRunning(false);
+      setElapsed(0);
+    } else {
+      startRef.current = Date.now();
+      setElapsed(0);
+      setRunning(true);
+    }
+  };
+  const addManual = () => {
+    const mins = Number(manual) || 0;
+    if (mins > 0) {
+      onLog(Math.round(mins * 60));
+      setManual(0);
+    }
+  };
+  const tk = todayKey();
+  const today = log.filter(e => e.date === tk).reduce((a, e) => a + (e.seconds || 0), 0);
+  const week7 = last7Keys();
+  const weekSet = new Set(week7);
+  const week = log.filter(e => weekSet.has(e.date)).reduce((a, e) => a + (e.seconds || 0), 0);
+  const total = log.reduce((a, e) => a + (e.seconds || 0), 0);
+  const byDay = week7.map(k => ({
+    k,
+    sec: log.filter(e => e.date === k).reduce((a, e) => a + (e.seconds || 0), 0)
+  }));
+  const maxSec = Math.max(1, ...byDay.map(d => d.sec));
+  const wd = k => new Date(+k.slice(0, 4), +k.slice(5, 7) - 1, +k.slice(8, 10)).toLocaleDateString("en-US", {
+    weekday: "narrow"
+  });
+  return React.createElement(Section, {
+    title: "Time in prayer"
+  }, React.createElement("div", {
+    className: "timer-wrap"
+  }, React.createElement("div", {
+    className: "timer-face"
+  }, React.createElement("div", {
+    className: "timer-clock" + (running ? " live" : "")
+  }, mmss(running ? elapsed : 0)), React.createElement("div", {
+    className: "timer-sub"
+  }, running ? "praying…" : "ready when you are")), React.createElement("button", {
+    className: "timer-btn" + (running ? " stop" : ""),
+    onClick: toggle
+  }, running ? React.createElement("span", null, React.createElement(Icon, {
+    name: "check",
+    size: 16
+  }), " Stop & save") : "Start praying")), React.createElement("div", {
+    className: "timer-manual"
+  }, React.createElement("span", {
+    className: "muted"
+  }, "Or log a past prayer time:"), React.createElement("div", {
+    className: "tm-row"
+  }, React.createElement(NumberField, {
+    value: manual,
+    onChange: setManual
+  }), React.createElement("span", {
+    className: "muted"
+  }, "min"), React.createElement("button", {
+    className: "add-mini",
+    onClick: addManual
+  }, React.createElement(Icon, {
+    name: "plus",
+    size: 14
+  }), " Add"))), React.createElement("div", {
+    className: "timer-stats"
+  }, React.createElement("div", null, React.createElement("strong", null, fmtDur(today)), React.createElement("span", null, "today")), React.createElement("div", null, React.createElement("strong", null, fmtDur(week)), React.createElement("span", null, "this week")), React.createElement("div", null, React.createElement("strong", null, fmtDur(total)), React.createElement("span", null, "all time"))), React.createElement("div", {
+    className: "pmin-week"
+  }, byDay.map(d => React.createElement("div", {
+    className: "pmin-col",
+    key: d.k
+  }, React.createElement("div", {
+    className: "pmin-track"
+  }, React.createElement("div", {
+    className: "pmin-bar",
+    style: {
+      height: d.sec / maxSec * 100 + "%"
+    }
+  })), React.createElement("span", {
+    className: d.k === tk ? "pmin-today" : ""
+  }, wd(d.k))))));
+}
 function Faith({
   state,
   update
@@ -1558,6 +1916,24 @@ function Faith({
       devoDays: dd
     });
   };
+  const savePrayer = (theme, need) => {
+    const body = (need ? "My need: " + need + "\n\n" : "") + theme.prayer + "\n\n" + theme.verses.map(v => '"' + v[0] + '" — ' + v[1]).join("\n");
+    setFaith({
+      devotionals: [{
+        id: uid(),
+        date: todayKey(),
+        reference: "Prayer for " + theme.label,
+        reflection: body
+      }, ...f.devotionals]
+    });
+  };
+  const logPrayerTime = seconds => setFaith({
+    prayerLog: [{
+      id: uid(),
+      date: todayKey(),
+      seconds
+    }, ...(f.prayerLog || [])]
+  });
   const answered = f.prayers.filter(p => p.answered).length;
   const pct = f.reading.total > 0 ? Math.min(100, Math.round(f.reading.completed / f.reading.total * 100)) : 0;
   return React.createElement("div", {
@@ -1569,7 +1945,12 @@ function Faith({
     size: 18
   }), React.createElement("div", null, React.createElement("h2", null, "Walk with God"), React.createElement("p", {
     className: "muted"
-  }, "Your quiet place to read, reflect, and pray."))), React.createElement(DevotionalJourney, {
+  }, "Your quiet place to read, reflect, and pray."))), React.createElement(PrayerHelp, {
+    onSave: savePrayer
+  }), React.createElement(PrayerTimer, {
+    log: f.prayerLog || [],
+    onLog: logPrayerTime
+  }), React.createElement(DevotionalJourney, {
     faith: f,
     toggleToday: toggleToday
   }), React.createElement(Section, {
