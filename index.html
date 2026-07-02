@@ -244,6 +244,8 @@ textarea,.plain-input,input,select{font-family:inherit;color:var(--ink);}
 .verse-body{margin:10px 0 0;font-size:15px;line-height:1.55;font-style:italic;font-family:'Fraunces',serif;color:var(--ink);}
 .two-col{display:flex;gap:8px;}
 .two-col .plain-input{flex:1;}
+.sermon-search{display:flex;align-items:center;gap:8px;margin-bottom:12px;}
+.sermon-search input{flex:1;padding:9px 12px;border:1px solid var(--line);border-radius:11px;font-family:inherit;font-size:14px;background:#fff;color:var(--ink);}
 .sermon-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;}
 .sermon-list li{background:var(--paper);border:1px solid var(--line);border-radius:13px;padding:12px;}
 .sermon-head{display:flex;align-items:center;gap:10px;}
@@ -2190,6 +2192,7 @@ function Sermons({
     scripture: "",
     notes: ""
   });
+  const [query, setQuery] = useState("");
   const set = (k, val) => setForm(p => ({
     ...p,
     [k]: val
@@ -2213,6 +2216,8 @@ function Sermons({
   const del = id => setStudy({
     sermons: sermons.filter(s => s.id !== id)
   });
+  const q = query.trim().toLowerCase();
+  const filtered = q ? sermons.filter(s => [s.title, s.speaker, s.scripture, s.notes].some(f => (f || "").toLowerCase().includes(q))) : sermons;
   return React.createElement(Section, {
     title: "Sermon & study notes"
   }, React.createElement("div", {
@@ -2245,9 +2250,21 @@ function Sermons({
   }, React.createElement(Icon, {
     name: "plus",
     size: 15
-  }), " Save note")), React.createElement("ul", {
+  }), " Save note")), sermons.length > 1 && React.createElement("div", {
+    className: "sermon-search"
+  }, React.createElement("input", {
+    value: query,
+    placeholder: "Search notes — title, speaker, scripture, text…",
+    onChange: e => setQuery(e.target.value)
+  }), query && React.createElement("button", {
+    className: "ghost-x",
+    onClick: () => setQuery("")
+  }, React.createElement(Icon, {
+    name: "x",
+    size: 15
+  }))), React.createElement("ul", {
     className: "sermon-list"
-  }, sermons.map(s => React.createElement("li", {
+  }, filtered.map(s => React.createElement("li", {
     key: s.id
   }, React.createElement("div", {
     className: "sermon-head"
@@ -2255,10 +2272,7 @@ function Sermons({
     className: "sermon-title"
   }, s.title || "Note"), React.createElement("span", {
     className: "muted"
-  }, new Date(s.date).toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric"
-  })), React.createElement("button", {
+  }, fmtShort(s.date)), React.createElement("button", {
     className: "ghost-x",
     onClick: () => del(s.id)
   }, React.createElement(Icon, {
@@ -2270,7 +2284,9 @@ function Sermons({
     className: "sermon-notes"
   }, s.notes))), sermons.length === 0 && React.createElement("p", {
     className: "empty"
-  }, "Capture Sunday's message or your study notes here — title, speaker, scripture, and what stood out.")));
+  }, "Capture Sunday's message or your study notes here — title, speaker, scripture, and what stood out."), sermons.length > 0 && filtered.length === 0 && React.createElement("p", {
+    className: "empty"
+  }, "No notes match \"", query, "\".")));
 }
 function StudyView({
   state,
