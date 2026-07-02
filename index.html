@@ -444,7 +444,7 @@ function fmtShort(dstr) {
     day: "numeric"
   });
 }
-const MINOR_WORDS = new Set(["a", "an", "and", "the", "but", "or", "nor", "for", "on", "in", "at", "to", "from", "by", "of", "with", "as", "per", "via", "vs", "&"]);
+const MINOR_WORDS = new Set(["a", "an", "the", "and", "but", "or", "nor", "for", "yet", "so", "as", "at", "by", "in", "of", "off", "on", "per", "to", "up", "via"]);
 function titleCase(str) {
   if (str == null) return str;
   const words = String(str).split(" ");
@@ -1107,7 +1107,7 @@ function Today({
   }) : React.createElement("button", {
     className: "name-btn",
     onClick: startEdit,
-    title: "Tap to change your name"
+    title: titleCase("Tap to change your name")
   }, displayName), "."), React.createElement("p", {
     className: "muted"
   }, dateStr))), React.createElement("div", {
@@ -1748,7 +1748,7 @@ function PrayerHelp({
   }), React.createElement("button", {
     className: "pill",
     onClick: submit,
-    title: "Pray with me"
+    title: titleCase("Pray with me")
   }, React.createElement(Icon, {
     name: "hands",
     size: 16
