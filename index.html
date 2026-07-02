@@ -444,6 +444,18 @@ function fmtShort(dstr) {
     day: "numeric"
   });
 }
+const MINOR_WORDS = new Set(["a", "an", "and", "the", "but", "or", "nor", "for", "on", "in", "at", "to", "from", "by", "of", "with", "as", "per", "via", "vs", "&"]);
+function titleCase(str) {
+  if (str == null) return str;
+  const words = String(str).split(" ");
+  return words.map((w, i) => {
+    if (!w) return w;
+    if (/[0-9$%·]/.test(w)) return w;
+    const lw = w.toLowerCase();
+    if (i !== 0 && i !== words.length - 1 && MINOR_WORDS.has(lw)) return lw;
+    return w.charAt(0).toUpperCase() + w.slice(1);
+  }).join(" ");
+}
 function deriveName(email) {
   if (!email || typeof email !== "string") return "friend";
   let n = email.split("@")[0].replace(/[._\-0-9]+/g, " ").trim().split(" ")[0] || "friend";
@@ -870,7 +882,7 @@ function Section({
     className: "block"
   }, React.createElement("div", {
     className: "block-head"
-  }, React.createElement("h3", null, title), action), children);
+  }, React.createElement("h3", null, titleCase(title)), action), children);
 }
 function NumberField({
   value,
@@ -1081,7 +1093,7 @@ function Today({
   }, React.createElement(Icon, {
     name: greetIcon,
     size: 22
-  })), React.createElement("div", null, React.createElement("h2", null, greet, ", ", editName ? React.createElement("input", {
+  })), React.createElement("div", null, React.createElement("h2", null, titleCase(greet), ", ", editName ? React.createElement("input", {
     className: "name-input",
     autoFocus: true,
     value: nameInput,
@@ -1752,7 +1764,7 @@ function PrayerHelp({
     className: "pray-echo"
   }, "For what you shared: ", React.createElement("em", null, "\"", result.need, "\"")), React.createElement("h4", {
     className: "pray-h"
-  }, "A prayer for ", result.theme.label.toLowerCase()), React.createElement("p", {
+  }, titleCase("A prayer for " + result.theme.label)), React.createElement("p", {
     className: "pray-text"
   }, result.theme.prayer), React.createElement("div", {
     className: "pray-verses"
@@ -1962,7 +1974,7 @@ function Faith({
   }, React.createElement(Icon, {
     name: "book",
     size: 18
-  }), React.createElement("div", null, React.createElement("h2", null, "Walk with God"), React.createElement("p", {
+  }), React.createElement("div", null, React.createElement("h2", null, titleCase("Walk with God")), React.createElement("p", {
     className: "muted"
   }, "Your quiet place to read, reflect, and pray."))), React.createElement(PrayerHelp, {
     onSave: savePrayer
@@ -2285,7 +2297,7 @@ function StudyView({
   }, React.createElement(Icon, {
     name: "book",
     size: 18
-  }), React.createElement("div", null, React.createElement("h2", null, "The Word"), React.createElement("p", {
+  }), React.createElement("div", null, React.createElement("h2", null, titleCase("The Word")), React.createElement("p", {
     className: "muted"
   }, "Read, memorize, and remember."))), React.createElement(BiblePlan, {
     bible: state.faith.bible,
@@ -2492,7 +2504,7 @@ function Balance({
   }, React.createElement(Icon, {
     name: "compass",
     size: 18
-  }), React.createElement("div", null, React.createElement("h2", null, "Life balance"), React.createElement("p", {
+  }), React.createElement("div", null, React.createElement("h2", null, titleCase("Life balance")), React.createElement("p", {
     className: "muted"
   }, "A weekly check-in across the areas that matter."))), React.createElement(Section, {
     title: "How is each area feeling this week?"
@@ -2800,7 +2812,7 @@ function Money({
   }, React.createElement(Icon, {
     name: "wallet",
     size: 18
-  }), React.createElement("div", null, React.createElement("h2", null, "Budget & finances"), React.createElement("p", {
+  }), React.createElement("div", null, React.createElement("h2", null, titleCase("Budget & finances")), React.createElement("p", {
     className: "muted"
   }, "A clear picture, updated whenever you like."))), React.createElement("div", {
     className: "money-summary"
