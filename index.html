@@ -340,6 +340,18 @@ textarea,.plain-input,input,select{font-family:inherit;color:var(--ink);}
 .pmin-col>span{font-size:10px;font-weight:800;color:var(--inkSoft);text-transform:uppercase;}
 .pmin-today{color:var(--gold)!important;}
 
+/* pay schedule settings */
+.pay-settings{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:13px 14px;margin-bottom:14px;display:flex;flex-direction:column;gap:12px;}
+.ps-row{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:13.5px;font-weight:700;color:var(--ink);}
+.ps-row>span:first-child{flex:1;}
+.ps-row select,.ps-input{padding:8px 10px;border:1px solid var(--line);border-radius:10px;font-family:inherit;font-size:13px;background:#fff;color:var(--ink);}
+.ps-input{width:130px;text-align:right;}
+.ps-toggle{padding:7px 16px;border:1px solid var(--line);background:#fff;border-radius:99px;font-family:inherit;font-weight:800;font-size:12.5px;color:var(--inkSoft);cursor:pointer;flex:none;}
+.ps-toggle.on{background:var(--sage);color:#fff;border-color:transparent;}
+.ps-sub{display:flex;flex-direction:column;gap:12px;border-left:2px solid var(--lilacWash);padding-left:12px;}
+.ps-pct{display:inline-flex;align-items:center;gap:6px;font-weight:800;flex:none;}
+.ps-pct input{width:54px;padding:8px;border:1px solid var(--line);border-radius:10px;font-family:inherit;font-size:14px;text-align:right;background:#fff;color:var(--ink);}
+
 .tabbar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:540px;
   background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border-top:1px solid var(--line);
   display:flex;padding:8px 8px calc(8px + env(safe-area-inset-bottom));}
@@ -686,6 +698,13 @@ function seed() {
       history: [],
       giving: [],
       paychecks: [],
+      payConfig: {
+        meSchedule: "semimonthly",
+        partnerOn: true,
+        partnerLabel: "Spouse",
+        partnerSchedule: "biweekly",
+        tithePct: 10
+      },
       categories: [{
         id: uid(),
         name: "Tithe & offering",
@@ -2631,6 +2650,30 @@ function Money({
       ...patch
     }
   }));
+  const cfg = {
+    meSchedule: "semimonthly",
+    partnerOn: true,
+    partnerLabel: "Spouse",
+    partnerSchedule: "biweekly",
+    tithePct: 10,
+    ...(m.payConfig || {})
+  };
+  const setCfg = patch => setMoney({
+    payConfig: {
+      ...cfg,
+      ...patch
+    }
+  });
+  const [showSettings, setShowSettings] = useState(false);
+  const SCHED = {
+    weekly: "weekly",
+    biweekly: "every 2 weeks",
+    semimonthly: "twice a month",
+    monthly: "monthly"
+  };
+  const tithePct = Number(cfg.tithePct) || 0;
+  const partnerName = cfg.partnerLabel || "Spouse";
+  const payHint = (cfg.partnerOn ? "You're paid " + (SCHED[cfg.meSchedule] || "regularly") + " · " + partnerName + " " + (SCHED[cfg.partnerSchedule] || "regularly") + "." : "You're paid " + (SCHED[cfg.meSchedule] || "regularly") + ".") + " Add each check as it comes in" + (tithePct > 0 ? ", and your " + tithePct + "% tithe is figured for you." : ".");
   const ym = todayKey().slice(0, 7);
   const monthName = new Date().toLocaleDateString("en-US", {
     month: "long"
@@ -2657,7 +2700,7 @@ function Money({
     setMoney({
       paychecks: [{
         id: uid(),
-        who: payWho,
+        who: cfg.partnerOn ? payWho : "me",
         amount: Number(payAmt) || 0,
         date: payDate
       }, ...paychecks]
@@ -2667,7 +2710,7 @@ function Money({
   const delPay = id => setMoney({
     paychecks: paychecks.filter(p => p.id !== id)
   });
-  const titheTarget = Math.round(income * 0.1);
+  const titheTarget = Math.round(income * tithePct / 100);
   const titheGiven = (m.giving || []).filter(g => g.type === "Tithe" && (g.date || "").slice(0, 7) === ym).reduce((a, g) => a + (Number(g.amount) || 0), 0);
   const titheLeft = Math.max(0, titheTarget - titheGiven);
   const recordTithe = () => {
@@ -2767,9 +2810,9 @@ function Money({
     className: "muted"
   }, "Income · ", monthName), React.createElement("strong", {
     className: "hero-num"
-  }, money(income))), (yourIncome > 0 || spouseIncome > 0) && React.createElement("span", {
+  }, money(income))), cfg.partnerOn && (yourIncome > 0 || spouseIncome > 0) && React.createElement("span", {
     className: "hero-split"
-  }, "You ", money(yourIncome), " · Hubby ", money(spouseIncome))), React.createElement("div", {
+  }, "You ", money(yourIncome), " · ", partnerName, " ", money(spouseIncome))), React.createElement("div", {
     className: "sum-grid"
   }, React.createElement("div", null, React.createElement("span", {
     className: "muted"
@@ -2779,17 +2822,81 @@ function Money({
     className: "muted"
   }, "Left"), React.createElement("strong", null, money(left))), React.createElement("div", null, React.createElement("span", {
     className: "muted"
-  }, "Tithe 10%"), React.createElement("strong", null, money(titheTarget))))), React.createElement(Section, {
-    title: "Paychecks"
-  }, React.createElement("div", {
+  }, "Tithe ", tithePct, "%"), React.createElement("strong", null, money(titheTarget))))), React.createElement(Section, {
+    title: "Paychecks",
+    action: React.createElement("button", {
+      className: "add-mini",
+      onClick: () => setShowSettings(!showSettings)
+    }, showSettings ? "Done" : "Set up")
+  }, showSettings && React.createElement("div", {
+    className: "pay-settings"
+  }, React.createElement("label", {
+    className: "ps-row"
+  }, React.createElement("span", null, "Your pay schedule"), React.createElement("select", {
+    value: cfg.meSchedule,
+    onChange: e => setCfg({
+      meSchedule: e.target.value
+    })
+  }, React.createElement("option", {
+    value: "weekly"
+  }, "Weekly"), React.createElement("option", {
+    value: "biweekly"
+  }, "Every 2 weeks"), React.createElement("option", {
+    value: "semimonthly"
+  }, "Twice a month"), React.createElement("option", {
+    value: "monthly"
+  }, "Monthly"))), React.createElement("label", {
+    className: "ps-row"
+  }, React.createElement("span", null, "Track a second income"), React.createElement("button", {
+    className: "ps-toggle" + (cfg.partnerOn ? " on" : ""),
+    onClick: () => setCfg({
+      partnerOn: !cfg.partnerOn
+    })
+  }, cfg.partnerOn ? "On" : "Off")), cfg.partnerOn && React.createElement("div", {
+    className: "ps-sub"
+  }, React.createElement("label", {
+    className: "ps-row"
+  }, React.createElement("span", null, "What to call them"), React.createElement("input", {
+    className: "ps-input",
+    value: cfg.partnerLabel,
+    onChange: e => setCfg({
+      partnerLabel: e.target.value
+    }),
+    placeholder: "Spouse"
+  })), React.createElement("label", {
+    className: "ps-row"
+  }, React.createElement("span", null, "Their pay schedule"), React.createElement("select", {
+    value: cfg.partnerSchedule,
+    onChange: e => setCfg({
+      partnerSchedule: e.target.value
+    })
+  }, React.createElement("option", {
+    value: "weekly"
+  }, "Weekly"), React.createElement("option", {
+    value: "biweekly"
+  }, "Every 2 weeks"), React.createElement("option", {
+    value: "semimonthly"
+  }, "Twice a month"), React.createElement("option", {
+    value: "monthly"
+  }, "Monthly")))), React.createElement("label", {
+    className: "ps-row"
+  }, React.createElement("span", null, "Tithe percentage"), React.createElement("span", {
+    className: "ps-pct"
+  }, React.createElement("input", {
+    type: "number",
+    value: cfg.tithePct,
+    onChange: e => setCfg({
+      tithePct: Math.max(0, Number(e.target.value) || 0)
+    })
+  }), " %"))), React.createElement("div", {
     className: "who-toggle"
   }, React.createElement("button", {
     className: payWho === "me" ? "on" : "",
     onClick: () => setPayWho("me")
-  }, "You"), React.createElement("button", {
+  }, "You"), cfg.partnerOn && React.createElement("button", {
     className: payWho === "spouse" ? "on" : "",
     onClick: () => setPayWho("spouse")
-  }, "Husband")), React.createElement("div", {
+  }, partnerName)), React.createElement("div", {
     className: "pay-add"
   }, React.createElement(NumberField, {
     prefix: "$",
@@ -2808,7 +2915,7 @@ function Money({
     size: 15
   }))), React.createElement("p", {
     className: "pay-hint"
-  }, "You're paid the 1st & 15th · your husband every 2 weeks. Add each check as it comes in, and your 10% tithe is figured for you."), React.createElement("div", {
+  }, payHint), React.createElement("div", {
     className: "tithe-card"
   }, React.createElement("div", {
     className: "tithe-row"
@@ -2830,11 +2937,11 @@ function Money({
     key: p.id
   }, React.createElement("span", {
     className: "pay-who"
-  }, p.who === "spouse" ? "Husband" : "You"), React.createElement("span", {
+  }, p.who === "spouse" ? partnerName : "You"), React.createElement("span", {
     className: "pay-amt"
   }, money(p.amount)), React.createElement("span", {
     className: "pay-tithe"
-  }, "tithe ", money(Math.round((Number(p.amount) || 0) * 0.1))), React.createElement("span", {
+  }, "tithe ", money(Math.round((Number(p.amount) || 0) * tithePct / 100))), React.createElement("span", {
     className: "muted pay-date"
   }, fmtShort(p.date)), React.createElement("button", {
     className: "ghost-x",
