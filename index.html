@@ -59,8 +59,8 @@ h1,h2,h3{font-family:'Playfair Display',Georgia,serif;font-weight:600;letter-spa
 .banner h2{font-size:19px;}
 .banner .muted{color:rgba(255,255,255,.85);}
 .banner svg{flex:none;}
-.faith-banner{background:linear-gradient(135deg,var(--lilac),#644736);}
-.balance-banner{background:linear-gradient(135deg,#B59F8C,var(--lilac));}
+.faith-banner{background:linear-gradient(135deg,var(--lilac),var(--ink));}
+.balance-banner{background:linear-gradient(135deg,var(--sage),var(--ink));}
 .money-banner{background:linear-gradient(135deg,var(--gold),var(--lilac));}
 
 .focus-list,.habit-today,.prayer-list,.dev-list,.cat-list,.row-list,.goal-list,.habit-week{
@@ -151,7 +151,7 @@ textarea,.plain-input,input,select{font-family:inherit;color:var(--ink);}
 .sum-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;text-align:center;}
 .sum-grid>div{display:flex;flex-direction:column;gap:3px;}
 .sum-grid strong{font-family:'Fraunces',serif;font-size:18px;}
-.sum-grid .pos strong{color:#7A6147;}
+.sum-grid .pos strong{color:var(--sage);}
 .sum-grid .neg strong{color:var(--rose);}
 
 .numfield{display:inline-flex;align-items:center;gap:2px;background:#fff;border:1px solid var(--line);
@@ -186,7 +186,7 @@ textarea,.plain-input,input,select{font-family:inherit;color:var(--ink);}
 .journey-btn.on{background:var(--lilac);color:#fff;border-color:transparent;}
 .journey-btn .check.small{width:20px;height:20px;border-radius:6px;border:1.6px solid var(--lilac);background:#fff;display:grid;place-items:center;color:#fff;flex:none;}
 .journey-btn.on .check.small{background:#fff;border-color:#fff;color:var(--lilac);}
-.journey-done{display:flex;align-items:center;gap:9px;background:#efe6d6;color:#6a4f38;font-weight:800;font-size:14px;padding:11px 14px;border-radius:13px;width:100%;}
+.journey-done{display:flex;align-items:center;gap:9px;background:var(--lilacWash);color:var(--ink);font-weight:800;font-size:14px;padding:11px 14px;border-radius:13px;width:100%;}
 .streak-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;}
 .stat{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:12px 6px;text-align:center;display:flex;flex-direction:column;gap:3px;}
 .stat-num{font-family:'Fraunces',serif;font-size:23px;font-weight:600;color:var(--lilac);display:inline-flex;align-items:center;justify-content:center;gap:3px;}
@@ -213,7 +213,7 @@ textarea,.plain-input,input,select{font-family:inherit;color:var(--ink);}
 .bible-day{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);}
 .bible-passage{font-family:'Fraunces',serif;font-size:18px;color:var(--ink);line-height:1.3;}
 .bible-current .primary{align-self:flex-start;margin-top:2px;}
-.bible-finished{display:inline-flex;align-items:center;gap:8px;background:#efe6d6;color:#6a4f38;font-weight:800;font-size:14px;padding:12px 14px;border-radius:13px;}
+.bible-finished{display:inline-flex;align-items:center;gap:8px;background:var(--lilacWash);color:var(--ink);font-weight:800;font-size:14px;padding:12px 14px;border-radius:13px;}
 .bible-all{margin-top:12px;}
 .bible-all summary{cursor:pointer;font-weight:800;font-size:13px;color:var(--lilac);padding:6px 0;list-style-position:inside;}
 .bible-list{list-style:none;margin:8px 0 0;padding:0;max-height:300px;overflow-y:auto;display:flex;flex-direction:column;gap:6px;}
@@ -229,18 +229,18 @@ textarea,.plain-input,input,select{font-family:inherit;color:var(--ink);}
 .hist-ym{font-weight:800;font-size:13px;flex:none;min-width:78px;}
 .hist-cell{font-size:13px;font-weight:700;display:flex;flex-direction:column;}
 .hist-cell i{font-style:normal;font-size:10px;font-weight:700;}
-.hist-cell .pos{color:#5f8a55;}
+.hist-cell .pos{color:var(--sage);}
 .hist-cell .neg{color:var(--rose);}
 
 /* study tab */
-.study-banner{background:linear-gradient(135deg,#B5946A,#6e4f34);}
+.study-banner{background:linear-gradient(135deg,var(--gold),var(--ink));}
 .verse-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px;}
 .verse-list li{background:var(--paper);border:1px solid var(--line);border-radius:13px;padding:11px;}
 .verse-top{display:flex;align-items:center;gap:9px;}
 .verse-ref{flex:1;font-weight:800;color:var(--lilac);font-size:14px;}
 .verse-list li.memorized .verse-ref{color:var(--sage);}
 .reveal-btn{background:var(--lilacWash);border:none;color:var(--ink);font-family:inherit;font-weight:700;font-size:12px;padding:5px 11px;border-radius:9px;cursor:pointer;flex:none;}
-.reveal-btn:hover{background:#e6d9c2;}
+.reveal-btn:hover{background:var(--lilacSoft);}
 .verse-body{margin:10px 0 0;font-size:15px;line-height:1.55;font-style:italic;font-family:'Fraunces',serif;color:var(--ink);}
 .two-col{display:flex;gap:8px;}
 .two-col .plain-input{flex:1;}
@@ -260,7 +260,7 @@ textarea,.plain-input,input,select{font-family:inherit;color:var(--ink);}
 .giving-total{display:flex;align-items:center;justify-content:space-between;margin:12px 0 8px;}
 .giving-total strong{font-family:'Fraunces',serif;font-size:23px;color:var(--lilac);}
 .giving-chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:6px;}
-.giving-chips .chip{background:var(--lilacWash);color:#6a4f38;font-weight:800;font-size:12px;padding:5px 11px;border-radius:99px;}
+.giving-chips .chip{background:var(--lilacWash);color:var(--ink);font-weight:800;font-size:12px;padding:5px 11px;border-radius:99px;}
 .giving-list{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-direction:column;gap:7px;}
 .giving-list li{display:flex;align-items:center;gap:10px;background:var(--paper);border:1px solid var(--line);border-radius:11px;padding:9px 11px;}
 .giv-type{font-weight:800;font-size:13px;width:74px;flex:none;}
@@ -305,8 +305,8 @@ textarea,.plain-input,input,select{font-family:inherit;color:var(--ink);}
 /* prayer & encouragement */
 .pray-intro{font-size:13px;color:var(--inkSoft);line-height:1.55;margin:0 0 12px;}
 .pray-chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px;}
-.pray-chip{background:var(--lilacWash);border:none;color:#6a4f38;font-family:inherit;font-weight:800;font-size:12.5px;padding:7px 13px;border-radius:99px;cursor:pointer;}
-.pray-chip:hover{background:#e6d9c2;}
+.pray-chip{background:var(--lilacWash);border:none;color:var(--ink);font-family:inherit;font-weight:800;font-size:12.5px;padding:7px 13px;border-radius:99px;cursor:pointer;}
+.pray-chip:hover{background:var(--lilacSoft);}
 .pray-result{margin-top:16px;background:linear-gradient(150deg,var(--card),var(--lilacWash));border:1px solid var(--line);border-radius:16px;padding:16px;}
 .pray-echo{font-size:13px;color:var(--inkSoft);margin:0 0 10px;}
 .pray-echo em{color:var(--ink);font-style:italic;}
@@ -325,7 +325,7 @@ textarea,.plain-input,input,select{font-family:inherit;color:var(--ink);}
 .timer-clock.live{color:var(--lilac);}
 .timer-sub{font-size:12px;color:var(--inkSoft);font-weight:800;margin-top:7px;letter-spacing:.02em;}
 .timer-btn{background:var(--lilac);color:#fff;border:none;font-family:inherit;font-weight:800;font-size:15px;padding:13px 30px;border-radius:14px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;box-shadow:0 8px 20px -10px var(--lilac);}
-.timer-btn.stop{background:#9c5f43;box-shadow:none;}
+.timer-btn.stop{background:var(--rose);box-shadow:none;}
 .timer-btn span{display:inline-flex;align-items:center;gap:7px;}
 .timer-manual{margin-top:16px;padding-top:14px;border-top:1px solid var(--line);}
 .timer-manual>.muted{font-size:12.5px;font-weight:800;}
@@ -353,6 +353,72 @@ textarea,.plain-input,input,select{font-family:inherit;color:var(--ink);}
 .ps-sub{display:flex;flex-direction:column;gap:12px;border-left:2px solid var(--lilacWash);padding-left:12px;}
 .ps-pct{display:inline-flex;align-items:center;gap:6px;font-weight:800;flex:none;}
 .ps-pct input{width:54px;padding:8px;border:1px solid var(--line);border-radius:10px;font-family:inherit;font-size:14px;text-align:right;background:#fff;color:var(--ink);}
+
+/* theme picker */
+.head-actions{display:flex;align-items:center;gap:8px;}
+.icon-btn{background:none;border:1px solid var(--line);color:var(--inkSoft);width:38px;height:36px;border-radius:11px;display:grid;place-items:center;cursor:pointer;}
+.icon-btn:hover{background:var(--lilacWash);color:var(--ink);}
+.theme-overlay{position:fixed;inset:0;background:rgba(20,15,12,.42);backdrop-filter:blur(2px);display:flex;align-items:flex-end;justify-content:center;z-index:60;}
+.theme-sheet{background:var(--card);width:100%;max-width:540px;border-radius:22px 22px 0 0;padding:20px 18px calc(22px + env(safe-area-inset-bottom));max-height:82vh;overflow-y:auto;box-shadow:0 -10px 40px -20px rgba(0,0,0,.4);}
+.theme-sheet-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:2px;}
+.theme-sheet-head h3{font-size:19px;}
+.theme-grid{display:flex;flex-direction:column;gap:10px;margin-top:16px;}
+.theme-opt{display:flex;align-items:center;gap:13px;padding:11px 13px;border:1.5px solid var(--line);border-radius:14px;background:var(--paper);cursor:pointer;font-family:inherit;text-align:left;width:100%;}
+.theme-opt.active{border-color:var(--lilac);box-shadow:0 0 0 1px var(--lilac);}
+.theme-swatches{display:flex;border-radius:8px;overflow:hidden;flex:none;border:1px solid rgba(0,0,0,.06);}
+.theme-swatches i{width:22px;height:36px;display:block;}
+.theme-name{font-weight:800;font-size:14.5px;color:var(--ink);flex:1;}
+.theme-check{color:var(--lilac);display:inline-flex;flex:none;}
+
+/* 30 days of being held */
+.held-card{display:flex;flex-direction:column;gap:8px;background:linear-gradient(150deg,var(--card),var(--lilacWash));border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:0 8px 24px -20px rgba(0,0,0,.4);cursor:pointer;text-align:left;font-family:inherit;width:100%;}
+.held-badge{align-self:flex-start;background:var(--lilac);color:#fff;font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:4px 9px;border-radius:99px;}
+.held-card-title{font-family:'Playfair Display',serif;font-weight:600;font-size:20px;color:var(--ink);margin-top:2px;}
+.held-card-sub{font-size:13px;color:var(--inkSoft);line-height:1.5;}
+.held-card .progress,.held-progress .progress{display:block;height:9px;background:var(--lilacWash);border-radius:99px;overflow:hidden;margin-top:4px;}
+.held-bar{display:block;height:100%;border-radius:99px;background:var(--lilac);transition:width .3s;}
+.held-card-foot{display:flex;align-items:center;justify-content:space-between;margin-top:2px;}
+.held-open{font-weight:800;font-size:13px;color:var(--lilac);}
+.held-overlay{position:fixed;inset:0;background:var(--paper);z-index:70;display:flex;justify-content:center;}
+.held-reader{width:100%;max-width:540px;display:flex;flex-direction:column;height:100%;background:var(--paper);}
+.held-top{display:flex;align-items:center;gap:12px;padding:14px 16px 8px;}
+.held-progress{flex:1;display:flex;align-items:center;gap:10px;}
+.held-progress .progress{flex:1;margin-top:0;}
+.held-count{font-weight:800;font-size:12px;color:var(--inkSoft);flex:none;}
+.held-strip{display:flex;gap:6px;overflow-x:auto;padding:4px 16px 12px;border-bottom:1px solid var(--line);}
+.held-pill{flex:none;width:32px;height:32px;border-radius:9px;border:1.4px solid var(--line);background:var(--card);color:var(--inkSoft);font-family:inherit;font-weight:800;font-size:12.5px;cursor:pointer;}
+.held-pill.done{background:var(--lilacWash);color:var(--ink);border-color:transparent;}
+.held-pill.cur{border-color:var(--lilac);color:var(--lilac);box-shadow:0 0 0 1px var(--lilac);}
+.held-scroll{flex:1;overflow-y:auto;padding:18px 18px calc(28px + env(safe-area-inset-bottom));}
+.held-weeklabel{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);margin:0 0 4px;}
+.held-daytitle{font-size:23px;margin:0 0 12px;}
+.held-intro{font-size:14px;line-height:1.6;color:var(--inkSoft);font-style:italic;margin:0 0 14px;}
+.held-verse{background:linear-gradient(150deg,var(--card),var(--lilacWash));border:1px solid var(--line);border-radius:16px;padding:16px;text-align:center;margin-bottom:14px;}
+.held-verse p{font-family:'Playfair Display',serif;font-size:16px;line-height:1.5;font-style:italic;margin:0 0 8px;color:var(--ink);}
+.held-verse span{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);font-weight:800;}
+.held-practice{display:flex;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:16px;}
+.hp-emoji{font-size:22px;flex:none;line-height:1.2;}
+.held-practice strong{display:block;font-size:14.5px;color:var(--ink);margin-bottom:4px;font-weight:800;}
+.held-practice p{margin:0;font-size:13.5px;line-height:1.55;color:var(--inkSoft);}
+.held-write{display:flex;flex-direction:column;gap:14px;}
+.held-prompt{display:flex;flex-direction:column;gap:6px;}
+.held-prompt label{font-size:14px;font-weight:700;color:var(--ink);line-height:1.4;}
+.held-prompt textarea{border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-family:inherit;font-size:14px;resize:vertical;background:var(--card);color:var(--ink);}
+.held-feelings{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:13px;display:flex;flex-direction:column;gap:9px;}
+.hf-title{font-weight:800;font-size:13px;color:var(--ink);}
+.hf-row{display:flex;align-items:center;gap:10px;}
+.hf-row label{width:52px;flex:none;font-size:12.5px;font-weight:800;color:var(--inkSoft);}
+.hf-row input{flex:1;border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-family:inherit;font-size:14px;background:var(--paper);color:var(--ink);}
+.held-done{margin-top:16px;width:100%;background:var(--lilac);color:#fff;border:none;font-family:inherit;font-weight:800;font-size:15px;padding:13px;border-radius:14px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:7px;}
+.held-done.is-done{background:var(--lilacWash);color:var(--ink);}
+.held-done span{display:inline-flex;align-items:center;gap:7px;}
+.held-weekcomplete{margin-top:22px;padding-top:18px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:14px;}
+.held-weekcomplete h3{font-size:17px;}
+.held-closing{margin-top:22px;padding-top:18px;border-top:1px solid var(--line);}
+.held-closing h3{font-size:18px;margin-bottom:12px;}
+.held-nav{display:flex;justify-content:space-between;gap:10px;margin-top:24px;}
+.held-nav button{flex:1;padding:12px;border:1px solid var(--line);background:var(--card);border-radius:12px;font-family:inherit;font-weight:800;font-size:13.5px;color:var(--ink);cursor:pointer;}
+.held-nav button:disabled{opacity:.4;cursor:default;}
 
 .tabbar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:540px;
   background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border-top:1px solid var(--line);
@@ -415,28 +481,186 @@ const {
 } = React;
 const SUPABASE_URL = "https://zgkpprzfspzvneslrxlt.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_uk5Cyy0k3_YlNriHYhTEZA_lDDHvX5j";
-const COLORS = {
-  paper: "#EDE6DA",
-  ink: "#4C3729",
-  inkSoft: "#8A7561",
-  lilac: "#9E7655",
-  lilacSoft: "#D8C3A3",
-  lilacWash: "#E8DCC6",
-  gold: "#C7A37E",
-  goldSoft: "#E3CBA6",
-  rose: "#A85D3E",
-  sage: "#7C6A4D",
-  line: "#E0D5C4"
+const THEMES = {
+  linen: {
+    name: "Linen & Coffee",
+    paper: "#EDE6DA",
+    card: "#FBF8F1",
+    ink: "#4C3729",
+    inkSoft: "#8A7561",
+    accent: "#9E7655",
+    accentSoft: "#D8C3A3",
+    accentWash: "#E8DCC6",
+    second: "#C7A37E",
+    secondSoft: "#E3CBA6",
+    neg: "#A85D3E",
+    pos: "#7C6A4D",
+    line: "#E0D5C4",
+    ramp: ["#9E7655", "#C7A37E", "#B59F8C", "#644736", "#C9B79E", "#8A6A4E", "#7C6A4D"],
+    heat: ["#E8DCC6", "#D8C3A3", "#C7A37E", "#9E7655"]
+  },
+  rosewood: {
+    name: "Rosewood",
+    paper: "#F3E9E4",
+    card: "#FBF4F0",
+    ink: "#5E2733",
+    inkSoft: "#9A6E74",
+    accent: "#B07680",
+    accentSoft: "#D8A2AA",
+    accentWash: "#EFE0E1",
+    second: "#E7BFC4",
+    secondSoft: "#F3DDDF",
+    neg: "#8E3A48",
+    pos: "#9A8478",
+    line: "#E7D6D3",
+    ramp: ["#B07680", "#D8A2AA", "#E7BFC4", "#5E2733", "#9A8478", "#C98C94", "#7E4652"],
+    heat: ["#EFE0E1", "#E7BFC4", "#D8A2AA", "#B07680"]
+  },
+  sagerose: {
+    name: "Sage & Rose",
+    paper: "#EFEAE1",
+    card: "#FAF6EF",
+    ink: "#4A4034",
+    inkSoft: "#8A8172",
+    accent: "#7A816C",
+    accentSoft: "#B3B7A3",
+    accentWash: "#E4E4D9",
+    second: "#D1A9A5",
+    secondSoft: "#EAD4D1",
+    neg: "#AE6965",
+    pos: "#6E7860",
+    line: "#E1DBCF",
+    ramp: ["#7A816C", "#D1A9A5", "#AE6965", "#A58B71", "#B3B7A3", "#C99A94", "#8A8172"],
+    heat: ["#E4E4D9", "#B3B7A3", "#98A088", "#7A816C"]
+  },
+  eucalyptus: {
+    name: "Eucalyptus",
+    paper: "#EEEFE6",
+    card: "#F7F5EC",
+    ink: "#2D3536",
+    inkSoft: "#6E7A72",
+    accent: "#697C70",
+    accentSoft: "#A9B7AC",
+    accentWash: "#E1E7DE",
+    second: "#98AA9D",
+    secondSoft: "#C9D3CC",
+    neg: "#A9736B",
+    pos: "#6E8A7C",
+    line: "#DDE1D6",
+    ramp: ["#697C70", "#98AA9D", "#B3C9D6", "#2D3536", "#A9B7AC", "#7E9187", "#8AA0AC"],
+    heat: ["#E1E7DE", "#A9B7AC", "#98AA9D", "#697C70"]
+  },
+  forest: {
+    name: "Deep Forest",
+    paper: "#E7EFE9",
+    card: "#F2F7F3",
+    ink: "#0C2A22",
+    inkSoft: "#5A7A6E",
+    accent: "#2F6B54",
+    accentSoft: "#9FC3B2",
+    accentWash: "#DCEAE3",
+    second: "#4F8F75",
+    secondSoft: "#B9D6C9",
+    neg: "#9C6B5E",
+    pos: "#4F8F75",
+    line: "#D2E0D8",
+    ramp: ["#1F4D3A", "#4F8F75", "#9FC3B2", "#022E24", "#7BA891", "#356B55", "#5A7A6E"],
+    heat: ["#DCEAE3", "#9FC3B2", "#4F8F75", "#1F4D3A"]
+  },
+  dustyblue: {
+    name: "Dusty Blue",
+    paper: "#EAF0F4",
+    card: "#F5F8FA",
+    ink: "#1C2B48",
+    inkSoft: "#5E7086",
+    accent: "#5E82AC",
+    accentSoft: "#A7C7E7",
+    accentWash: "#DEEAF2",
+    second: "#8EB1D1",
+    secondSoft: "#C4D8E5",
+    neg: "#9C6B78",
+    pos: "#5E8A82",
+    line: "#D6E1EA",
+    ramp: ["#5E82AC", "#8EB1D1", "#A7C7E7", "#1C2B48", "#C4D8E5", "#3F5F86", "#5E7086"],
+    heat: ["#DEEAF2", "#A7C7E7", "#8EB1D1", "#5E82AC"]
+  },
+  oxford: {
+    name: "Oxford Navy",
+    paper: "#EBEFF3",
+    card: "#F6F9FB",
+    ink: "#0E2233",
+    inkSoft: "#54687C",
+    accent: "#334B60",
+    accentSoft: "#91A1B2",
+    accentWash: "#DCE4EC",
+    second: "#6C7F91",
+    secondSoft: "#B7C7D6",
+    neg: "#8A6070",
+    pos: "#5E7D6E",
+    line: "#D5DEE6",
+    ramp: ["#193347", "#334B60", "#4F6478", "#6C7F91", "#91A1B2", "#B7C7D6", "#0E2233"],
+    heat: ["#DCE4EC", "#B7C7D6", "#6C7F91", "#334B60"]
+  },
+  slate: {
+    name: "Slate",
+    paper: "#EBEEF0",
+    card: "#F6F8F9",
+    ink: "#1C2B3C",
+    inkSoft: "#676A70",
+    accent: "#4B5C6C",
+    accentSoft: "#B9C1D0",
+    accentWash: "#DFE4E9",
+    second: "#7A859D",
+    secondSoft: "#C6C7BD",
+    neg: "#8A6B72",
+    pos: "#6E8078",
+    line: "#D7DCE1",
+    ramp: ["#4B5C6C", "#7A859D", "#B9C1D0", "#1C2B3C", "#C6C7BD", "#404F68", "#676A70"],
+    heat: ["#DFE4E9", "#B9C1D0", "#7A859D", "#4B5C6C"]
+  }
 };
-const AREA_COLORS = {
-  Faith: "#9E7655",
-  Family: "#B59F8C",
-  Marriage: "#A9694A",
-  Health: "#C7A37E",
-  Work: "#644736",
-  Rest: "#C9B79E",
-  Friends: "#8A6A4E"
-};
+const THEME_ORDER = ["linen", "rosewood", "sagerose", "eucalyptus", "forest", "dustyblue", "oxford", "slate"];
+const AREA_NAMES = ["Faith", "Family", "Marriage", "Health", "Work", "Rest", "Friends"];
+function themeColors(id) {
+  const t = THEMES[id] || THEMES.linen;
+  return {
+    paper: t.paper,
+    card: t.card,
+    ink: t.ink,
+    inkSoft: t.inkSoft,
+    lilac: t.accent,
+    lilacSoft: t.accentSoft,
+    lilacWash: t.accentWash,
+    gold: t.second,
+    goldSoft: t.secondSoft,
+    rose: t.neg,
+    sage: t.pos,
+    line: t.line
+  };
+}
+function themeAreas(id) {
+  const r = (THEMES[id] || THEMES.linen).ramp;
+  const o = {};
+  AREA_NAMES.forEach((n, i) => {
+    o[n] = r[i % r.length];
+  });
+  return o;
+}
+let COLORS = themeColors("linen");
+let AREA_COLORS = themeAreas("linen");
+let pieColors = THEMES.linen.ramp;
+let HEAT = THEMES.linen.heat;
+function applyTheme(id) {
+  COLORS = themeColors(id);
+  AREA_COLORS = themeAreas(id);
+  const t = THEMES[id] || THEMES.linen;
+  pieColors = t.ramp;
+  HEAT = t.heat;
+}
+function themeCss(id) {
+  const t = THEMES[id] || THEMES.linen;
+  return ":root{--paper:" + t.paper + ";--card:" + t.card + ";--ink:" + t.ink + ";--inkSoft:" + t.inkSoft + ";--lilac:" + t.accent + ";--lilacSoft:" + t.accentSoft + ";--lilacWash:" + t.accentWash + ";--gold:" + t.second + ";--goldSoft:" + t.secondSoft + ";--rose:" + t.neg + ";--sage:" + t.pos + ";--line:" + t.line + ";}";
+}
 function fmtShort(dstr) {
   if (!dstr) return "";
   const p = String(dstr).split("-");
@@ -586,6 +810,28 @@ function Icon({
       return React.createElement("svg", s, React.createElement("path", {
         d: "M6 18a4 4 0 0 1 0-8 5 5 0 0 1 9.6-1.3A3.5 3.5 0 0 1 18 18z"
       }));
+    case "palette":
+      return React.createElement("svg", s, React.createElement("path", {
+        d: "M12 3a9 9 0 1 0 0 18c1 0 1.6-.8 1.6-1.6 0-.4-.2-.7-.4-1-.2-.3-.4-.6-.4-1 0-.8.7-1.4 1.5-1.4H16a5 5 0 0 0 5-5c0-4.5-4-8-9-8z"
+      }), React.createElement("circle", {
+        cx: "7.5",
+        cy: "10.5",
+        r: "1",
+        fill: "currentColor",
+        stroke: "none"
+      }), React.createElement("circle", {
+        cx: "12",
+        cy: "7.5",
+        r: "1",
+        fill: "currentColor",
+        stroke: "none"
+      }), React.createElement("circle", {
+        cx: "16.5",
+        cy: "10.5",
+        r: "1",
+        fill: "currentColor",
+        stroke: "none"
+      }));
     default:
       return null;
   }
@@ -624,6 +870,7 @@ function seed() {
     profile: {
       name: ""
     },
+    theme: "linen",
     days: {},
     gratitudes: [],
     habits: [{
@@ -683,6 +930,11 @@ function seed() {
     }],
     balanceNote: "",
     moments: [],
+    held: {
+      days: {},
+      weeks: {},
+      letter: ""
+    },
     study: {
       memoryVerses: [],
       sermons: []
@@ -818,7 +1070,17 @@ function hydrate(loaded) {
     },
     days: loaded.days || {},
     gratitudes,
+    theme: typeof loaded.theme === "string" && THEMES[loaded.theme] ? loaded.theme : "linen",
     moments: Array.isArray(loaded.moments) ? loaded.moments : [],
+    held: loaded.held && typeof loaded.held === "object" ? {
+      days: loaded.held.days || {},
+      weeks: loaded.held.weeks || {},
+      letter: loaded.held.letter || ""
+    } : {
+      days: {},
+      weeks: {},
+      letter: ""
+    },
     study: {
       memoryVerses: (loaded.study || {}).memoryVerses || [],
       sermons: (loaded.study || {}).sermons || []
@@ -1233,7 +1495,6 @@ function Today({
 }
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const MONTH_LETTERS = ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"];
-const HEAT = ["#E8DCC6", "#D8C3A3", "#C7A37E", "#9E7655"];
 function dayInfo(faith) {
   const entries = {};
   (faith.devotionals || []).forEach(d => {
@@ -1379,7 +1640,7 @@ function MonthlyCompare({
     const cx = left + m * groupW + groupW / 2;
     return React.createElement("g", {
       key: m
-    }, bar(py[m], cx - barW - 1, "#D8C3A3"), bar(cy[m], cx + 1, "#9E7655"), React.createElement("text", {
+    }, bar(py[m], cx - barW - 1, COLORS.lilacSoft), bar(cy[m], cx + 1, COLORS.lilac), React.createElement("text", {
       x: cx,
       y: H - 6,
       fontSize: "9",
@@ -1476,11 +1737,11 @@ function DevotionalJourney({
     className: "compare-legend"
   }, React.createElement("span", null, React.createElement("i", {
     style: {
-      background: "#9E7655"
+      background: COLORS.lilac
     }
   }), year), React.createElement("span", null, React.createElement("i", {
     style: {
-      background: "#D8C3A3"
+      background: COLORS.lilacSoft
     }
   }), year - 1)));
 }
@@ -2088,6 +2349,626 @@ function Faith({
     size: 13
   })))))));
 }
+const HELD_WEEKS = [{
+  n: 1,
+  title: "You Are Not Alone",
+  intro: "This week we begin where most of us are afraid to begin: with the honest admission that we have been carrying too much, alone, for too long. God's first answer to that is not a command. It is a presence."
+}, {
+  n: 2,
+  title: "You Are Held",
+  intro: "This week we move from awareness to trust. Being held is different from being helped. Help solves a problem. Being held means you are safe even before the problem is solved. That is what God offers you."
+}, {
+  n: 3,
+  title: "Gratitude as Practice",
+  intro: "Gratitude is not a feeling that comes when life is easy. It is a discipline that rewires how you see when life is hard. This week we practice looking — slowly, honestly — at the gifts that are already here."
+}, {
+  n: 4,
+  title: "Your Feelings Are Not Too Much",
+  intro: "You said your feelings feel like too much. This week is a direct answer to that fear. Scripture does not tell you to feel less. It tells you to bring more — all of it — to the One who can hold it."
+}, {
+  n: 5,
+  title: "Learning to Receive",
+  intro: "You are good at giving. This week is about the harder practice: receiving. Receiving rest, receiving help, receiving grace. God's economy runs on gift. Your job is to open your hands."
+}, {
+  n: 6,
+  title: "A New Rhythm",
+  intro: "These final days are about anchoring what you have learned into the ongoing rhythm of your life. Not a program you completed — a way of living you are growing into. Slowly, with grace, one day at a time."
+}];
+const HELD_DAYS = [{
+  n: 1,
+  w: 1,
+  title: "God Sees the Weight",
+  ref: "Genesis 16:13",
+  verse: "She gave this name to the LORD who spoke to her: 'You are the God who sees me.'",
+  pi: "✋",
+  pt: "Hands-Open Prayer",
+  px: "Sit with your hands open on your lap, palms up. Say out loud: 'God, You see what I am carrying today.' Stay there for 2 minutes. You don't need more words.",
+  q: ["What am I carrying today that I haven't fully named before God?", "Where have I felt most unseen this week?", "What would it feel like to be truly seen — and not judged?"]
+}, {
+  n: 2,
+  w: 1,
+  title: "It's Okay to Say It's Too Much",
+  ref: "Psalm 6:6",
+  verse: "I am worn out from my groaning. All night long I flood my bed with weeping and drench my couch with tears.",
+  pi: "📝",
+  pt: "Lament Letter",
+  px: "Write one sentence that starts with: 'God, I am tired of...' Don't filter it. Then write one sentence: 'But I trust that You...' Both sentences belong together.",
+  q: ["What emotion am I most afraid to bring to God?", "What would I say if I knew He would not be disappointed in me?", "Is there something I have been 'holding together' that actually needs to be set down?"]
+}, {
+  n: 3,
+  w: 1,
+  title: "You Were Not Designed to Do This Alone",
+  ref: "Genesis 2:18",
+  verse: "The LORD God said, 'It is not good for man to be alone.'",
+  pi: "📱",
+  pt: "Reach Out",
+  px: "Text or call one safe person today — not to talk about a problem, just to connect. A simple 'thinking of you' counts. Let yourself receive a response.",
+  q: ["Who are the 1-2 people in my life that feel truly safe?", "Where have I been pulling away from connection because I feel like 'too much'?", "What would I need to believe to ask for help more easily?"]
+}, {
+  n: 4,
+  w: 1,
+  title: "Cast It — The Active Release",
+  ref: "1 Peter 5:7",
+  verse: "Cast all your anxiety on him because he cares for you.",
+  pi: "🌬",
+  pt: "Breath Prayer",
+  px: "Inhale slowly: 'I give this to You.' Exhale fully: 'You carry it now.' Repeat 6 times. Each exhale is a cast. This is prayer and nervous system regulation at the same time.",
+  q: ["What specific worry have I been holding today?", "What does it feel like in my body when I imagine releasing it?", "What do I need to believe about God's care to actually let go?"]
+}, {
+  n: 5,
+  w: 1,
+  title: "Sabbath Is Not Optional",
+  ref: "Genesis 2:2",
+  verse: "By the seventh day God had finished the work he had been doing; so on the seventh day he rested.",
+  pi: "☀️",
+  pt: "10-Minute Sabbath",
+  px: "Set a timer for 10 minutes today. Do nothing productive. Sit in sunlight if you can, listen to worship music, or simply be still. This is not wasted time. This is obedience.",
+  q: ["When did I last truly rest without guilt?", "What belief keeps me from stopping?", "What would change if I trusted that God covers what I cannot finish?"]
+}, {
+  n: 6,
+  w: 2,
+  title: "The Shepherd Carries the Lamb",
+  ref: "Isaiah 40:11",
+  verse: "He tends his flock like a shepherd: He gathers the lambs in his arms and carries them close to his heart.",
+  pi: "🤲",
+  pt: "Body Posture Prayer",
+  px: "Lie down or sit fully back in a chair. Let yourself feel supported by the surface beneath you. Say: 'You are holding me right now.' Stay here for 3 minutes. This is not laziness. This is receiving.",
+  q: ["When do I feel most like a lamb — small and unable to keep up?", "What does it feel like to imagine being carried rather than carrying?", "What part of me resists being the one who is held?"]
+}, {
+  n: 7,
+  w: 2,
+  title: "Nothing Can Separate You",
+  ref: "Romans 8:38-39",
+  verse: "Neither death nor life, neither angels nor demons... nor anything else in all creation, will be able to separate us from the love of God.",
+  pi: "✍️",
+  pt: "Nothing List",
+  px: "Write the word NOTHING at the top of a page. Below it, list the things you fear might separate you from God's love. Then read Romans 8:38-39 over each one. They are already covered.",
+  q: ["What do I secretly fear disqualifies me from God's love?", "How does exhaustion affect my sense of closeness to God?", "What would change today if I truly believed nothing could separate me from Him?"]
+}, {
+  n: 8,
+  w: 2,
+  title: "Be Still and Know",
+  ref: "Psalm 46:10",
+  verse: "Be still, and know that I am God.",
+  pi: "⏱️",
+  pt: "Raphah Practice",
+  px: "Set a timer for 5 minutes. Sit with your feet flat on the floor. With each exhale, consciously release tension in your shoulders, jaw, and hands. Repeat quietly: 'You are God. I am not.' This is not emptying your mind. It is filling it with one true thing.",
+  q: ["Where in my body do I carry the most tension?", "What am I bracing against right now?", "What would it mean to truly let God be God in my situation today?"]
+}, {
+  n: 9,
+  w: 2,
+  title: "His Yoke Is Easy",
+  ref: "Matthew 11:28",
+  verse: "Come to me, all you who are weary and burdened, and I will give you rest.",
+  pi: "🚶",
+  pt: "Walking Prayer",
+  px: "Take a 5-10 minute walk — even around your block. With every step, say inwardly: 'I come to You.' You do not need to arrive anywhere. The walking toward Him is the practice.",
+  q: ["What burden feels heaviest to me today?", "What does 'rest' actually look like for me right now — not ideally, but realistically?", "Is there a burden I am carrying that was never mine to carry?"]
+}, {
+  n: 10,
+  w: 2,
+  title: "You Are Engraved on His Hands",
+  ref: "Isaiah 49:16",
+  verse: "See, I have engraved you on the palms of my hands; your walls are ever before me.",
+  pi: "🖊",
+  pt: "Name on Palm",
+  px: "Write your name on your palm. Leave it there through the morning. Every time you see it, say: 'He has engraved me. I am not forgotten.' Let it be a physical reminder of a spiritual truth.",
+  q: ["When do I feel most forgotten or invisible?", "What would it feel like to be permanently remembered by God?", "What are the 'walls' — the hard things — that are ever before Him today?"]
+}, {
+  n: 11,
+  w: 3,
+  title: "The Discipline of Noticing",
+  ref: "1 Thessalonians 5:18",
+  verse: "Give thanks in all circumstances; for this is God's will for you in Christ Jesus.",
+  pi: "👁",
+  pt: "Three Small Things",
+  px: "Before you put your phone down tonight, name three specific small things you noticed today — not big blessings, small ones. The smell of something warm. A moment your child laughed. A text from a friend. Train your eyes to find grace at small scale.",
+  q: ["What small thing have I been walking past without noticing?", "What is something my body can do today that I take for granted?", "Where did I see God in something ordinary this week?"]
+}, {
+  n: 12,
+  w: 3,
+  title: "Your Family Is a Gift — Even on Hard Days",
+  ref: "Psalm 127:3",
+  verse: "Children are a heritage from the LORD, offspring a reward from him.",
+  pi: "📸",
+  pt: "Gratitude Photo",
+  px: "Take one photo today of something in your home or family that you love — even something tiny. Set it as your lock screen for the week. Let it interrupt the mental load with one moment of beauty you already have.",
+  q: ["What do I genuinely love about my child today — something specific?", "What is one thing my husband does that I have stopped noticing?", "When I am not overwhelmed, what do I feel about my family?"]
+}, {
+  n: 13,
+  w: 3,
+  title: "Counting What Is Already Here",
+  ref: "James 1:17",
+  verse: "Every good and perfect gift is from above, coming down from the Father of the heavenly lights.",
+  pi: "📋",
+  pt: "Inventory of Grace",
+  px: "Make a list of 10 things in your life right now that are genuinely good. They do not have to be big. They just have to be real. Keep this list somewhere visible for the rest of the week.",
+  q: ["What is something I have that I once prayed for — and forgot to stay grateful for?", "What does my ordinary Tuesday contain that someone, somewhere, would desperately want?", "How does comparison steal my gratitude?"]
+}, {
+  n: 14,
+  w: 3,
+  title: "Praise as Nervous System Medicine",
+  ref: "Psalm 150:4-5",
+  verse: "Praise him with tambourine and dancing... praise him with the clash of cymbals.",
+  pi: "🎵",
+  pt: "Worship Break",
+  px: "Put on one worship song — something that has moved you before. Sing it out loud. Even softly. Even in your car alone. The vibration in your chest and throat activates your vagus nerve. This is biology and worship happening at the same time.",
+  q: ["What song has met me in a hard moment before?", "When did I last truly worship — not perform, but release?", "What would I sing to God today if no one else could hear?"]
+}, {
+  n: 15,
+  w: 3,
+  title: "The Middle of the Story",
+  ref: "Romans 8:28",
+  verse: "And we know that in all things God works for the good of those who love him.",
+  pi: "📖",
+  pt: "Reframe Prayer",
+  px: "Write one hard thing you are in the middle of. Then write: 'God is working in this. I cannot see how yet. But this is not the end.' Read it back to yourself slowly. This is not pretending. This is faith.",
+  q: ["What story am I telling myself about my season right now?", "What would a different narrator — one who trusted God — say about this same season?", "Where have I seen God work good out of something hard before in my life?"]
+}, {
+  n: 16,
+  w: 4,
+  title: "Jesus Wept",
+  ref: "John 11:33, 38",
+  verse: "When Jesus therefore saw her weeping... he groaned in the spirit, and was troubled.",
+  pi: "💧",
+  pt: "Permission to Feel",
+  px: "Today, if emotion rises — let it. Don't talk yourself out of it, speed past it, or apologize for it. Even one minute of allowing what is real is more honest than an hour of managing it away.",
+  q: ["What emotion have I been pushing down most recently?", "What am I afraid would happen if I let myself fully feel it?", "What does Jesus weeping tell me about how God sees my tears?"]
+}, {
+  n: 17,
+  w: 4,
+  title: "The God Who Handles Anger",
+  ref: "Ephesians 4:26",
+  verse: "In your anger do not sin: Do not let the sun go down while you are still angry.",
+  pi: "✍️",
+  pt: "Anger Letter (Not to Send)",
+  px: "Write what you are actually angry about. Don't filter it. When you are done, pray: 'God, this is real. Help me understand what it is telling me. Help me not sin in it.' Then decide if any action is needed.",
+  q: ["What am I most angry or frustrated about right now?", "What need or value underneath the anger is not being met?", "What would healthy anger look like — not suppressed, not explosive?"]
+}, {
+  n: 18,
+  w: 4,
+  title: "When You Are Empty",
+  ref: "1 Kings 19:4",
+  verse: "Elijah... went a day's journey into the wilderness. He came to a broom bush, sat down under it and prayed that he might die.",
+  pi: "🍞",
+  pt: "Nourish First",
+  px: "Do one thing today that feeds your body first — a real meal, a nap, a glass of water, a walk outside. No spiritual productivity attached. Just: my body matters, and God cared for Elijah's body before He spoke to him.",
+  q: ["What does my body need most right now that I have been ignoring?", "When did I last do something that was genuinely restorative?", "What would I say to a friend who was as depleted as I am?"]
+}, {
+  n: 19,
+  w: 4,
+  title: "The Gift of Lament",
+  ref: "Lamentations 3:49-50",
+  verse: "My eyes will flow unceasingly, without relief, until the LORD looks down from heaven and sees.",
+  pi: "📝",
+  pt: "Honest Psalm",
+  px: "Write a 5-sentence psalm that begins with the hard thing and ends with even one thread of trust. It does not have to be resolved. It just has to be honest. Model it after Psalm 13: 'How long, O Lord... But I trust in your unfailing love.'",
+  q: ["What is my honest lament right now — the thing I cannot wrap up?", "What would I need to feel or experience to move from lament toward trust?", "What one thing about God do I still believe, even in the middle of the hard?"]
+}, {
+  n: 20,
+  w: 4,
+  title: "You Are Not Too Much",
+  ref: "Psalm 103:14",
+  verse: "For he knows how we are formed, he remembers that we are dust.",
+  pi: "🪞",
+  pt: "Mirror Affirmation",
+  px: "Look at yourself in the mirror and say out loud: 'I am not too much. I am known and loved.' Do it even if it feels strange. Say it until your face softens slightly. What your body hears repeatedly, it begins to believe.",
+  q: ["Where did I learn that my feelings were too much?", "What would it mean to be fully known by God and fully loved at the same time?", "What would I say to my own child if she came to me overwhelmed and afraid she was too much?"]
+}, {
+  n: 21,
+  w: 5,
+  title: "Mary Chose the Better Thing",
+  ref: "Luke 10:42",
+  verse: "Mary has chosen what is better, and it will not be taken away from her.",
+  pi: "☕",
+  pt: "Sit First",
+  px: "Before you do a single task tomorrow morning, spend 5 minutes just sitting with God. No requests, no list. Just: I am here. I want to be near You. Let that be enough.",
+  q: ["What does 'choosing the better thing' look like in my actual schedule?", "What do I fear will fall apart if I sit before I serve?", "When did I last feel truly present — to God, to my family, to myself?"]
+}, {
+  n: 22,
+  w: 5,
+  title: "Grace for Today",
+  ref: "Matthew 6:11",
+  verse: "Give us today our daily bread.",
+  pi: "📅",
+  pt: "One-Day Frame",
+  px: "Write at the top of today: 'I only need grace for today.' When a worry about the future surfaces, say: 'That is tomorrow. I have what I need for right now.' Repeat as needed.",
+  q: ["What future worry am I carrying into today that does not yet belong to me?", "What do I actually have today — provision, presence, grace — that I am not acknowledging?", "What would it feel like to ask God for daily bread and trust that it will come?"]
+}, {
+  n: 23,
+  w: 5,
+  title: "Let Others Carry You",
+  ref: "Exodus 17:12",
+  verse: "When Moses' hands grew tired... Aaron and Hur held his hands up — one on one side, one on the other.",
+  pi: "🗣",
+  pt: "Ask for One Thing",
+  px: "Ask one person for one specific thing today. Something small and real. A favor, a prayer, a meal, a call. Practice receiving without apologizing for the need.",
+  q: ["Who is an Aaron or Hur in my life right now?", "What makes it hard for me to let people hold me up?", "What specific thing could I ask for this week that I have been carrying alone?"]
+}, {
+  n: 24,
+  w: 5,
+  title: "His Mercies Are New",
+  ref: "Lamentations 3:22-23",
+  verse: "Because of the LORD's great love we are not consumed, for his compassions never fail. They are new every morning.",
+  pi: "🌅",
+  pt: "Morning Reset",
+  px: "When you wake tomorrow, before anything else, say: 'His mercies are new this morning. I receive them.' Inhale slowly. The day does not begin in debt. It begins in grace.",
+  q: ["What from yesterday am I still carrying into today?", "What would it feel like to actually set it down at the door of a new morning?", "Where do I most need new mercy right now?"]
+}, {
+  n: 25,
+  w: 5,
+  title: "You Are Allowed to Rest",
+  ref: "Isaiah 30:15",
+  verse: "In repentance and rest is your salvation, in quietness and trust is your strength.",
+  pi: "🛏",
+  pt: "Guilt-Free Rest",
+  px: "Schedule one block of rest this week — even 20 minutes — and protect it. When guilt tries to fill it with productivity, say: 'In quietness and trust is my strength. This is not laziness. This is obedience.'",
+  q: ["What belief drives me to keep going when my body says stop?", "What would have to be true about God for rest to feel safe?", "What does real rest look like for me — not perfect rest, but honest rest?"]
+}, {
+  n: 26,
+  w: 6,
+  title: "Small Faithfulness",
+  ref: "Matthew 25:21",
+  verse: "Well done, good and faithful servant! You have been faithful with a few things.",
+  pi: "✅",
+  pt: "One Thing Well",
+  px: "Choose one thing today and do it slowly and with full presence. Wash one dish slowly. Read one verse and sit with it. Hug your child and actually stay there for 10 seconds. Small faithfulness, done fully, is enough.",
+  q: ["What does 'faithfulness with a few things' look like in my actual life?", "Where have I been measuring myself against an impossible standard?", "What is one thing I do consistently that I have undervalued?"]
+}, {
+  n: 27,
+  w: 6,
+  title: "The Peace That Guards",
+  ref: "Philippians 4:7",
+  verse: "The peace of God, which transcends all understanding, will guard your hearts and your minds in Christ Jesus.",
+  pi: "🛡",
+  pt: "Peace Inventory",
+  px: "Write: 'What is true right now?' List 5 things that are stable — God's love, today's provision, one relationship, one small grace. This is what the guard of peace looks like: anchoring to what is true when what is uncertain is loud.",
+  q: ["What is the loudest 'uncertain' in my life right now?", "What is one stable truth I can anchor to today?", "What does peace feel like in my body when it is present?"]
+}, {
+  n: 28,
+  w: 6,
+  title: "Strength for the Weary",
+  ref: "Isaiah 40:29",
+  verse: "He gives strength to the weary and increases the power of the weak.",
+  pi: "💪",
+  pt: "Receive Strength",
+  px: "Say this prayer: 'God, I am weary. I cannot generate what I do not have. I receive the strength You give — for today, for this hour, for this moment.' Then take one step. You do not need all the strength at once.",
+  q: ["What would I do differently today if I truly believed God gives strength to the weary?", "Where have I been waiting to feel strong before I act, when God says He gives strength as I go?", "What does it feel like to ask for strength instead of trying to manufacture it?"]
+}, {
+  n: 29,
+  w: 6,
+  title: "Rooted and Established",
+  ref: "Ephesians 3:17-18",
+  verse: "I pray that you, being rooted and established in love, may have power... to grasp how wide and long and high and deep is the love of Christ.",
+  pi: "🌳",
+  pt: "Roots Meditation",
+  px: "Sit with your feet on the floor. Press them gently into the ground. Imagine roots going down from you into solid ground. Say: 'I am rooted in love. I am held. I will not be swept away.' Stay there for 3 minutes.",
+  q: ["What does it mean to be rooted in love rather than in performance?", "What storms have I survived that prove my roots are deeper than I think?", "What would it look like to live from my roots rather than from my striving?"]
+}, {
+  n: 30,
+  w: 6,
+  title: "You Have Come a Long Way",
+  ref: "Philippians 1:6",
+  verse: "Being confident of this, that he who began a good work in you will carry it on to completion.",
+  pi: "📖",
+  pt: "30-Day Letter",
+  px: "Write a short letter to yourself: What do I know now that I did not know 30 days ago? What has shifted, even slightly? What do I want to carry forward? Seal it and read it in 3 months.",
+  q: ["What has this month shown me about myself?", "What has it shown me about God?", "What one practice do I want to carry into the next season of my life?"]
+}];
+const WEEK_Q = ["What was the most meaningful day or moment from this week?", "What did I notice about myself or about God this week?", "What do I want to carry into next week?"];
+function heldEmpty() {
+  return {
+    days: {},
+    weeks: {},
+    letter: ""
+  };
+}
+function heldDoneCount(held) {
+  const d = held.days || {};
+  return Object.keys(d).filter(k => d[k] && d[k].done).length;
+}
+function HeldCard({
+  held,
+  onOpen
+}) {
+  const done = heldDoneCount(held);
+  const pct = Math.round(done / 30 * 100);
+  return React.createElement("button", {
+    className: "held-card",
+    onClick: onOpen
+  }, React.createElement("span", {
+    className: "held-badge"
+  }, "30-Day Devotional"), React.createElement("span", {
+    className: "held-card-title"
+  }, "30 Days of Being Held"), React.createElement("span", {
+    className: "held-card-sub"
+  }, "A devotional for the weary woman who wants to come home to herself."), React.createElement("span", {
+    className: "progress"
+  }, React.createElement("span", {
+    className: "held-bar",
+    style: {
+      width: pct + "%"
+    }
+  })), React.createElement("span", {
+    className: "held-card-foot"
+  }, React.createElement("span", {
+    className: "muted"
+  }, done, " of 30 days"), React.createElement("span", {
+    className: "held-open"
+  }, done > 0 ? "Continue" : "Begin", " →")));
+}
+function HeldReader({
+  held,
+  update,
+  onClose
+}) {
+  const days = held.days || {};
+  const first = (() => {
+    for (let i = 1; i <= 30; i++) {
+      if (!(days[i] && days[i].done)) return i;
+    }
+    return 30;
+  })();
+  const [n, setN] = useState(first);
+  const scrollRef = useRef(null);
+  useEffect(() => {
+    if (scrollRef.current) scrollRef.current.scrollTop = 0;
+  }, [n]);
+  const day = HELD_DAYS[n - 1];
+  const wk = HELD_WEEKS[day.w - 1];
+  const rec = days[n] || {
+    a: ["", "", ""],
+    body: "",
+    mind: "",
+    spirit: "",
+    done: false
+  };
+  const done = heldDoneCount(held);
+  const setAns = (i, val) => update(s => {
+    const h = s.held || heldEmpty();
+    const d = {
+      a: ["", "", ""],
+      body: "",
+      mind: "",
+      spirit: "",
+      done: false,
+      ...(h.days[n] || {})
+    };
+    const a = [...(d.a || ["", "", ""])];
+    a[i] = val;
+    return {
+      ...s,
+      held: {
+        ...h,
+        days: {
+          ...h.days,
+          [n]: {
+            ...d,
+            a
+          }
+        }
+      }
+    };
+  });
+  const setField = (k, val) => update(s => {
+    const h = s.held || heldEmpty();
+    const d = {
+      a: ["", "", ""],
+      body: "",
+      mind: "",
+      spirit: "",
+      done: false,
+      ...(h.days[n] || {})
+    };
+    return {
+      ...s,
+      held: {
+        ...h,
+        days: {
+          ...h.days,
+          [n]: {
+            ...d,
+            [k]: val
+          }
+        }
+      }
+    };
+  });
+  const toggleDone = () => update(s => {
+    const h = s.held || heldEmpty();
+    const d = {
+      a: ["", "", ""],
+      body: "",
+      mind: "",
+      spirit: "",
+      done: false,
+      ...(h.days[n] || {})
+    };
+    const nd = {
+      ...d,
+      done: !d.done
+    };
+    const devo = {
+      ...(s.faith && s.faith.devoDays || {})
+    };
+    if (nd.done) devo[todayKey()] = true;
+    return {
+      ...s,
+      held: {
+        ...h,
+        days: {
+          ...h.days,
+          [n]: nd
+        }
+      },
+      faith: {
+        ...s.faith,
+        devoDays: devo
+      }
+    };
+  });
+  const setWeek = (i, val) => update(s => {
+    const h = s.held || heldEmpty();
+    const wq = [...(h.weeks[day.w] && h.weeks[day.w].a || ["", "", ""])];
+    wq[i] = val;
+    return {
+      ...s,
+      held: {
+        ...h,
+        weeks: {
+          ...h.weeks,
+          [day.w]: {
+            a: wq
+          }
+        }
+      }
+    };
+  });
+  const setLetter = val => update(s => {
+    const h = s.held || heldEmpty();
+    return {
+      ...s,
+      held: {
+        ...h,
+        letter: val
+      }
+    };
+  });
+  const weekRec = held.weeks && held.weeks[day.w] || {
+    a: ["", "", ""]
+  };
+  const isWeekEnd = n % 5 === 0;
+  const pct = Math.round(done / 30 * 100);
+  return React.createElement("div", {
+    className: "held-overlay"
+  }, React.createElement("div", {
+    className: "held-reader"
+  }, React.createElement("div", {
+    className: "held-top"
+  }, React.createElement("button", {
+    className: "ghost-x",
+    onClick: onClose
+  }, React.createElement(Icon, {
+    name: "x",
+    size: 20
+  })), React.createElement("div", {
+    className: "held-progress"
+  }, React.createElement("span", {
+    className: "progress"
+  }, React.createElement("span", {
+    className: "held-bar",
+    style: {
+      width: pct + "%"
+    }
+  })), React.createElement("span", {
+    className: "held-count"
+  }, done, "/30"))), React.createElement("div", {
+    className: "held-strip"
+  }, HELD_DAYS.map(d => React.createElement("button", {
+    key: d.n,
+    className: "held-pill" + (d.n === n ? " cur" : "") + (days[d.n] && days[d.n].done ? " done" : ""),
+    onClick: () => setN(d.n)
+  }, d.n))), React.createElement("div", {
+    className: "held-scroll",
+    ref: scrollRef
+  }, React.createElement("p", {
+    className: "held-weeklabel"
+  }, "Week ", wk.n, " · ", wk.title), React.createElement("h2", {
+    className: "held-daytitle"
+  }, "Day ", n, " — ", day.title), n % 5 === 1 && React.createElement("p", {
+    className: "held-intro"
+  }, wk.intro), React.createElement("div", {
+    className: "held-verse"
+  }, React.createElement("p", null, "\"", day.verse, "\""), React.createElement("span", null, day.ref)), React.createElement("div", {
+    className: "held-practice"
+  }, React.createElement("span", {
+    className: "hp-emoji"
+  }, day.pi), React.createElement("div", null, React.createElement("strong", null, day.pt), React.createElement("p", null, day.px))), React.createElement("div", {
+    className: "held-write"
+  }, day.q.map((q, i) => React.createElement("div", {
+    className: "held-prompt",
+    key: i
+  }, React.createElement("label", null, q), React.createElement("textarea", {
+    rows: 2,
+    value: rec.a ? rec.a[i] || "" : "",
+    onChange: e => setAns(i, e.target.value),
+    placeholder: "Write honestly…"
+  }))), React.createElement("div", {
+    className: "held-feelings"
+  }, React.createElement("span", {
+    className: "hf-title"
+  }, "How do I feel right now?"), React.createElement("div", {
+    className: "hf-row"
+  }, React.createElement("label", null, "Body"), React.createElement("input", {
+    value: rec.body || "",
+    onChange: e => setField("body", e.target.value)
+  })), React.createElement("div", {
+    className: "hf-row"
+  }, React.createElement("label", null, "Mind"), React.createElement("input", {
+    value: rec.mind || "",
+    onChange: e => setField("mind", e.target.value)
+  })), React.createElement("div", {
+    className: "hf-row"
+  }, React.createElement("label", null, "Spirit"), React.createElement("input", {
+    value: rec.spirit || "",
+    onChange: e => setField("spirit", e.target.value)
+  })))), React.createElement("button", {
+    className: "held-done" + (rec.done ? " is-done" : ""),
+    onClick: toggleDone
+  }, rec.done ? React.createElement("span", null, React.createElement(Icon, {
+    name: "check",
+    size: 16
+  }), " Day complete") : "Mark day complete"), isWeekEnd && React.createElement("div", {
+    className: "held-weekcomplete"
+  }, React.createElement("h3", null, "Week ", day.w, " Complete"), WEEK_Q.map((q, i) => React.createElement("div", {
+    className: "held-prompt",
+    key: i
+  }, React.createElement("label", null, q), React.createElement("textarea", {
+    rows: 2,
+    value: weekRec.a ? weekRec.a[i] || "" : "",
+    onChange: e => setWeek(i, e.target.value),
+    placeholder: "Write honestly…"
+  })))), n === 30 && React.createElement("div", {
+    className: "held-closing"
+  }, React.createElement("h3", null, "You Made It — And You Are Still Being Made"), React.createElement("div", {
+    className: "held-verse"
+  }, React.createElement("p", null, "\"Being confident of this, that he who began a good work in you will carry it on to completion until the day of Christ Jesus.\""), React.createElement("span", null, "Philippians 1:6")), React.createElement("div", {
+    className: "held-prompt"
+  }, React.createElement("label", null, "A letter to myself, 30 days from now:"), React.createElement("textarea", {
+    rows: 5,
+    value: held.letter || "",
+    onChange: e => setLetter(e.target.value),
+    placeholder: "Write your letter…"
+  }))), React.createElement("div", {
+    className: "held-nav"
+  }, React.createElement("button", {
+    disabled: n <= 1,
+    onClick: () => setN(n - 1)
+  }, "‹ Previous"), React.createElement("button", {
+    disabled: n >= 30,
+    onClick: () => setN(n + 1)
+  }, "Next ›")))));
+}
 function MemoryVerses({
   study,
   setStudy
@@ -2306,6 +3187,8 @@ function StudyView({
       ...patch
     }
   }));
+  const [heldOpen, setHeldOpen] = useState(false);
+  const held = state.held || heldEmpty();
   return React.createElement("div", {
     className: "stack"
   }, React.createElement("div", {
@@ -2315,7 +3198,10 @@ function StudyView({
     size: 18
   }), React.createElement("div", null, React.createElement("h2", null, titleCase("The Word")), React.createElement("p", {
     className: "muted"
-  }, "Read, memorize, and remember."))), React.createElement(BiblePlan, {
+  }, "Read, memorize, and remember."))), React.createElement(HeldCard, {
+    held: held,
+    onOpen: () => setHeldOpen(true)
+  }), React.createElement(BiblePlan, {
     bible: state.faith.bible,
     setBible: setBible
   }), React.createElement(MemoryVerses, {
@@ -2324,6 +3210,10 @@ function StudyView({
   }), React.createElement(Sermons, {
     study: state.study,
     setStudy: setStudy
+  }), heldOpen && React.createElement(HeldReader, {
+    held: held,
+    update: update,
+    onClose: () => setHeldOpen(false)
   }));
 }
 const GIVING_TYPES = ["Tithe", "Offering", "Missions", "Other"];
@@ -2359,7 +3249,7 @@ function GivingChart({
       width: bw,
       height: h,
       rx: "2",
-      fill: "#9E7655"
+      fill: COLORS.lilac
     }), React.createElement("text", {
       x: x + bw / 2,
       y: H - 6,
@@ -2719,7 +3609,6 @@ function Money({
     name: c.name,
     value: Number(c.spent)
   }));
-  const pieColors = ["#9E7655", "#C7A37E", "#B59F8C", "#644736", "#C9B79E", "#8A6A4E", "#D8C3A3", "#7C6A4D"];
   const [payWho, setPayWho] = useState("me");
   const [payAmt, setPayAmt] = useState(0);
   const [payDate, setPayDate] = useState(todayKey());
@@ -3223,7 +4112,7 @@ function MoneyHistoryChart({
     className: "compare-legend"
   }, React.createElement("span", null, React.createElement("i", {
     style: {
-      background: "#9E7655"
+      background: COLORS.lilac
     }
   }), "Spent each month")));
 }
@@ -3348,6 +4237,7 @@ function Dashboard({
   const [state, setState] = useState(null);
   const [status, setStatus] = useState("loading");
   const [tab, setTab] = useState("today");
+  const [showThemes, setShowThemes] = useState(false);
   const saveTimer = useRef(null);
   const userId = session.user.id;
   useEffect(() => {
@@ -3405,9 +4295,14 @@ function Dashboard({
       className: "muted"
     }, "Opening your space…"));
   }
+  applyTheme(state.theme);
+  const setTheme = id => update(s => ({
+    ...s,
+    theme: id
+  }));
   return React.createElement("div", {
     className: "lh-root"
-  }, React.createElement("header", {
+  }, React.createElement("style", null, themeCss(state.theme)), React.createElement("header", {
     className: "app-head"
   }, React.createElement("div", {
     className: "brand"
@@ -3418,10 +4313,19 @@ function Dashboard({
     size: 16
   })), React.createElement("div", null, React.createElement("h1", null, "My Life Hub"), React.createElement(SyncBadge, {
     status: status
-  }))), React.createElement("button", {
+  }))), React.createElement("div", {
+    className: "head-actions"
+  }, React.createElement("button", {
+    className: "icon-btn",
+    onClick: () => setShowThemes(true),
+    title: "Change theme"
+  }, React.createElement(Icon, {
+    name: "palette",
+    size: 18
+  })), React.createElement("button", {
     className: "signout",
     onClick: () => sb.auth.signOut()
-  }, "Sign out")), React.createElement("main", {
+  }, "Sign out"))), React.createElement("main", {
     className: "app-body"
   }, tab === "today" && React.createElement(Today, {
     state: state,
@@ -3439,7 +4343,64 @@ function Dashboard({
   }), tab === "money" && React.createElement(Money, {
     state: state,
     update: update
-  })), React.createElement("nav", {
+  })), showThemes && React.createElement("div", {
+    className: "theme-overlay",
+    onClick: () => setShowThemes(false)
+  }, React.createElement("div", {
+    className: "theme-sheet",
+    onClick: e => e.stopPropagation()
+  }, React.createElement("div", {
+    className: "theme-sheet-head"
+  }, React.createElement("h3", null, "Choose your palette"), React.createElement("button", {
+    className: "ghost-x",
+    onClick: () => setShowThemes(false)
+  }, React.createElement(Icon, {
+    name: "x",
+    size: 18
+  }))), React.createElement("p", {
+    className: "muted"
+  }, "Pick the colors that feel like home. You can change this anytime."), React.createElement("div", {
+    className: "theme-grid"
+  }, THEME_ORDER.map(id => {
+    const t = THEMES[id];
+    return React.createElement("button", {
+      key: id,
+      className: "theme-opt" + (state.theme === id ? " active" : ""),
+      onClick: () => {
+        setTheme(id);
+        setShowThemes(false);
+      }
+    }, React.createElement("span", {
+      className: "theme-swatches"
+    }, React.createElement("i", {
+      style: {
+        background: t.paper
+      }
+    }), React.createElement("i", {
+      style: {
+        background: t.accentSoft
+      }
+    }), React.createElement("i", {
+      style: {
+        background: t.accent
+      }
+    }), React.createElement("i", {
+      style: {
+        background: t.second
+      }
+    }), React.createElement("i", {
+      style: {
+        background: t.ink
+      }
+    })), React.createElement("span", {
+      className: "theme-name"
+    }, t.name), state.theme === id && React.createElement("span", {
+      className: "theme-check"
+    }, React.createElement(Icon, {
+      name: "check",
+      size: 17
+    })));
+  })))), React.createElement("nav", {
     className: "tabbar"
   }, TABS.map(t => React.createElement("button", {
     key: t.id,
