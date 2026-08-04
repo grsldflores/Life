@@ -420,6 +420,12 @@ textarea,.plain-input,input,select{font-family:inherit;color:var(--ink);}
 .held-nav button{flex:1;padding:12px;border:1px solid var(--line);background:var(--card);border-radius:12px;font-family:inherit;font-weight:800;font-size:13.5px;color:var(--ink);cursor:pointer;}
 .held-nav button:disabled{opacity:.4;cursor:default;}
 
+.habit-setup{display:flex;flex-direction:column;gap:12px;}
+.hs-list{display:flex;flex-direction:column;gap:9px;}
+.hs-row{display:flex;align-items:center;gap:10px;}
+.hs-cat{display:flex;align-items:center;gap:7px;font-weight:800;font-size:13px;width:96px;flex:none;color:var(--ink);}
+.hs-row input{flex:1;padding:9px 11px;border:1px solid var(--line);border-radius:10px;font-family:inherit;font-size:14px;background:var(--card);color:var(--ink);}
+.hs-actions{display:flex;gap:10px;align-items:center;justify-content:flex-end;margin-top:2px;}
 .tabbar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:540px;
   background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border-top:1px solid var(--line);
   display:flex;padding:8px 8px calc(8px + env(safe-area-inset-bottom));}
@@ -873,32 +879,7 @@ function seed() {
     theme: "linen",
     days: {},
     gratitudes: [],
-    habits: [{
-      id: uid(),
-      name: "Morning prayer",
-      area: "Faith",
-      history: {}
-    }, {
-      id: uid(),
-      name: "Read scripture",
-      area: "Faith",
-      history: {}
-    }, {
-      id: uid(),
-      name: "Move my body",
-      area: "Health",
-      history: {}
-    }, {
-      id: uid(),
-      name: "Time with my little one",
-      area: "Family",
-      history: {}
-    }, {
-      id: uid(),
-      name: "Tidy 10 minutes",
-      area: "Rest",
-      history: {}
-    }],
+    habits: [],
     areas: [{
       id: uid(),
       name: "Faith",
@@ -1251,6 +1232,67 @@ function DonutSVG({
     return c;
   })));
 }
+const HABIT_SUGGEST = {
+  Faith: "Morning prayer",
+  Family: "Time with my kids",
+  Marriage: "Check in with my spouse",
+  Health: "Move my body",
+  Work: "Plan my top three",
+  Rest: "Tidy 10 minutes",
+  Friends: "Reach out to a friend"
+};
+function HabitSetup({
+  onSave
+}) {
+  const cats = AREA_NAMES;
+  const [vals, setVals] = useState({});
+  const setVal = (c, v) => setVals(p => ({
+    ...p,
+    [c]: v
+  }));
+  const fill = () => setVals(Object.fromEntries(cats.map(c => [c, HABIT_SUGGEST[c] || ""])));
+  const anyFilled = cats.some(c => (vals[c] || "").trim());
+  const save = () => {
+    const hs = cats.filter(c => (vals[c] || "").trim()).map(c => ({
+      id: uid(),
+      name: vals[c].trim(),
+      area: c,
+      history: {}
+    }));
+    if (hs.length) onSave(hs);
+  };
+  return React.createElement("div", {
+    className: "habit-setup"
+  }, React.createElement("p", {
+    className: "empty"
+  }, "Choose one small daily habit for each area you want to grow in. Leave any blank — you can change these anytime in the Balance tab."), React.createElement("div", {
+    className: "hs-list"
+  }, cats.map(c => React.createElement("div", {
+    className: "hs-row",
+    key: c
+  }, React.createElement("span", {
+    className: "hs-cat"
+  }, React.createElement("span", {
+    className: "dot",
+    style: {
+      background: AREA_COLORS[c]
+    }
+  }), c), React.createElement("input", {
+    value: vals[c] || "",
+    placeholder: HABIT_SUGGEST[c] || "a habit…",
+    onChange: e => setVal(c, e.target.value)
+  })))), React.createElement("div", {
+    className: "hs-actions"
+  }, React.createElement("button", {
+    className: "add-mini",
+    onClick: fill
+  }, "Use suggestions"), React.createElement("button", {
+    className: "primary",
+    onClick: save,
+    disabled: !anyFilled
+  }, "Save habits")));
+}
+
 function Today({
   state,
   update,
@@ -1425,7 +1467,9 @@ function Today({
     size: 15
   })))), React.createElement(Section, {
     title: "Daily habits"
-  }, React.createElement("ul", {
+  }, state.habits.length === 0 ? React.createElement(HabitSetup, {
+    onSave: habits => update(s => ({ ...s, habits }))
+  }) : React.createElement("ul", {
     className: "habit-today"
   }, state.habits.map(h => React.createElement("li", {
     key: h.id
