@@ -1241,11 +1241,35 @@ const HABIT_SUGGEST = {
   Rest: "Tidy 10 minutes",
   Friends: "Reach out to a friend"
 };
+function habitInitial(existing) {
+  const ex = existing || [];
+  const o = {};
+  AREA_NAMES.forEach(c => {
+    const h = ex.find(x => x.area === c);
+    o[c] = h ? h.name : "";
+  });
+  return o;
+}
+function buildHabits(vals, existing) {
+  const ex = existing || [];
+  return AREA_NAMES.filter(c => (vals[c] || "").trim()).map(c => {
+    const name = vals[c].trim();
+    const prev = ex.find(h => h.area === c && h.name === name);
+    return prev ? prev : {
+      id: uid(),
+      name,
+      area: c,
+      history: {}
+    };
+  });
+}
 function HabitSetup({
-  onSave
+  onSave,
+  onCancel,
+  initial
 }) {
   const cats = AREA_NAMES;
-  const [vals, setVals] = useState({});
+  const [vals, setVals] = useState(initial || {});
   const setVal = (c, v) => setVals(p => ({
     ...p,
     [c]: v
@@ -1253,19 +1277,13 @@ function HabitSetup({
   const fill = () => setVals(Object.fromEntries(cats.map(c => [c, HABIT_SUGGEST[c] || ""])));
   const anyFilled = cats.some(c => (vals[c] || "").trim());
   const save = () => {
-    const hs = cats.filter(c => (vals[c] || "").trim()).map(c => ({
-      id: uid(),
-      name: vals[c].trim(),
-      area: c,
-      history: {}
-    }));
-    if (hs.length) onSave(hs);
+    onSave(vals);
   };
   return React.createElement("div", {
     className: "habit-setup"
   }, React.createElement("p", {
     className: "empty"
-  }, "Choose one small daily habit for each area you want to grow in. Leave any blank — you can change these anytime in the Balance tab."), React.createElement("div", {
+  }, "Choose one small daily habit for each area you want to grow in. Leave any blank — you can change these anytime."), React.createElement("div", {
     className: "hs-list"
   }, cats.map(c => React.createElement("div", {
     className: "hs-row",
@@ -1283,7 +1301,10 @@ function HabitSetup({
     onChange: e => setVal(c, e.target.value)
   })))), React.createElement("div", {
     className: "hs-actions"
-  }, React.createElement("button", {
+  }, onCancel && React.createElement("button", {
+    className: "add-mini",
+    onClick: onCancel
+  }, "Cancel"), React.createElement("button", {
     className: "add-mini",
     onClick: fill
   }, "Use suggestions"), React.createElement("button", {
@@ -1373,6 +1394,7 @@ function Today({
   }));
   const displayName = (state.profile.name || "").trim() || deriveName(email);
   const [editName, setEditName] = useState(false);
+  const [redo, setRedo] = useState(false);
   const [nameInput, setNameInput] = useState("");
   const startEdit = () => {
     setNameInput((state.profile.name || "").trim());
@@ -1466,9 +1488,18 @@ function Today({
     name: "plus",
     size: 15
   })))), React.createElement(Section, {
-    title: "Daily habits"
-  }, state.habits.length === 0 ? React.createElement(HabitSetup, {
-    onSave: habits => update(s => ({ ...s, habits }))
+    title: "Daily habits",
+    action: state.habits.length > 0 && !redo ? React.createElement("button", {
+      className: "add-mini",
+      onClick: () => setRedo(true)
+    }, "Redo") : null
+  }, state.habits.length === 0 || redo ? React.createElement(HabitSetup, {
+    initial: habitInitial(state.habits),
+    onSave: vals => {
+      update(s => ({ ...s, habits: buildHabits(vals, s.habits) }));
+      setRedo(false);
+    },
+    onCancel: state.habits.length > 0 ? () => setRedo(false) : null
   }) : React.createElement("ul", {
     className: "habit-today"
   }, state.habits.map(h => React.createElement("li", {
