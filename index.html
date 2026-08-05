@@ -192,6 +192,22 @@ textarea,.plain-input,input,select{font-family:inherit;color:var(--ink);}
 .stat-num{font-family:'Fraunces',serif;font-size:23px;font-weight:600;color:var(--lilac);display:inline-flex;align-items:center;justify-content:center;gap:3px;}
 .stat-lbl{font-size:11px;color:var(--inkSoft);font-weight:700;}
 .heatmap-scroll{overflow-x:auto;padding-bottom:4px;}
+.journey-grid{position:relative;}
+.heat-hint{font-size:11px;color:var(--inkSoft);margin:6px 0 0;text-align:center;opacity:.85;}
+.day-pop{position:absolute;width:196px;transform:translateY(-100%);z-index:20;
+  background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 12px 11px;
+  box-shadow:0 14px 30px -14px rgba(58,46,69,.45);animation:popIn .14s ease-out;}
+@keyframes popIn{from{opacity:0;transform:translateY(-100%) scale(.96);}to{opacity:1;transform:translateY(-100%) scale(1);}}
+.day-pop-date{font-family:'Fraunces',serif;font-size:13px;font-weight:600;color:var(--ink);margin-bottom:6px;}
+.day-pop-row{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:700;color:var(--ink);margin-top:3px;}
+.day-pop-row svg{color:var(--lilac);flex:none;}
+.day-pop-row.off{color:var(--inkSoft);font-weight:600;opacity:.7;}
+.day-pop-row.off svg{color:var(--inkSoft);}
+.day-pop-ref{font-size:11px;color:var(--inkSoft);margin-top:6px;padding-top:6px;border-top:1px solid var(--line);line-height:1.35;}
+.day-pop-ref.soft{font-style:italic;}
+.day-pop-arrow{position:absolute;bottom:-6px;width:11px;height:11px;margin-left:-5.5px;
+  background:var(--card);border-right:1px solid var(--line);border-bottom:1px solid var(--line);
+  transform:rotate(45deg);border-radius:0 0 3px 0;}
 .heat-legend{display:flex;align-items:center;justify-content:flex-end;gap:5px;font-size:11px;color:var(--inkSoft);margin-top:4px;font-weight:700;}
 .heat-legend i{width:11px;height:11px;border-radius:3px;display:inline-block;}
 .compare-head{margin:18px 0 6px;font-weight:800;font-size:13px;color:var(--ink);}
@@ -1572,23 +1588,48 @@ const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "
 const MONTH_LETTERS = ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"];
 function dayInfo(faith) {
   const entries = {};
+  const refs = {};
   (faith.devotionals || []).forEach(d => {
-    if (d.date) entries[d.date] = (entries[d.date] || 0) + 1;
+    if (!d || !d.date) return;
+    entries[d.date] = (entries[d.date] || 0) + 1;
+    const r = (d.reference || "").trim();
+    if (r) {
+      (refs[d.date] = refs[d.date] || []).push(r);
+    }
   });
   const checked = faith.devoDays || {};
-  const keys = new Set([...Object.keys(entries), ...Object.keys(checked).filter(k => checked[k])]);
-  const level = k => {
+  const prayer = {};
+  (faith.prayerLog || []).forEach(p => {
+    if (!p || !p.date) return;
+    prayer[p.date] = (prayer[p.date] || 0) + (p.seconds || 0);
+  });
+  const keys = new Set([...Object.keys(entries), ...Object.keys(checked).filter(k => checked[k]), ...Object.keys(prayer).filter(k => prayer[k] > 0)]);
+  const wordLevel = k => {
     const e = entries[k] || 0;
     if (e >= 2) return 3;
     if (e === 1) return 2;
     if (checked[k]) return 1;
     return 0;
   };
+  const prayLevel = k => {
+    const s = prayer[k] || 0;
+    if (s >= 2700) return 3;
+    if (s >= 900) return 2;
+    if (s > 0) return 1;
+    return 0;
+  };
+  const level = k => {
+    return Math.min(3, wordLevel(k) + prayLevel(k));
+  };
   return {
     entries,
+    refs,
     checked,
+    prayer,
     keys,
-    level
+    level,
+    wordLevel,
+    prayLevel
   };
 }
 function computeStreaks(keysSet) {
@@ -1613,9 +1654,64 @@ function computeStreaks(keysSet) {
     longest
   };
 }
+function prettyDay(key) {
+  const p = String(key).split("-");
+  const d = new Date(+p[0], +p[1] - 1, +p[2]);
+  if (isNaN(d)) return key;
+  return d.toLocaleDateString(undefined, {
+    weekday: "long",
+    month: "long",
+    day: "numeric"
+  });
+}
+function DayPopup({
+  dayKey,
+  info,
+  left,
+  top,
+  arrow
+}) {
+  const secs = info.prayer[dayKey] || 0;
+  const wordly = !!(info.checked[dayKey] || info.entries[dayKey]);
+  const refs = info.refs[dayKey] || [];
+  const nEntries = info.entries[dayKey] || 0;
+  return /*#__PURE__*/React.createElement("div", {
+    className: "day-pop",
+    style: {
+      left: left,
+      top: top
+    },
+    onClick: e => e.stopPropagation()
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "day-pop-date"
+  }, prettyDay(dayKey)), /*#__PURE__*/React.createElement("div", {
+    className: "day-pop-row" + (secs > 0 ? "" : " off")
+  }, /*#__PURE__*/React.createElement(Icon, {
+    name: "flame",
+    size: 12
+  }), /*#__PURE__*/React.createElement("span", null, secs > 0 ? fmtDur(secs) + " in prayer" : "No prayer logged")), /*#__PURE__*/React.createElement("div", {
+    className: "day-pop-row" + (wordly ? "" : " off")
+  }, /*#__PURE__*/React.createElement(Icon, {
+    name: wordly ? "check" : "book",
+    size: 12
+  }), /*#__PURE__*/React.createElement("span", null, wordly ? "Time in the Word" : "No time in the Word")), refs.length > 0 && /*#__PURE__*/React.createElement("div", {
+    className: "day-pop-ref"
+  }, refs.slice(0, 3).join(" · ")), nEntries > 0 && refs.length === 0 && /*#__PURE__*/React.createElement("div", {
+    className: "day-pop-ref"
+  }, nEntries === 1 ? "1 journal entry" : nEntries + " journal entries"), secs === 0 && !wordly && /*#__PURE__*/React.createElement("div", {
+    className: "day-pop-ref soft"
+  }, "A quiet day — grace for it."), /*#__PURE__*/React.createElement("span", {
+    className: "day-pop-arrow",
+    style: {
+      left: arrow
+    }
+  }));
+}
 function YearHeatmap({
   year,
-  level
+  info,
+  sel,
+  onPick
 }) {
   const cell = 11,
     gap = 3,
@@ -1627,7 +1723,8 @@ function YearHeatmap({
   const end = new Date(year, 11, 31);
   const totalDays = Math.round((end - start) / 86400000) + 1;
   const rects = [],
-    labels = [];
+    labels = [],
+    hits = [];
   for (let i = 0; i < totalDays; i++) {
     const d = new Date(start);
     d.setDate(start.getDate() + i);
@@ -1637,16 +1734,46 @@ function YearHeatmap({
     const key = d.toLocaleDateString("en-CA");
     const x = leftPad + col * step,
       y = topPad + row * step;
-    rects.push(React.createElement("rect", {
+    rects.push(/*#__PURE__*/React.createElement("rect", {
       key: i,
       x: x,
       y: y,
       width: cell,
       height: cell,
       rx: "2.5",
-      fill: inYear ? HEAT[level(key)] : "transparent"
+      fill: inYear ? HEAT[info.level(key)] : "transparent"
     }));
-    if (inYear && d.getDate() === 1) labels.push(React.createElement("text", {
+    if (inYear) {
+      if (sel === key) {
+        rects.push(/*#__PURE__*/React.createElement("rect", {
+          key: "s" + i,
+          x: x - 2,
+          y: y - 2,
+          width: cell + 4,
+          height: cell + 4,
+          rx: "4",
+          fill: "none",
+          stroke: COLORS.ink,
+          strokeWidth: "1.4"
+        }));
+      }
+      hits.push(/*#__PURE__*/React.createElement("rect", {
+        key: "h" + i,
+        x: x - gap / 2,
+        y: y - gap / 2,
+        width: step,
+        height: step,
+        fill: "transparent",
+        style: {
+          cursor: "pointer"
+        },
+        onClick: e => {
+          e.stopPropagation();
+          onPick(key, x + cell / 2, y);
+        }
+      }));
+    }
+    if (inYear && d.getDate() === 1) labels.push(/*#__PURE__*/React.createElement("text", {
       key: "m" + i,
       x: x,
       y: topPad - 5,
@@ -1659,20 +1786,73 @@ function YearHeatmap({
   const width = leftPad + cols * step,
     height = topPad + 7 * step;
   const dayLabels = ["", "M", "", "W", "", "F", ""];
-  return React.createElement("svg", {
+  return /*#__PURE__*/React.createElement("svg", {
     width: width,
     height: height,
     style: {
       minWidth: width
     }
-  }, dayLabels.map((l, r) => l ? React.createElement("text", {
+  }, dayLabels.map((l, r) => l ? /*#__PURE__*/React.createElement("text", {
     key: r,
     x: "0",
     y: topPad + r * step + cell - 1,
     fontSize: "8",
     fontWeight: "700",
     fill: COLORS.inkSoft
-  }, l) : null), labels, rects);
+  }, l) : null), labels, rects, hits);
+}
+function JourneyGrid({
+  year,
+  info
+}) {
+  const scrollRef = useRef(null);
+  const [sel, setSel] = useState(null);
+  const [scrollX, setScrollX] = useState(0);
+  useEffect(() => {
+    setSel(null);
+  }, [year]);
+  useEffect(() => {
+    if (!sel) return;
+    const close = () => setSel(null);
+    window.addEventListener("click", close);
+    return () => window.removeEventListener("click", close);
+  }, [sel]);
+  const pick = (key, cx, cy) => {
+    const sx = scrollRef.current ? scrollRef.current.scrollLeft : 0;
+    setScrollX(sx);
+    setSel(s => s && s.key === key ? null : {
+      key: key,
+      cx: cx,
+      cy: cy
+    });
+  };
+  const POPW = 196;
+  let popLeft = 0,
+    arrowLeft = POPW / 2;
+  if (sel) {
+    const box = scrollRef.current ? scrollRef.current.clientWidth : 340;
+    const centre = sel.cx - scrollX;
+    popLeft = Math.max(0, Math.min(centre - POPW / 2, Math.max(0, box - POPW)));
+    arrowLeft = Math.max(12, Math.min(centre - popLeft, POPW - 12));
+  }
+  return /*#__PURE__*/React.createElement("div", {
+    className: "journey-grid"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "heatmap-scroll",
+    ref: scrollRef,
+    onScroll: e => setScrollX(e.target.scrollLeft)
+  }, /*#__PURE__*/React.createElement(YearHeatmap, {
+    year: year,
+    info: info,
+    sel: sel && sel.key,
+    onPick: pick
+  })), sel && /*#__PURE__*/React.createElement(DayPopup, {
+    dayKey: sel.key,
+    info: info,
+    left: popLeft,
+    top: sel.cy - 8,
+    arrow: arrowLeft
+  }));
 }
 function MonthlyCompare({
   year,
@@ -1791,12 +1971,12 @@ function DevotionalJourney({
     className: "stat-num"
   }, yearCount), React.createElement("span", {
     className: "stat-lbl"
-  }, "days in ", year))), React.createElement("div", {
-    className: "heatmap-scroll"
-  }, React.createElement(YearHeatmap, {
+  }, "days in ", year))), React.createElement(JourneyGrid, {
     year: year,
-    level: info.level
-  })), React.createElement("div", {
+    info: info
+  }), React.createElement("p", {
+    className: "heat-hint"
+  }, "Tap any day to see how you spent it."), React.createElement("div", {
     className: "heat-legend"
   }, "Less", HEAT.map((c, i) => React.createElement("i", {
     key: i,
