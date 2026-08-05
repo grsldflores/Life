@@ -1847,6 +1847,7 @@ function JourneyGrid({
     sel: sel && sel.key,
     onPick: pick
   })), sel && /*#__PURE__*/React.createElement(DayPopup, {
+    key: sel.key,
     dayKey: sel.key,
     info: info,
     left: popLeft,
