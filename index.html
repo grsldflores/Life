@@ -472,6 +472,79 @@ button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-vis
 .config-warn{max-width:480px;margin:60px auto;padding:24px;background:#fff;border:1px solid var(--line);
   border-radius:18px;line-height:1.6;font-size:14px;}
 .config-warn code{background:var(--lilacWash);padding:2px 6px;border-radius:6px;font-size:13px;}
+/* --- church gatherings --- */
+.journey-gathered{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700;
+  color:var(--gold);margin:8px 0 0;justify-content:center;}
+.journey-gathered svg{flex:none;}
+.gp-wrap{display:flex;flex-direction:column;gap:8px;margin-bottom:12px;}
+.gp-card{display:flex;align-items:center;gap:10px;padding:11px 13px;border-radius:15px;
+  background:linear-gradient(140deg,var(--lilacWash),var(--card));border:1px solid var(--line);}
+.gp-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px;}
+.gp-body strong{font-size:13.5px;color:var(--ink);}
+.gp-body span{font-size:11.5px;color:var(--inkSoft);font-weight:600;}
+.gp-btns{display:flex;gap:6px;flex:none;}
+.gp-yes,.gp-no{font-family:inherit;font-weight:800;font-size:12px;padding:8px 12px;
+  border-radius:11px;cursor:pointer;display:inline-flex;align-items:center;gap:4px;}
+.gp-yes{background:var(--lilac);color:#fff;border:1px solid transparent;}
+.gp-no{background:none;color:var(--inkSoft);border:1px solid var(--line);}
+.gp-no:hover{background:var(--card);color:var(--ink);}
+
+.day-pop-add{margin-top:9px;width:100%;display:inline-flex;align-items:center;justify-content:center;
+  gap:5px;font-family:inherit;font-weight:800;font-size:11.5px;padding:7px 10px;border-radius:10px;
+  background:var(--lilacWash);color:var(--ink);border:1px solid var(--line);cursor:pointer;}
+.day-pop-add:hover{background:var(--lilacSoft);}
+
+.de-scrim{position:fixed;inset:0;background:rgba(58,46,69,.34);z-index:60;display:flex;
+  align-items:center;justify-content:center;padding:18px;animation:popIn .14s ease-out;}
+.de-sheet{background:var(--card);border:1px solid var(--line);border-radius:22px;width:100%;
+  max-width:400px;max-height:84vh;overflow-y:auto;padding:16px 17px 18px;
+  box-shadow:0 24px 60px -20px rgba(58,46,69,.5);display:flex;flex-direction:column;gap:13px;}
+.de-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;}
+.de-head h3{font-size:16px;line-height:1.25;}
+.de-lbl{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--inkSoft);font-weight:800;}
+.de-already{display:flex;flex-wrap:wrap;gap:6px;align-items:center;}
+.de-already .de-lbl{width:100%;}
+.de-chip{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;font-weight:700;
+  color:var(--ink);background:var(--lilacWash);border:1px solid var(--line);
+  border-radius:999px;padding:4px 5px 4px 9px;}
+.de-chip.flat{padding-right:9px;}
+.de-chip svg{color:var(--lilac);flex:none;}
+.de-chip button{background:none;border:none;cursor:pointer;color:var(--inkSoft);padding:2px;
+  display:inline-flex;border-radius:50%;}
+.de-chip button:hover{background:var(--lilacSoft);color:var(--ink);}
+.de-empty{color:var(--inkSoft);font-size:13px;font-style:italic;margin:0;}
+.de-field{display:flex;flex-direction:column;gap:6px;}
+.de-row{display:flex;align-items:center;gap:8px;}
+.de-word{display:flex;align-items:center;gap:9px;font-family:inherit;font-weight:700;font-size:13.5px;
+  color:var(--ink);background:none;border:1px dashed var(--line);border-radius:13px;
+  padding:11px 13px;cursor:pointer;text-align:left;}
+.de-word:hover{background:var(--lilacWash);}
+.de-gats{display:flex;flex-direction:column;gap:7px;}
+.de-gat{display:flex;align-items:center;gap:10px;font-family:inherit;text-align:left;
+  background:none;border:1px solid var(--line);border-radius:13px;padding:9px 11px;cursor:pointer;}
+.de-gat:hover:not(:disabled){background:var(--lilacWash);}
+.de-gat.on{border-color:var(--lilac);background:var(--lilacWash);}
+.de-gat.done{opacity:.6;cursor:default;}
+.de-gat-body{display:flex;flex-direction:column;gap:1px;min-width:0;}
+.de-gat-body strong{font-size:13.5px;color:var(--ink);}
+.de-gat-body span{font-size:11.5px;color:var(--inkSoft);font-weight:600;}
+.de-actions{display:flex;gap:9px;justify-content:flex-end;align-items:center;margin-top:2px;}
+.ghost-btn{background:none;border:1px solid var(--line);color:var(--inkSoft);font-family:inherit;
+  font-weight:700;font-size:13px;padding:9px 14px;border-radius:12px;cursor:pointer;}
+.ghost-btn:hover{background:var(--lilacWash);color:var(--ink);}
+
+.gs-list{list-style:none;margin:0 0 4px;padding:0;display:flex;flex-direction:column;gap:9px;}
+.gs-list li{display:flex;align-items:center;gap:10px;}
+.gs-list li.off .gs-body{opacity:.5;}
+.gs-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px;}
+.gs-body strong{font-size:14px;color:var(--ink);}
+.gs-form{display:flex;flex-direction:column;gap:10px;margin-top:10px;padding-top:12px;
+  border-top:1px solid var(--line);}
+.gs-row{display:flex;align-items:center;gap:7px;flex-wrap:wrap;}
+.gs-sel,.gs-time{padding:9px 10px;border:1px solid var(--line);border-radius:10px;
+  font-family:inherit;font-size:13.5px;background:var(--card);color:var(--ink);}
+.gs-sel{flex:1;min-width:118px;}
+.gs-hint{font-size:11.5px;color:var(--inkSoft);line-height:1.4;margin:10px 0 0;font-style:italic;}
 </style>
 </head>
 <body>
@@ -940,6 +1013,8 @@ function seed() {
       devotionals: [],
       devoDays: {},
       prayerLog: [],
+      gatherings: [],
+      gatheringLog: [],
       bible: {
         completed: {}
       },
@@ -1100,6 +1175,8 @@ function hydrate(loaded) {
       },
       devoDays: lf.devoDays || {},
       prayerLog: Array.isArray(lf.prayerLog) ? lf.prayerLog : [],
+      gatherings: Array.isArray(lf.gatherings) ? lf.gatherings : [],
+      gatheringLog: Array.isArray(lf.gatheringLog) ? lf.gatheringLog : [],
       bible: {
         completed: lf.bible && lf.bible.completed || {}
       }
@@ -1586,6 +1663,40 @@ function Today({
 }
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const MONTH_LETTERS = ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"];
+const GATHER_LEVEL = 2;
+const DOW = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+const DOW_SHORT = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+function hhmmToMin(t) {
+  const m = /^(\d{1,2}):(\d{2})$/.exec(String(t || "").trim());
+  if (!m) return null;
+  return +m[1] * 60 + +m[2];
+}
+function gatherMinutes(g) {
+  const a = hhmmToMin(g && g.startTime),
+    b = hhmmToMin(g && g.endTime);
+  if (a == null || b == null) return 0;
+  let d = b - a;
+  if (d < 0) d += 1440;
+  return d;
+}
+function fmtTime(t) {
+  const mins = hhmmToMin(t);
+  if (mins == null) return "";
+  let h = Math.floor(mins / 60),
+    m = mins % 60;
+  const ap = h >= 12 ? "pm" : "am";
+  h = h % 12;
+  if (h === 0) h = 12;
+  return h + (m ? ":" + String(m).padStart(2, "0") : "") + ap;
+}
+function gatherWhen(g) {
+  const t = [fmtTime(g.startTime), fmtTime(g.endTime)].filter(Boolean).join("–");
+  return [DOW[g.dayOfWeek] != null ? DOW[g.dayOfWeek] + "s" : "", t].filter(Boolean).join(" · ");
+}
+function dowOf(key) {
+  const p = String(key).split("-");
+  return new Date(+p[0], +p[1] - 1, +p[2]).getDay();
+}
 function dayInfo(faith) {
   const entries = {};
   const refs = {};
@@ -1599,11 +1710,18 @@ function dayInfo(faith) {
   });
   const checked = faith.devoDays || {};
   const prayer = {};
+  const prayerEntries = {};
   (faith.prayerLog || []).forEach(p => {
     if (!p || !p.date) return;
     prayer[p.date] = (prayer[p.date] || 0) + (p.seconds || 0);
+    (prayerEntries[p.date] = prayerEntries[p.date] || []).push(p);
   });
-  const keys = new Set([...Object.keys(entries), ...Object.keys(checked).filter(k => checked[k]), ...Object.keys(prayer).filter(k => prayer[k] > 0)]);
+  const gathered = {};
+  (faith.gatheringLog || []).forEach(g => {
+    if (!g || !g.date) return;
+    (gathered[g.date] = gathered[g.date] || []).push(g);
+  });
+  const keys = new Set([...Object.keys(entries), ...Object.keys(checked).filter(k => checked[k]), ...Object.keys(prayer).filter(k => prayer[k] > 0), ...Object.keys(gathered).filter(k => gathered[k].length > 0)]);
   const wordLevel = k => {
     const e = entries[k] || 0;
     if (e >= 2) return 3;
@@ -1618,18 +1736,22 @@ function dayInfo(faith) {
     if (s > 0) return 1;
     return 0;
   };
-  const level = k => {
-    return Math.min(3, wordLevel(k) + prayLevel(k));
-  };
+  // A gathering contributes a flat amount no matter how long the service ran,
+  // so a 3-hour Sunday never washes out the quiet 15-minute weekdays.
+  const gatherLevel = k => (gathered[k] || []).length > 0 ? GATHER_LEVEL : 0;
+  const level = k => Math.min(3, wordLevel(k) + prayLevel(k) + gatherLevel(k));
   return {
     entries,
     refs,
     checked,
     prayer,
+    prayerEntries,
+    gathered,
     keys,
     level,
     wordLevel,
-    prayLevel
+    prayLevel,
+    gatherLevel
   };
 }
 function computeStreaks(keysSet) {
@@ -1664,43 +1786,222 @@ function prettyDay(key) {
     day: "numeric"
   });
 }
+function DayEditor({
+  dayKey,
+  info,
+  gatherings,
+  onSave,
+  onRemovePrayer,
+  onRemoveGathering,
+  onToggleWord,
+  onClose
+}) {
+  const [mins, setMins] = useState(0);
+  const [oneOff, setOneOff] = useState("");
+  const [picked, setPicked] = useState({});
+  const secs = info.prayer[dayKey] || 0;
+  const wordChecked = !!info.checked[dayKey];
+  const nEntries = info.entries[dayKey] || 0;
+  const dayGathered = info.gathered[dayKey] || [];
+  const pEntries = info.prayerEntries[dayKey] || [];
+  const loggedIds = new Set(dayGathered.map(g => g.gatheringId).filter(Boolean));
+  const active = (gatherings || []).filter(g => g.active !== false);
+  const dow = dowOf(dayKey);
+  // Gatherings that fall on this weekday come first — most likely what you're logging.
+  const ordered = [...active].sort((a, b) => (a.dayOfWeek === dow ? 0 : 1) - (b.dayOfWeek === dow ? 0 : 1));
+  const toggle = id => setPicked(p => ({
+    ...p,
+    [id]: !p[id]
+  }));
+  const save = () => {
+    const chosen = ordered.filter(g => picked[g.id] && !loggedIds.has(g.id));
+    onSave(dayKey, {
+      prayerMins: Number(mins) || 0,
+      gatherings: chosen.map(g => ({
+        gatheringId: g.id,
+        name: g.name,
+        minutes: gatherMinutes(g)
+      })),
+      oneOff: oneOff.trim()
+    });
+    onClose();
+  };
+  const nothingNew = !(Number(mins) > 0) && !oneOff.trim() && !ordered.some(g => picked[g.id] && !loggedIds.has(g.id));
+  return React.createElement("div", {
+    className: "de-scrim",
+    onClick: onClose
+  }, React.createElement("div", {
+    className: "de-sheet",
+    onClick: e => e.stopPropagation()
+  }, React.createElement("div", {
+    className: "de-head"
+  }, React.createElement("h3", null, prettyDay(dayKey)), React.createElement("button", {
+    className: "ghost-x",
+    onClick: onClose,
+    "aria-label": "close"
+  }, React.createElement(Icon, {
+    name: "x",
+    size: 15
+  }))), secs > 0 || wordChecked || nEntries > 0 || dayGathered.length > 0 ? React.createElement("div", {
+    className: "de-already"
+  }, React.createElement("span", {
+    className: "de-lbl"
+  }, "Already logged"), pEntries.map(p => React.createElement("span", {
+    className: "de-chip",
+    key: p.id
+  }, React.createElement(Icon, {
+    name: "flame",
+    size: 11
+  }), " ", fmtDur(p.seconds || 0), React.createElement("button", {
+    onClick: () => onRemovePrayer(p.id),
+    "aria-label": "remove"
+  }, React.createElement(Icon, {
+    name: "x",
+    size: 10
+  })))), dayGathered.map(g => React.createElement("span", {
+    className: "de-chip",
+    key: g.id
+  }, React.createElement(Icon, {
+    name: "hands",
+    size: 11
+  }), " ", g.name || "Gathering", React.createElement("button", {
+    onClick: () => onRemoveGathering(g.id),
+    "aria-label": "remove"
+  }, React.createElement(Icon, {
+    name: "x",
+    size: 10
+  })))), nEntries > 0 && React.createElement("span", {
+    className: "de-chip flat"
+  }, React.createElement(Icon, {
+    name: "book",
+    size: 11
+  }), " ", nEntries === 1 ? "1 journal entry" : nEntries + " journal entries"), wordChecked && React.createElement("span", {
+    className: "de-chip"
+  }, React.createElement(Icon, {
+    name: "check",
+    size: 11
+  }), " Time in the Word", React.createElement("button", {
+    onClick: () => onToggleWord(dayKey),
+    "aria-label": "remove"
+  }, React.createElement(Icon, {
+    name: "x",
+    size: 10
+  })))) : React.createElement("p", {
+    className: "de-empty"
+  }, "Nothing logged for this day yet."), React.createElement("div", {
+    className: "de-field"
+  }, React.createElement("span", {
+    className: "de-lbl"
+  }, "Add prayer time"), React.createElement("div", {
+    className: "de-row"
+  }, React.createElement(NumberField, {
+    value: mins,
+    onChange: setMins
+  }), React.createElement("span", {
+    className: "muted"
+  }, "min"))), !wordChecked && React.createElement("button", {
+    className: "de-word",
+    onClick: () => onToggleWord(dayKey)
+  }, React.createElement("span", {
+    className: "check small"
+  }), "I spent time in the Word"), ordered.length > 0 && React.createElement("div", {
+    className: "de-field"
+  }, React.createElement("span", {
+    className: "de-lbl"
+  }, "Gatherings"), React.createElement("div", {
+    className: "de-gats"
+  }, ordered.map(g => {
+    const done = loggedIds.has(g.id);
+    return React.createElement("button", {
+      key: g.id,
+      className: "de-gat" + (done ? " done" : "") + (picked[g.id] && !done ? " on" : ""),
+      disabled: done,
+      onClick: () => toggle(g.id)
+    }, React.createElement("span", {
+      className: "check small"
+    }, (done || picked[g.id]) && React.createElement(Icon, {
+      name: "check",
+      size: 12
+    })), React.createElement("span", {
+      className: "de-gat-body"
+    }, React.createElement("strong", null, g.name || "Gathering"), React.createElement("span", null, done ? "already logged" : gatherWhen(g))));
+  }))), React.createElement("div", {
+    className: "de-field"
+  }, React.createElement("span", {
+    className: "de-lbl"
+  }, "Or a one-off gathering"), React.createElement("input", {
+    className: "plain-input",
+    placeholder: "e.g. Saturday women's conference",
+    value: oneOff,
+    onChange: e => setOneOff(e.target.value)
+  })), React.createElement("div", {
+    className: "de-actions"
+  }, React.createElement("button", {
+    className: "ghost-btn",
+    onClick: onClose
+  }, "Cancel"), React.createElement("button", {
+    className: "primary",
+    onClick: save,
+    disabled: nothingNew
+  }, React.createElement(Icon, {
+    name: "plus",
+    size: 15
+  }), " Add to this day"))));
+}
 function DayPopup({
   dayKey,
   info,
   left,
   top,
-  arrow
+  arrow,
+  onEdit
 }) {
   const secs = info.prayer[dayKey] || 0;
   const wordly = !!(info.checked[dayKey] || info.entries[dayKey]);
   const refs = info.refs[dayKey] || [];
   const nEntries = info.entries[dayKey] || 0;
-  return /*#__PURE__*/React.createElement("div", {
+  const gats = info.gathered[dayKey] || [];
+  const future = dayKey > todayKey();
+  return React.createElement("div", {
     className: "day-pop",
     style: {
       left: left,
       top: top
     },
     onClick: e => e.stopPropagation()
-  }, /*#__PURE__*/React.createElement("div", {
+  }, React.createElement("div", {
     className: "day-pop-date"
-  }, prettyDay(dayKey)), /*#__PURE__*/React.createElement("div", {
+  }, prettyDay(dayKey)), React.createElement("div", {
     className: "day-pop-row" + (secs > 0 ? "" : " off")
-  }, /*#__PURE__*/React.createElement(Icon, {
+  }, React.createElement(Icon, {
     name: "flame",
     size: 12
-  }), /*#__PURE__*/React.createElement("span", null, secs > 0 ? fmtDur(secs) + " in prayer" : "No prayer logged")), /*#__PURE__*/React.createElement("div", {
+  }), React.createElement("span", null, secs > 0 ? fmtDur(secs) + " in prayer" : "No prayer logged")), React.createElement("div", {
     className: "day-pop-row" + (wordly ? "" : " off")
-  }, /*#__PURE__*/React.createElement(Icon, {
+  }, React.createElement(Icon, {
     name: wordly ? "check" : "book",
     size: 12
-  }), /*#__PURE__*/React.createElement("span", null, wordly ? "Time in the Word" : "No time in the Word")), refs.length > 0 && /*#__PURE__*/React.createElement("div", {
+  }), React.createElement("span", null, wordly ? "Time in the Word" : "No time in the Word")), gats.length > 0 && React.createElement("div", {
+    className: "day-pop-row"
+  }, React.createElement(Icon, {
+    name: "hands",
+    size: 12
+  }), React.createElement("span", null, gats.map(g => g.name || "Gathering").join(" · "))), refs.length > 0 && React.createElement("div", {
     className: "day-pop-ref"
-  }, refs.slice(0, 3).join(" · ")), nEntries > 0 && refs.length === 0 && /*#__PURE__*/React.createElement("div", {
+  }, refs.slice(0, 3).join(" · ")), nEntries > 0 && refs.length === 0 && React.createElement("div", {
     className: "day-pop-ref"
-  }, nEntries === 1 ? "1 journal entry" : nEntries + " journal entries"), secs === 0 && !wordly && /*#__PURE__*/React.createElement("div", {
+  }, nEntries === 1 ? "1 journal entry" : nEntries + " journal entries"), secs === 0 && !wordly && gats.length === 0 && React.createElement("div", {
     className: "day-pop-ref soft"
-  }, "A quiet day — grace for it."), /*#__PURE__*/React.createElement("span", {
+  }, "A quiet day — grace for it."), !future && React.createElement("button", {
+    className: "day-pop-add",
+    onClick: e => {
+      e.stopPropagation();
+      onEdit(dayKey);
+    }
+  }, React.createElement(Icon, {
+    name: "plus",
+    size: 12
+  }), " Add to this day"), React.createElement("span", {
     className: "day-pop-arrow",
     style: {
       left: arrow
@@ -1724,7 +2025,8 @@ function YearHeatmap({
   const totalDays = Math.round((end - start) / 86400000) + 1;
   const rects = [],
     labels = [],
-    hits = [];
+    hits = [],
+    marks = [];
   for (let i = 0; i < totalDays; i++) {
     const d = new Date(start);
     d.setDate(start.getDate() + i);
@@ -1734,7 +2036,7 @@ function YearHeatmap({
     const key = d.toLocaleDateString("en-CA");
     const x = leftPad + col * step,
       y = topPad + row * step;
-    rects.push(/*#__PURE__*/React.createElement("rect", {
+    rects.push(React.createElement("rect", {
       key: i,
       x: x,
       y: y,
@@ -1744,8 +2046,16 @@ function YearHeatmap({
       fill: inYear ? HEAT[info.level(key)] : "transparent"
     }));
     if (inYear) {
+      if ((info.gathered[key] || []).length > 0) {
+        // Small notch in the top-right corner marks a day gathered with the body.
+        marks.push(React.createElement("path", {
+          key: "g" + i,
+          d: "M" + (x + cell - 4.2) + " " + y + " L" + (x + cell) + " " + y + " L" + (x + cell) + " " + (y + 4.2) + " Z",
+          fill: COLORS.gold
+        }));
+      }
       if (sel === key) {
-        rects.push(/*#__PURE__*/React.createElement("rect", {
+        rects.push(React.createElement("rect", {
           key: "s" + i,
           x: x - 2,
           y: y - 2,
@@ -1757,7 +2067,7 @@ function YearHeatmap({
           strokeWidth: "1.4"
         }));
       }
-      hits.push(/*#__PURE__*/React.createElement("rect", {
+      hits.push(React.createElement("rect", {
         key: "h" + i,
         x: x - gap / 2,
         y: y - gap / 2,
@@ -1773,7 +2083,7 @@ function YearHeatmap({
         }
       }));
     }
-    if (inYear && d.getDate() === 1) labels.push(/*#__PURE__*/React.createElement("text", {
+    if (inYear && d.getDate() === 1) labels.push(React.createElement("text", {
       key: "m" + i,
       x: x,
       y: topPad - 5,
@@ -1786,37 +2096,43 @@ function YearHeatmap({
   const width = leftPad + cols * step,
     height = topPad + 7 * step;
   const dayLabels = ["", "M", "", "W", "", "F", ""];
-  return /*#__PURE__*/React.createElement("svg", {
+  return React.createElement("svg", {
     width: width,
     height: height,
     style: {
       minWidth: width
     }
-  }, dayLabels.map((l, r) => l ? /*#__PURE__*/React.createElement("text", {
+  }, dayLabels.map((l, r) => l ? React.createElement("text", {
     key: r,
     x: "0",
     y: topPad + r * step + cell - 1,
     fontSize: "8",
     fontWeight: "700",
     fill: COLORS.inkSoft
-  }, l) : null), labels, rects, hits);
+  }, l) : null), labels, rects, marks, hits);
 }
 function JourneyGrid({
   year,
-  info
+  info,
+  gatherings,
+  onSaveDay,
+  onRemovePrayer,
+  onRemoveGathering,
+  onToggleWord
 }) {
   const scrollRef = useRef(null);
   const [sel, setSel] = useState(null);
+  const [edit, setEdit] = useState(null);
   const [scrollX, setScrollX] = useState(0);
   useEffect(() => {
     setSel(null);
   }, [year]);
   useEffect(() => {
-    if (!sel) return;
+    if (!sel || edit) return;
     const close = () => setSel(null);
     window.addEventListener("click", close);
     return () => window.removeEventListener("click", close);
-  }, [sel]);
+  }, [sel, edit]);
   const pick = (key, cx, cy) => {
     const sx = scrollRef.current ? scrollRef.current.scrollLeft : 0;
     setScrollX(sx);
@@ -1835,24 +2151,38 @@ function JourneyGrid({
     popLeft = Math.max(0, Math.min(centre - POPW / 2, Math.max(0, box - POPW)));
     arrowLeft = Math.max(12, Math.min(centre - popLeft, POPW - 12));
   }
-  return /*#__PURE__*/React.createElement("div", {
+  return React.createElement("div", {
     className: "journey-grid"
-  }, /*#__PURE__*/React.createElement("div", {
+  }, React.createElement("div", {
     className: "heatmap-scroll",
     ref: scrollRef,
     onScroll: e => setScrollX(e.target.scrollLeft)
-  }, /*#__PURE__*/React.createElement(YearHeatmap, {
+  }, React.createElement(YearHeatmap, {
     year: year,
     info: info,
     sel: sel && sel.key,
     onPick: pick
-  })), sel && /*#__PURE__*/React.createElement(DayPopup, {
+  })), sel && React.createElement(DayPopup, {
     key: sel.key,
     dayKey: sel.key,
     info: info,
     left: popLeft,
     top: sel.cy - 8,
-    arrow: arrowLeft
+    arrow: arrowLeft,
+    onEdit: k => setEdit(k)
+  }), edit && React.createElement(DayEditor, {
+    key: "ed-" + edit,
+    dayKey: edit,
+    info: info,
+    gatherings: gatherings,
+    onSave: onSaveDay,
+    onRemovePrayer: onRemovePrayer,
+    onRemoveGathering: onRemoveGathering,
+    onToggleWord: onToggleWord,
+    onClose: () => {
+      setEdit(null);
+      setSel(null);
+    }
   }));
 }
 function MonthlyCompare({
@@ -1906,9 +2236,172 @@ function MonthlyCompare({
     }, MONTH_LETTERS[m]));
   }));
 }
+function GatheringPrompt({
+  gatherings,
+  info,
+  onConfirm
+}) {
+  const [skipped, setSkipped] = useState({});
+  const tk = todayKey();
+  const dow = dowOf(tk);
+  const loggedIds = new Set((info.gathered[tk] || []).map(g => g.gatheringId).filter(Boolean));
+  const due = (gatherings || []).filter(g => g.active !== false && g.dayOfWeek === dow && !loggedIds.has(g.id) && !skipped[g.id]);
+  if (due.length === 0) return null;
+  return React.createElement("div", {
+    className: "gp-wrap"
+  }, due.map(g => React.createElement("div", {
+    className: "gp-card",
+    key: g.id
+  }, React.createElement("div", {
+    className: "gp-body"
+  }, React.createElement("strong", null, g.name || "Gathering"), React.createElement("span", null, [fmtTime(g.startTime), fmtTime(g.endTime)].filter(Boolean).join("–") || "today", " — did you make it?")), React.createElement("div", {
+    className: "gp-btns"
+  }, React.createElement("button", {
+    className: "gp-no",
+    onClick: () => setSkipped(s => ({
+      ...s,
+      [g.id]: true
+    }))
+  }, "Not today"), React.createElement("button", {
+    className: "gp-yes",
+    onClick: () => onConfirm(g)
+  }, React.createElement(Icon, {
+    name: "check",
+    size: 13
+  }), " Yes")))));
+}
+function GatheringSetup({
+  gatherings,
+  onAdd,
+  onSet,
+  onDel
+}) {
+  const [open, setOpen] = useState(false);
+  const [form, setForm] = useState({
+    name: "",
+    dayOfWeek: 0,
+    startTime: "",
+    endTime: ""
+  });
+  const list = gatherings || [];
+  const submit = () => {
+    if (!form.name.trim()) return;
+    onAdd({
+      id: uid(),
+      name: form.name.trim(),
+      dayOfWeek: Number(form.dayOfWeek),
+      startTime: form.startTime,
+      endTime: form.endTime,
+      active: true
+    });
+    setForm({
+      name: "",
+      dayOfWeek: 0,
+      startTime: "",
+      endTime: ""
+    });
+    setOpen(false);
+  };
+  return React.createElement(Section, {
+    title: "Church gatherings",
+    action: React.createElement("button", {
+      className: "add-mini",
+      onClick: () => setOpen(o => !o)
+    }, React.createElement(Icon, {
+      name: open ? "x" : "plus",
+      size: 14
+    }), " ", open ? "Close" : "Add")
+  }, list.length === 0 && !open && React.createElement("p", {
+    className: "empty"
+  }, "Add the gatherings you keep — a Sunday service, a midweek prayer meeting, a small group. They'll show up on the day for you to confirm."), list.length > 0 && React.createElement("ul", {
+    className: "gs-list"
+  }, list.map(g => React.createElement("li", {
+    key: g.id,
+    className: g.active === false ? "off" : ""
+  }, React.createElement("button", {
+    className: "check",
+    onClick: () => onSet(g.id, {
+      active: g.active === false
+    }),
+    style: g.active !== false ? {
+      background: COLORS.sage,
+      borderColor: "transparent"
+    } : {}
+  }, g.active !== false && React.createElement(Icon, {
+    name: "check",
+    size: 14
+  })), React.createElement("div", {
+    className: "gs-body"
+  }, React.createElement("strong", null, g.name), React.createElement("span", {
+    className: "muted"
+  }, gatherWhen(g), gatherMinutes(g) > 0 ? " · " + fmtDur(gatherMinutes(g) * 60) : "")), React.createElement("button", {
+    className: "ghost-x",
+    onClick: () => onDel(g.id)
+  }, React.createElement(Icon, {
+    name: "trash",
+    size: 13
+  }))))), open && React.createElement("div", {
+    className: "gs-form"
+  }, React.createElement("input", {
+    className: "plain-input bold",
+    placeholder: "Name (e.g. Sunday service)",
+    value: form.name,
+    onChange: e => setForm({
+      ...form,
+      name: e.target.value
+    })
+  }), React.createElement("div", {
+    className: "gs-row"
+  }, React.createElement("select", {
+    className: "gs-sel",
+    value: form.dayOfWeek,
+    onChange: e => setForm({
+      ...form,
+      dayOfWeek: e.target.value
+    })
+  }, DOW.map((d, i) => React.createElement("option", {
+    key: i,
+    value: i
+  }, d))), React.createElement("input", {
+    className: "gs-time",
+    type: "time",
+    value: form.startTime,
+    onChange: e => setForm({
+      ...form,
+      startTime: e.target.value
+    })
+  }), React.createElement("span", {
+    className: "muted"
+  }, "to"), React.createElement("input", {
+    className: "gs-time",
+    type: "time",
+    value: form.endTime,
+    onChange: e => setForm({
+      ...form,
+      endTime: e.target.value
+    })
+  })), React.createElement("div", {
+    className: "hs-actions"
+  }, React.createElement("button", {
+    className: "primary",
+    onClick: submit,
+    disabled: !form.name.trim()
+  }, React.createElement(Icon, {
+    name: "plus",
+    size: 15
+  }), " Save gathering"))), list.length > 0 && React.createElement("p", {
+    className: "gs-hint"
+  }, "Attending counts toward your streak. Every gathering adds the same amount to the heatmap, so a long service won't outshine a quiet morning."));
+}
 function DevotionalJourney({
   faith,
-  toggleToday
+  toggleToday,
+  toggleWordOn,
+  gatherings,
+  onSaveDay,
+  onRemovePrayer,
+  onRemoveGathering,
+  onConfirmGathering
 }) {
   const thisYear = new Date().getFullYear();
   const [year, setYear] = useState(thisYear);
@@ -1921,6 +2414,7 @@ function DevotionalJourney({
   const tk = todayKey();
   const journaledToday = (info.entries[tk] || 0) > 0;
   const checkedToday = !!(faith.devoDays && faith.devoDays[tk]);
+  const gatheredToday = (info.gathered[tk] || []).length > 0;
   return React.createElement("section", {
     className: "block"
   }, React.createElement("div", {
@@ -1934,7 +2428,11 @@ function DevotionalJourney({
     onClick: () => setYear(year + 1),
     disabled: year >= thisYear,
     "aria-label": "next year"
-  }, "›"))), React.createElement("div", {
+  }, "›"))), React.createElement(GatheringPrompt, {
+    gatherings: gatherings,
+    info: info,
+    onConfirm: onConfirmGathering
+  }), React.createElement("div", {
     className: "journey-today"
   }, journaledToday ? React.createElement("span", {
     className: "journey-done"
@@ -1949,7 +2447,12 @@ function DevotionalJourney({
   }, checkedToday && React.createElement(Icon, {
     name: "check",
     size: 13
-  })), checkedToday ? "Marked for today" : "I spent time with God today")), React.createElement("div", {
+  })), checkedToday ? "Marked for today" : "I spent time with God today")), gatheredToday && React.createElement("p", {
+    className: "journey-gathered"
+  }, React.createElement(Icon, {
+    name: "hands",
+    size: 13
+  }), " ", (info.gathered[tk] || []).map(g => g.name || "Gathering").join(" · "), " — counted for today"), React.createElement("div", {
     className: "streak-stats"
   }, React.createElement("div", {
     className: "stat"
@@ -1974,10 +2477,15 @@ function DevotionalJourney({
     className: "stat-lbl"
   }, "days in ", year))), React.createElement(JourneyGrid, {
     year: year,
-    info: info
+    info: info,
+    gatherings: gatherings,
+    onSaveDay: onSaveDay,
+    onRemovePrayer: onRemovePrayer,
+    onRemoveGathering: onRemoveGathering,
+    onToggleWord: toggleWordOn
   }), React.createElement("p", {
     className: "heat-hint"
-  }, "Tap any day to see how you spent it."), React.createElement("div", {
+  }, "Tap any day to see how you spent it — or to fill one in later."), React.createElement("div", {
     className: "heat-legend"
   }, "Less", HEAT.map((c, i) => React.createElement("i", {
     key: i,
@@ -2456,16 +2964,103 @@ function Faith({
   const delPrayer = id => setFaith({
     prayers: f.prayers.filter(p => p.id !== id)
   });
-  const toggleToday = () => {
-    const k = todayKey();
+  const toggleWordOn = k => update(s => {
     const dd = {
-      ...(f.devoDays || {})
+      ...(s.faith.devoDays || {})
     };
     if (dd[k]) delete dd[k];else dd[k] = true;
-    setFaith({
-      devoDays: dd
+    return {
+      ...s,
+      faith: {
+        ...s.faith,
+        devoDays: dd
+      }
+    };
+  });
+  const toggleToday = () => toggleWordOn(todayKey());
+  const saveDay = (dayKey, add) => update(s => {
+    const fa = s.faith;
+    const pl = [...(fa.prayerLog || [])];
+    const gl = [...(fa.gatheringLog || [])];
+    if (add.prayerMins > 0) pl.unshift({
+      id: uid(),
+      date: dayKey,
+      seconds: Math.round(add.prayerMins * 60)
     });
-  };
+    (add.gatherings || []).forEach(g => gl.unshift({
+      id: uid(),
+      date: dayKey,
+      gatheringId: g.gatheringId,
+      name: g.name,
+      minutes: g.minutes
+    }));
+    if (add.oneOff) gl.unshift({
+      id: uid(),
+      date: dayKey,
+      gatheringId: null,
+      name: add.oneOff,
+      minutes: 0
+    });
+    return {
+      ...s,
+      faith: {
+        ...fa,
+        prayerLog: pl,
+        gatheringLog: gl
+      }
+    };
+  });
+  const removePrayerEntry = id => update(s => ({
+    ...s,
+    faith: {
+      ...s.faith,
+      prayerLog: (s.faith.prayerLog || []).filter(p => p.id !== id)
+    }
+  }));
+  const removeGatheringEntry = id => update(s => ({
+    ...s,
+    faith: {
+      ...s.faith,
+      gatheringLog: (s.faith.gatheringLog || []).filter(g => g.id !== id)
+    }
+  }));
+  const confirmGathering = g => update(s => ({
+    ...s,
+    faith: {
+      ...s.faith,
+      gatheringLog: [{
+        id: uid(),
+        date: todayKey(),
+        gatheringId: g.id,
+        name: g.name,
+        minutes: gatherMinutes(g)
+      }, ...(s.faith.gatheringLog || [])]
+    }
+  }));
+  const addGathering = g => update(s => ({
+    ...s,
+    faith: {
+      ...s.faith,
+      gatherings: [...(s.faith.gatherings || []), g]
+    }
+  }));
+  const setGathering = (id, patch) => update(s => ({
+    ...s,
+    faith: {
+      ...s.faith,
+      gatherings: (s.faith.gatherings || []).map(x => x.id === id ? {
+        ...x,
+        ...patch
+      } : x)
+    }
+  }));
+  const delGathering = id => update(s => ({
+    ...s,
+    faith: {
+      ...s.faith,
+      gatherings: (s.faith.gatherings || []).filter(x => x.id !== id)
+    }
+  }));
   const savePrayer = (theme, need) => {
     const body = (need ? "My need: " + need + "\n\n" : "") + theme.prayer + "\n\n" + theme.verses.map(v => '"' + v[0] + '" — ' + v[1]).join("\n");
     setFaith({
@@ -2502,7 +3097,18 @@ function Faith({
     onLog: logPrayerTime
   }), React.createElement(DevotionalJourney, {
     faith: f,
-    toggleToday: toggleToday
+    toggleToday: toggleToday,
+    toggleWordOn: toggleWordOn,
+    gatherings: f.gatherings || [],
+    onSaveDay: saveDay,
+    onRemovePrayer: removePrayerEntry,
+    onRemoveGathering: removeGatheringEntry,
+    onConfirmGathering: confirmGathering
+  }), React.createElement(GatheringSetup, {
+    gatherings: f.gatherings || [],
+    onAdd: addGathering,
+    onSet: setGathering,
+    onDel: delGathering
   }), React.createElement(Section, {
     title: "Devotional journal"
   }, React.createElement("div", {
