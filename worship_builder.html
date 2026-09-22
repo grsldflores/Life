@@ -1123,7 +1123,7 @@ function getAISuggestions(){
   const promptText = 'Suggest 2-3 songs from our library that pair well with "' + q + '" as a medley or natural flow for our bilingual (EN/ES) worship service. Only explain where to transition and how — no extra commentary. Library: ' + songList;
   el.innerHTML =
     '<div style="background:#e6f1fb;border-radius:8px;padding:12px 14px;font-family:system-ui,sans-serif;">' +
-      '<div style="font-size:12px;color:#0c447c;margin-bottom:8px;font-weight:500">Copy this prompt and paste it into your Claude chat:</div>' +
+      '<div style="font-size:12px;color:#0c447c;margin-bottom:8px;font-weight:500">Copy this prompt and paste it into AI chat:</div>' +
       '<textarea id="medley-prompt-ta" readonly style="width:100%;font-size:12px;font-family:system-ui,sans-serif;border:0.5px solid #b3d4f5;border-radius:6px;padding:8px;background:#fff;color:#1a1a1a;line-height:1.5;resize:none;height:80px">' + promptText.replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</textarea>' +
       '<button onclick="copyMedleyPrompt()" style="margin-top:8px;font-size:12px;padding:5px 14px" id="medley-copy-btn">Copy</button>' +
     '</div>';
@@ -1206,7 +1206,7 @@ function getEventSetlist(){
   const prompt = 'Build a worship setlist for our ' + event.label + ' service at Sandy Apostolic Church. Structure it with: Praise/Avivamiento, Worship/Adoración, Offering/Ofrenda, Altar Call. Pick 6-9 songs and briefly explain why each fits. Format: summary on top grouped by section, then full setlist in order. Only use songs from this library:\n\n' + songTitles;
   el.innerHTML = `
     <div style="background:#e6f1fb;border-radius:8px;padding:12px 14px;font-family:system-ui,sans-serif;">
-      <div style="font-size:12px;color:#0c447c;margin-bottom:8px;font-weight:500">Copy this prompt and paste it into your Claude chat for a full setlist:</div>
+      <div style="font-size:12px;color:#0c447c;margin-bottom:8px;font-weight:500">Copy this prompt and paste it into AI chat for a full setlist:</div>
       <textarea readonly onclick="this.select()" style="width:100%;font-size:12px;font-family:system-ui,sans-serif;border:0.5px solid #b3d4f5;border-radius:6px;padding:8px;background:#fff;color:#1a1a1a;line-height:1.5;resize:none;min-height:100px">${prompt}</textarea>
       <button onclick="
         const ta=this.previousElementSibling;
